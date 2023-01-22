@@ -54,7 +54,7 @@
             it by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality-with-unpredictable-url">here</a>. Once we launch the lab, we are welcomed by the page: 
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-url-1.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-url-1.png">
         </div>
         <p class="solution-text no-indent">
             At a first glance on the requests of the home page captured by BurpSuite, we see that there is nothing really interesting. To find if there is an
@@ -62,14 +62,14 @@
             that script.
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-url-2.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-url-2.png">
         </div>
         <p class="solution-text no-indent">
             Note that in the body tag we have a script running called "labHeader.js", and the code reflects the source directory that this script is located at.
             Let's try to access it.
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-url-3.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-url-3.png">
         </div>
         <p class="solution-text no-indent">
             We can see the source JavaScript code, but this is not the one we are looking for. This is just to set the lab headers correctly, I guess.
@@ -77,7 +77,7 @@
             able to find the following html:
         </p>
         <div class="fig-breath" style="text-align: center">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-url-4.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-url-4.png">
         </div>
         <p class="solution-text no-indent">
             This JavaScript is the one responsible to restrict access to certain pages if user is not administrator. But look that there is an information disclosure
@@ -85,12 +85,12 @@
             access this page by just appending this directory to the home URL. This is where we arrive at:
         </p>
         <div class="fig-breath" style="text-align: center">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-url-5.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-url-5.png">
         </div>
         <p class="solution-text no-indent">
             Now we can see the user's "carlos" account, and a buttton "delete" next to it. After clicking, we solve the lab!
         </p>
-        <a href="/home/joao/portfolio/PortSwiggerLabs.html">Go back</a>
+        <a href="../../PortSwiggerLabs.html">Go back</a>
     </div>
 
 </div>

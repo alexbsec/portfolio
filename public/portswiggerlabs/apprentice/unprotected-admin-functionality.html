@@ -53,7 +53,7 @@
             here</a>. Once we launch the lab, we are welcomed by the page: 
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-1.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-1.png">
         </div>
         <p class="solution-text no-indent">
             We can simply try to access pages like "/admin" or "/administrator" to see if there is an access control. Unfortunately, that is not the case. We get a 404 status for
@@ -64,24 +64,24 @@
             Let's move to some scans. I tried to find something with Nikto. This is what we find with the scan:
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-2.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-2.png">
         </div>
         <p class="solution-text no-indent">
             Look that we have information that can be manually seen in the "robots.txt" file of the website. Let us navigate to it. We just type in "/robots.txt" appended to the URL.
         </p>
         <div class="fig-breath" style="text-align: center">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-3.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-3.png">
         </div>
         <p class="solution-text no-indent">
             Interesting... This is indicating that there is/must be a folder called "administrator-panel". Let's try to access it.
         </p>
         <div class="fig-breath" style="text-align: center">
-            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-4.png">
+            <img class="fig-body" src="../../Images/priv-esc-unprotected-admin-func-4.png">
         </div>
         <p class="solution-text no-indent">
             Now we can see the user's "carlos" account, and a buttton "delete" next to it. After clicking, we solve the lab!
         </p>
-        <a href="/home/joao/portfolio/PortSwiggerLabs.html">Go back</a>
+        <a href="../../PortSwiggerLabs.html">Go back</a>
     </div>
 
 </div>

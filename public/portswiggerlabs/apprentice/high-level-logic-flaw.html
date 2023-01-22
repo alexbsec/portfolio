@@ -48,7 +48,7 @@
             <b class="solution-title">Solution</b>
         </p>
         <p class="solution-text">
-            Similarly to the last lab (access <a class="fake-link" href="/home/joao/portfolio/portswiggerlabs/apprentice/excessive-trust-in-client-side-controls.html">here</a>), we can access
+            Similarly to the last lab (access <a class="fake-link" href="../../portswiggerlabs/apprentice/excessive-trust-in-client-side-controls.html">here</a>), we can access
             the website root page "/" and check around to see if something is off. After loggin in, we see that we have $100.00 credit. Yay! (click <a class="fake-link" target="blank" href="https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-high-level">here</a>  to access PortSwigger page of this lab).
         </p>
 
@@ -57,13 +57,13 @@
             to buy the Leather Jacket. Here is the logged in home page:
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw.png">
+            <img class="fig-body" src="../../Images/high-level-logic-flaw.png">
         </div>
         <p class="solution-text no-indent">
             View details button on the Leather Jacket. This should lead to this page:
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw-2.png">
+            <img class="fig-body" src="../../Images/high-level-logic-flaw-2.png">
         </div>
         <p class="solution-text no-indent">
             Now we just add this to cart and see the http request on BurpSuite. Ok... That's getting
@@ -71,7 +71,7 @@
             a POST request that has two important variables:
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw-3.png">
+            <img class="fig-body" src="../../Images/high-level-logic-flaw-3.png">
         </div>
 
         <p class="solution-text no-indent">
@@ -82,7 +82,7 @@
         a negative quantity? Let's send this request to Repeater and change the parameter to -1.
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw-4.png">
+            <img class="fig-body" src="../../Images/high-level-logic-flaw-4.png">
         </div>  
         <p class="solution-text no-indent">
             That's awesome! Now the price is negative. But I bet there is still a problem here.
@@ -90,7 +90,7 @@
             But, just out of curiosity, let's try to finish our purchase the way it is right now.
         </p> 
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw-5.png">
+            <img class="fig-body" src="../../Images/high-level-logic-flaw-5.png">
         </div>  
         <p class="solution-text no-indent">
             Oops. That's what I expected. Not to worry! But before going any further, there is a catch here.
@@ -104,7 +104,7 @@
         <p class="solution-text center">
             Which solves the lab!
         </p>
-        <a href="/home/joao/portfolio/PortSwiggerLabs.html">Go back</a>
+        <a href="../../PortSwiggerLabs.html">Go back</a>
     </div>
 
 </div>

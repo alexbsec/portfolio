@@ -60,7 +60,7 @@
             is very expensive if we look at it. We also see that we have a store credit of 100.00$.
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="public/Images/bus-logic-client-side-trust.png">
+            <img class="fig-body" src="../../Images/bus-logic-client-side-trust.png">
         </div>
         <p class="solution-text no-indent">
             Let us navigate a little through the website. Note that when we click "View details" on
@@ -68,7 +68,7 @@
             After that, go to the cart symbol, now followed by the number 1: the quantity of items in the
             cart.
         <div class="fig-breath">
-            <img class="fig-body" src="public/Images/bus-logic-client-side-trust-2.png">
+            <img class="fig-body" src="../../Images/bus-logic-client-side-trust-2.png">
         </div>
         <p class="solution-text no-indent">
             Note that we have a coupon field, even though no coupon were actually given to us. Trying to input
@@ -77,7 +77,7 @@
             the POST request that is sent to the website API when we add an item to the cart. The POST request is located at the HTTP proxy tab.
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/burp-suite-client-side-trust.png">
+            <img class="fig-body" src="../../Images/burp-suite-client-side-trust.png">
         </div>
         <p class="solution-text no-indent">
             A very interesting parameter here can be seen in the request body. Look that we have the product id, as well
@@ -86,7 +86,7 @@
             There, change the price parameter to any integer different than zero. This should force the API to identify the price of the item to be, say, 0.20$. Send the request.
         </p>
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/burp-suite-client-side-trust-2.png">
+            <img class="fig-body" src="../../Images/burp-suite-client-side-trust-2.png">
         </div>
         <p class="solution-text no-indent">
             Note that the request sent us to a 302 response (redirection page) as expected. Now let us
@@ -94,7 +94,7 @@
         </p>
 
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/bus-logic-client-side-trust-3.png">
+            <img class="fig-body" src="../../Images/bus-logic-client-side-trust-3.png">
         </div>
 
         <p class="solution-text no-indent">
@@ -103,12 +103,12 @@
         </p>
 
         <div class="fig-breath">
-            <img class="fig-body" src="/home/joao/portfolio/Images/bus-logic-client-side-trust-4.png">
+            <img class="fig-body" src="../../Images/bus-logic-client-side-trust-4.png">
         </div>
         <p class="solution-text center">
             Which solves the lab!
         </p>
-        <a href="/home/joao/portfolio/PortSwiggerLabs.html">Go back</a>
+        <a href="../../PortSwiggerLabs.html">Go back</a>
     </div>
 
 </div>
