@@ -9,7 +9,6 @@
     <meta charset="utf-8">
     <title>Portfolio</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
@@ -26,17 +25,18 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top nav_left">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">João Buschinelli</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="collapse navbar-collapse flex-d flex-row-reverse nav_right" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-              <a class="nav-link" href="#">Features</a>
-              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+              <a class="nav-link" href="PortSwiggerLabs.html">Labs</a>
+              <a class="nav-link" href="ctfs.html">CTFs</a>
+              <a class="nav-link" href="about.html">About</a>
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </div>
           </div>
@@ -46,10 +46,8 @@
 <div class="jumbotron d-flex align-items-center" style="background-image: url(img/hero-2.jpg)">
     <div class="container text-center">
         <h1 id="typing-effect" class="display-2 mb-4"></h1>
-        <h2 class="section-title">Portfolio</h2>
-        <p>
-            In this website you will find all of my pentests, CTFs and Bug Hunts I have performed. You can contact me to pentest some web applications; APIs and more.
-        </p>
+        <h2 class="section-title">João C. Buschinelli</h2>
+        <span class="text-justify section-subtitle">Programmer | Ethical Hacker | Pentester</span>
         <h2 class="section-title">About me</h2>
         <p>I have a bachelor and MSc degree in physics. I always loved to program and I decided to take a step further and learn more about
             penetration tests, cyber security, ethical hacking. This decision was based on the fact that, as a physicist, I have a solid background knowledge about
