@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Joao C. Buschinelli</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" href="vendor/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendor/lightcase/lightcase.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/home/joao/portfolio/css/style.min.css">
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script src="/home/joao/portfolio/js/effect.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+    <div class="boxed-page">
+        <nav id="gtco-header-navbar" class=" navbar navbar-expand-lg py-4">
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-nav-header">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home/joao/portfolio/home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#CTFs">CTFs Solutions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#bbounty">Bug Hunts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/joao/portfolio/PortSwiggerLabs.html">PortSwigger Labs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a> 
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="jumbotron d-flex align-items-center">
+    <div class="container text-center">
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            In this lab, it seems that the developers protected URL POST requests and we need to bypass it by using different headers. To access the lab,
+            click <a class="fake-link" target="blank" href="https://portswigger.net/web-security/access-control/lab-url-based-access-control-can-be-circumvented">here</a>.
+            Aight! Start your BurpSuite, set the target and let's dive in this practioner lab!
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-url-control-circum-1.png">
+        </div>
+        <p class="solution-text no-indent">
+            Ok, the first thing that is really crazy is that in the homepage we have a link Admin panel right in front of us. This is funny, but it looks like bait.
+            Clicking on it will lead us to a 403: forbidden page. And here I thought this is already solved!
+        </p>
+        <p class="solution-text no-indent">
+            Let's see what we find in BurpSuite after clicking this link. Nothing. We can try to enumerate sub-directories inside the admin page and see if
+            we get access. Ok, let's try to log in then. Crap, we actually don't have credentials. Ok, let's login with a wrong users and analyze BurpSuite's 
+            requests/responses.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-url-control-circum-2.png">
+        </div>
+        <p class="solution-text no-indent">
+            As expected, we have wrong credentials. But wait a moment there. The lab tells us that they prevent accessing a certain page through POST requests.
+            What if we add a header here, the X-Original-URL one seems a good one. We add "/admin" to see if the header sends us to the admin page even with wrong
+            credentials. Let's intercept everything. Capture the login button. Look what we can add to this request:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-url-control-circum-3.png">
+        </div>
+        <p class="solution-text no-indent">
+            This X-Original-URL header 
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-url-control-circum-4.png">
+        </div>
+        <p class="solution-text no-indent">
+            It seems we have solved the lab, but when I click on delete, I get a 403 again. '-.-
+            This is getting problematic. Through the POST request I was able to circumvent the page and access the admin panel,
+            but it seems it does not see me as admin. Intercepting the delete button and adding the X-Original-URL header also does not
+            work (at least for me).
+        </p>
+        <p class="solution-text no-indent">
+            After a while scrapping through all requests and breaking my mind to understand what was happening, I had an idea. When I clicked on the delete button,
+            it was redirecting me to /admin/delete page. What if we did this process again but directly from the homepage? Well, let's try that.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-url-control-circum-5.png">
+        </div>
+        <p class="solution-text no-indent">
+            Our response now is a 302! If we go back to the lab, we have solved it. This is really weird, because we could only delete the account by sending 
+            requests (this time, a GET request on /). But we could also access the admin panel page through the login page! Such an interesting lab.
+        </p>
+        <a href="/home/joao/portfolio/PortSwiggerLabs.html">Go back</a>
+    </div>
+
+</div>
+
+
+</body>

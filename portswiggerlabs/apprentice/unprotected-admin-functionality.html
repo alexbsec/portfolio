@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Joao C. Buschinelli</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" href="vendor/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendor/lightcase/lightcase.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/home/joao/portfolio/css/style.min.css">
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script src="/home/joao/portfolio/js/effect.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+    <div class="boxed-page">
+        <nav id="gtco-header-navbar" class=" navbar navbar-expand-lg py-4">
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-nav-header">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home/joao/portfolio/home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#CTFs">CTFs Solutions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="bug-bounty.hmtl">Bug Hunts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/joao/portfolio/PortSwiggerLabs.html">PortSwigger Labs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="jumbotron d-flex align-items-center">
+    <div class="container text-center">
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            This is a lab about privilege escalation. You can access
+            it by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality">
+            here</a>. Once we launch the lab, we are welcomed by the page: 
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-1.png">
+        </div>
+        <p class="solution-text no-indent">
+            We can simply try to access pages like "/admin" or "/administrator" to see if there is an access control. Unfortunately, that is not the case. We get a 404 status for
+            both pages. Well, we can try to use BurpSuite to find any interesting requests. Go to the main website page and capture all the requests. There is nothing really interesting,
+            other than a GET request on a /.git/HEAD page. Unfortunatelly, it retrives us a 404.
+        </p>
+        <p class="solution-text no-indent">
+            Let's move to some scans. I tried to find something with Nikto. This is what we find with the scan:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-2.png">
+        </div>
+        <p class="solution-text no-indent">
+            Look that we have information that can be manually seen in the "robots.txt" file of the website. Let us navigate to it. We just type in "/robots.txt" appended to the URL.
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-3.png">
+        </div>
+        <p class="solution-text no-indent">
+            Interesting... This is indicating that there is/must be a folder called "administrator-panel". Let's try to access it.
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="/home/joao/portfolio/Images/priv-esc-unprotected-admin-func-4.png">
+        </div>
+        <p class="solution-text no-indent">
+            Now we can see the user's "carlos" account, and a buttton "delete" next to it. After clicking, we solve the lab!
+        </p>
+        <a href="/home/joao/portfolio/PortSwiggerLabs.html">Go back</a>
+    </div>
+
+</div>
+
+
+</body>

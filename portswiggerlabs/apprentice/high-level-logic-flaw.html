@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Joao C. Buschinelli</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" href="vendor/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendor/lightcase/lightcase.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/home/joao/portfolio/css/style.min.css">
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script src="/home/joao/portfolio/js/effect.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+    <div class="boxed-page">
+        <nav id="gtco-header-navbar" class=" navbar navbar-expand-lg py-4">
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-nav-header">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home/joao/portfolio/home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#CTFs">CTFs Solutions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#bbounty">Bug Hunts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/joao/portfolio/PortSwiggerLabs.html">PortSwigger Labs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a> 
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="jumbotron d-flex align-items-center">
+    <div class="container text-center">
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text">
+            Similarly to the last lab (access <a class="fake-link" href="/home/joao/portfolio/portswiggerlabs/apprentice/excessive-trust-in-client-side-controls.html">here</a>), we can access
+            the website root page "/" and check around to see if something is off. After loggin in, we see that we have $100.00 credit. Yay! (click <a class="fake-link" target="blank" href="https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-high-level">here</a>  to access PortSwigger page of this lab).
+        </p>
+
+        <p class="solution-text no-indent">
+            Let's go back to the root page and search for items to buy. I think this labs asks us
+            to buy the Leather Jacket. Here is the logged in home page:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw.png">
+        </div>
+        <p class="solution-text no-indent">
+            View details button on the Leather Jacket. This should lead to this page:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw-2.png">
+        </div>
+        <p class="solution-text no-indent">
+            Now we just add this to cart and see the http request on BurpSuite. Ok... That's getting
+            interesting. So, if you add to cart and then go to the "/cart" directory, BurpSuite should capture
+            a POST request that has two important variables:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw-3.png">
+        </div>
+
+        <p class="solution-text no-indent">
+        Note that there is a "quantity" variable, that probably is referring to the number of
+        items you added of that specific product. There's also a productId variable. This probably
+        refers to the Leather Jacked id number stored in their database or something. The other parameter
+        must be telling the program that this is a query design to the PRODUCTS section only. What happens if we add, say,
+        a negative quantity? Let's send this request to Repeater and change the parameter to -1.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw-4.png">
+        </div>  
+        <p class="solution-text no-indent">
+            That's awesome! Now the price is negative. But I bet there is still a problem here.
+            You see, websites usually prevent this kind of bugs by just setting the minimum price to be at least $0.01.
+            But, just out of curiosity, let's try to finish our purchase the way it is right now.
+        </p> 
+        <div class="fig-breath">
+            <img class="fig-body" src="/home/joao/portfolio/Images/high-level-logic-flaw-5.png">
+        </div>  
+        <p class="solution-text no-indent">
+            Oops. That's what I expected. Not to worry! But before going any further, there is a catch here.
+            Buying -1 product does not make sense. This would probably not work to bypass real websites (at least to the point
+            where the negative quantity of the product that was ordered tells that that product was actually not bought). In that case, we 
+            will add to the cart 1 Leather Jacket. After that, we add negative amounts of other products
+            to leveraged down the price we have to pay (cause we are hackers hehehe). There is a product in my session that 
+            costs $78.96. If we add -16 of this product in the cart, we probably will be able to purchase
+            our jacket with an exploited price.
+        </p>
+        <p class="solution-text center">
+            Which solves the lab!
+        </p>
+        <a href="/home/joao/portfolio/PortSwiggerLabs.html">Go back</a>
+    </div>
+
+</div>
+
+
+</body>

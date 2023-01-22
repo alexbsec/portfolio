@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Joao C. Buschinelli</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" href="vendor/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendor/lightcase/lightcase.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.min.css">
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script src="js/effect.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+    <div class="boxed-page">
+        <nav id="gtco-header-navbar" class=" navbar navbar-expand-lg py-4">
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-nav-header">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#CTFs">CTFs Solutions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#bbounty">Bug Hunts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="PortSwiggerLabs.html">PortSwigger Labs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a> 
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="jumbotron d-flex align-items-center">
+    <div class="container text-center">
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b>Solutions</b>
+        </p>
+        <p>
+            Here I'll be posting apprentice, practioner and expert lab solutions.
+        </p>
+        <div class="dropdown">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" onclick="dropDown(this);" href="#apprentice">Apprentice</a>
+                    <ul class="dropdown-content show">
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this);" href="#appresqli">SQL Injection</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/sqli-vulnerability-in-where-clause.html">SQLi Vulnerability in Where Clause Allowing Retrieval of hidden data</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/sqli-vulnerability-login-bypass.html">SQLi Vulnerability Allowing Login Bypass</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this);" href="#blogic">Business Logic Vulnerabilities</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/excessive-trust-in-client-side-controls.html">Excessive Trust in Client-Side Controls</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/high-level-logic-flaw.html">High-Level Logic Vulnerability</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="inconsistent-security-controls.html">Inconsistent Security Controls</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="flawed-enforcement-of-business-rules.html">Flawed Enforcement of Business Rules</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this);" href="#auth">Authentication</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="username-enumeration-via-different-responses.html">Username Enumeration via Different Responses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="2FA-simple-bypass.html">2FA Simple Bypass</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="password-reset-broken-logic.html">Password Reset Broken Logic</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this);" href="#priv-esc">Privilege Escalation</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/unprotected-admin-functionality.html">Unprotected admin functionality</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/unprotected-admin-functionality-2.html">Unprotected admin functionality with unpredictable URL</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/user-role-controlled-by-request-parameter.html">User role controlled by request parameter</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/user-role-can-be-modified-in-user-profile.html">User role can be modified in user profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/user-id-controlled-by-request-parameter.html">User ID controlled by request parameter</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/apprentice/user-id-controlled-by-request-parameter-2.html">User ID controlled by request parameter, with unpredictable user IDs</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="dropDown(this)" href="#practioner">Practioner</a>
+                    <ul class="dropdown-content show">
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this)" href="#practsqli">SQL Injection</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="sqli-union-attack-determining-the-number-of-columns-returned-by-the-query.html">SQLi UNION attack, determining the number of columns returned by the query</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="sqli-union-attack-finding-a-column-containing-text.html">SQLi UNION attack, finding a column containing text</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="sqli-union-attack-retrieving-data-from-other-tables.html">
+                                        SQLi UNION attack, retrieving data from other tables</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    sqli-union-attack-retrieving-multiple-values-in-a-single-column.html">
+                                    SQLi UNION attack, retrieving multiple values in a single column</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    sqli-attack-querying-the-database-type-and-version-on-oracle.html">
+                                    SQLi attack, querying the database type and version on Oracle</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    sqli-attack-querying-the-database-type-and-version-on-mysql-and-microsoft.html">
+                                    SQLi attack, querying the database type and version on MySQL and Microsoft</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    sqli-attack-listing-the-database-contents-on-non-oracle-databases.html">
+                                    SQLi attack, listing the database contents on non-Oracle databases</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    sqli-attack-listing-the-database-contents-on-oracle.html">
+                                    SQLi attack, listing the database contents on Oracle</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-bar" href="
+                                    blind-sqli-with-conditional-responses.html">
+                                    Blind SQLi with conditional responses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    blind-sqli-with-conditional-errors.html">
+                                    Blind SQLi with conditional errors</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    blind-sqli-with-time-delays.html">
+                                    Blind SQLi with time delays</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    blind-sqli-with-time-delays-and-information-retrieval.html">
+                                    Blind SQLi with time delays and information retrieval</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    sqli-with-filter-bypass-via-xml-encoding.html">
+                                    SQLi with filter bypass via XML encoding</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this)" href="#practblogic">Business Logic Vulnerabilities</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    low-level-logic-flaw.html">
+                                    Low-level logic flaw</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    inconsistent-handling-of-exceptional-input.html">
+                                    Inconsistent handling of exceptional input</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    weak-isolation-on-dual-use-endpoint.html">
+                                    Weak isolation on dual-use endpoint</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    insufficient-workflow-validation.html">
+                                    Insufficient workflow validation</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    authentication-bypass-via-flawed-state-machine.html">
+                                    Authentication bypass via flawed state machine</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    infinite-money-logic-flaw.html">
+                                    Infinite money logic flaw</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    authentication-bypass-via-encryption-oracle.html">
+                                    Authentication bypass via encryption oracle</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this)" href="#practauth">Authentication</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    broken-brute-force-protection-IP-block.html">
+                                    Broken brute-force protection, IP block</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    username-enumeration-via-account-lock.html">
+                                    Username enumeration via account lock</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    2FA-broken-logic.html">
+                                    2FA broken logic</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this)" href="#pracpriv-esc">Privilege escalation</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./portswiggerlabs/practioner/url-based-access-control-can-be-circumvented.html">
+                                    URL-based access control can be circumvented</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    username-enumeration-via-account-lock.html">
+                                    Username enumeration via account lock</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    2FA-broken-logic.html">
+                                    2FA broken logic</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="expert.html">Expert</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+</body>

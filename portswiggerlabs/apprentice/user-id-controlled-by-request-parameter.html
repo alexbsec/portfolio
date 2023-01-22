@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Joao C. Buschinelli</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" href="vendor/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendor/lightcase/lightcase.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/home/joao/portfolio/css/style.min.css">
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script src="/home/joao/portfolio/js/effect.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+    <div class="boxed-page">
+        <nav id="gtco-header-navbar" class=" navbar navbar-expand-lg py-4">
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-nav-header">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home/joao/portfolio/home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#CTFs">CTFs Solutions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="bug-bounty.hmtl">Bug Hunts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/joao/portfolio/PortSwiggerLabs.html">PortSwigger Labs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="jumbotron d-flex align-items-center">
+    <div class="container text-center">
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            In this lab, we are going to investigate horizontal privilege escalation. Basically, it works like the following: say the website is a bank website that stores information for
+            you, such as checking account, credits and so on. If there is a vulnerability like horizontal privilege escalation, then you could access other users information. It is horziontal
+            because this does not directly mean that you have administrator priviliges to do so, you are still a normal user. This type of vulnerability allow users to access information about 
+            other users. 
+        </p>
+        <p class="solution-text no-indent">
+            Ok, enough of blabbering. Open BurpSuite and let's explore the website. You can access this lab <a class="fake-link" target="blank" href="https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter">here</a>.
+            The lab asks us to access carlos' account and retrieve its API. At first, I didn't understand that, but then it became clear. Once you use your credentials to login, you are redirected to the
+            /my-account page. This should look like this:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="/home/joao/portfolio/Images/user-id-request-param.png">
+        </div>
+        <p class="solution-text no-indent">
+            In the URL we have nothing. It is just our /my-account page. But notice that we have an API key. So if there is a way to access carlos' account /my-account page, we 
+            finish the lab, right? Ok, looking at the POST and GET requests BurpSuite captured, there is no parameter that connects our account to some kind of ID. That got me stuck, because 
+            if we couldn't find the ID parameter that leads to the correct /my-account page (and even worse, we don't even know our own ID), then this becomes tricky.
+        </p>
+        <p class="solution-text no-indent">
+            Since I was lost, I decided to just navigate through the website pages to see if there was at least one that was storing some kind of ID (something like productId or anything).
+            If you go to Home page and access one of the products, we can see in the URL that there is a parameter called "productId=(some number)". Ok, but this should not change our account ID.
+            It's good information, because this shows that we actually have an ID parameter, but it is being hidden in the URL. So, I decided to go back to the URL. As I was hovering my cursor on the link,
+            the pop-up URL redirect was explict enough to show where the ID was stored. In this pop-up URL we had "vuln-website.bla/my-account?id=wiener". Ok, this was kind of weird, since it is just
+            storing our ID as our username! Just by changing the id parameter to carlos, we arrive at carlos' /my-account page.
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="/home/joao/portfolio/Images/user-id-request-param.png">
+        </div>
+        <p class="solution-text center">
+            And there is our API! Just submit it, and the lab is solved!
+        </p>
+
+        <a href="/home/joao/portfolio/PortSwiggerLabs.html">Go back</a>
+    </div>
+
+</div>
+
+
+</body>
