@@ -25,32 +25,32 @@ window.onload = function() {
   else if (sPage == "sqli01") {
     txt = 'SQLi Vulnerability in Where Clause Allowing Retrieval of hidden data';
   }
-  else if (sPage == "sqli-vulnerability-login-bypass.html") {
+  else if (sPage == "sqli02") {
     txt = 'SQLi Vulnerability Allowing Login Bypass';
   }
-  else if (sPage == "excessive-trust-in-client-side-controls.html") {
+  else if (sPage == "buslogic01") {
     txt = 'Excessive trust in Client-Side Controls';
   }
-  else if (sPage == "high-level-logic-flaw.html"){
+  else if (sPage == "buslogic02"){
     txt = 'High-Level Logic Vulnerability';
   }
-  else if (sPage == "unprotected-admin-functionality.html") {
+  else if (sPage == "priv-esc01") {
     txt = 'Unprotected Admin Functionality';
   }
-  else if (sPage == "unprotected-admin-functionality-2.html") {
+  else if (sPage == "priv-esc02") {
     txt = 'Unprotected Admin Functionality with Unpredictable URL';
   }
-  else if (sPage == "user-role-controlled-by-request-parameter.html") {
+  else if (sPage == "priv-esc03") {
     txt = 'User role Controlled by Request Parameter';
   }
-  else if (sPage == "user-role-can-be-modified-in-user-profile.html") {
+  else if (sPage == "priv-esc04") {
     txt = 'User role can be modified in user profile';
   }
-  else if (sPage == "user-id-controlled-by-request-parameter.html") {
+  else if (sPage == "priv-esc05") {
     txt = 'User ID controlled by Request Parameter'
   }
-  else if (sPage == "user-id-controlled-by-request-parameter-2.html") {
-    txt = 'User ID controlled by request parameter, with unpredictable user IDs'
+  else if (sPage == "priv-esc11") {
+    txt = 'URL Based Access Control can be Circumvented'
   }
   typeWriter(txt, speed, 0);
 };
