@@ -10,7 +10,7 @@ Right now, the page has little functionalities. I'm using Flask to create routes
 file suffixes (such as .html, .png and so on). I'm working on the authentication page in order
 to implement some security functionalities, and then break them. 
 
-There is already some apprentice PortSwigger labs with solutions I've found. It looks like a blog
+There are already some apprentice PortSwigger labs with solutions I've found. It looks like a blog
 post where I explain my thought process to solve all the problems.
 
 <h2>About</h2>
