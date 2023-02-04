@@ -9,14 +9,15 @@ You need to install python 3.7+
 
 Clone repo:
 
-`code()`
+`git clone https://github.com/buschinelli-joao/portfolio`
 
 * Needed packages:
     * flask
     * flask_login
     * flask_sqlalchemy
 
-To run server, use 
+To run server, use `python main.py` inside portfolio folder. After that, you can navigate pretty easily throughout the webpage.
+Sign-up is necessary in order to access all pages.
 
 
 
