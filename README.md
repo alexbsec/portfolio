@@ -5,16 +5,15 @@ be able to check all my projects, labs, CTFs and even play around with some
 web application functionalities present in this webpage (still in progress).
 
 <h2>HOW TO USE/VISUALIZE WEBPAGE PORTFOLIO</h2>
+Simply access it at http://hobohacker.pythonanywhere.com/login
+
 You need to install python 3.7+
 
 Clone repo:
 
 `git clone https://github.com/buschinelli-joao/portfolio`
 
-* Needed packages:
-    * flask
-    * flask_login
-    * flask_sqlalchemy
+Check requirements.txt to see what packages are needed.
 
 To run server, use `python main.py` inside portfolio folder. After that, you can navigate pretty easily throughout the webpage.
 Sign-up is necessary in order to access all pages.
