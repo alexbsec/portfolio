@@ -11,10 +11,12 @@ Clone repo:
 
 `git clone https://github.com/buschinelli-joao/portfolio`
 
-* Needed packages:
+* Needed packages (see requirments.txt):
     * flask
     * flask_login
     * flask_sqlalchemy
+    * sqlalchemy
+    * werkzeug
 
 To run server, use `python main.py` inside portfolio folder. After that, you can navigate pretty easily throughout the webpage.
 Sign-up is necessary in order to access all pages.
