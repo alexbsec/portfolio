@@ -11,12 +11,7 @@
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
-      <link rel="stylesheet" href="vendor/select2/select2.min.css">
-      <link rel="stylesheet" href="vendor/owlcarousel/owl.carousel.min.css">
-      <link rel="stylesheet" href="vendor/lightcase/lightcase.css">
       <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
-      <link rel="stylesheet" href="css/style.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 </head>
 
@@ -32,7 +27,7 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" id="home" href="/">Home</a>
               <a class="nav-link" target="blank" href="https://github.com/buschinelli-joao/">GitHub</a>
-              <a class="nav-link" href="PortSwiggerLabs.html">Labs</a>
+              <a class="nav-link" href="\labs">Labs</a>
               <a class="nav-link" href="ctfs.html">CTFs</a>
               <a class="nav-link" href="about.html">About</a>
               <a class="nav-link" id="login" href="/login">Login</a>
@@ -44,7 +39,7 @@
     </nav>
 
     <div class="jumbotron d-flex align-items-center" style="background-image: url(img/hero-2.jpg)">
-      <div class="container text-center">
+      <div class="container">
       {% block content %}
       {% endblock %}
       </div>
@@ -55,5 +50,8 @@
   </footer>
 
 <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.min.css') }}">
+
 
 </body>
