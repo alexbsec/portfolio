@@ -4,6 +4,14 @@ This is my Portfolio webpage that is under development. Here you will
 be able to check all my projects, labs, CTFs and even play around with some
 web application functionalities present in this webpage (still in progress).
 
+<h2>Future Updates</h2>
+Thinking of implementing a comment session in labs' pages. This feature will need user to be authenticated. Also,
+thinking about on how to create some security breaches in order to test pentests skills. Studying a little to do so.
+
+I will add more PortSwigger labs solutions as I solve them. There are a few solutions that is yet not implemented.
+
+About page is blank, need to update that. There is also no reference to projects I've been developing. Will add that
+soon.
 
 <h2>As of Feb 4 - 2023</h2>
 Right now, the page has little functionalities. Suffixes are already removed. Login, sign-up and
