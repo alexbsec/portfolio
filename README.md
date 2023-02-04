@@ -5,7 +5,7 @@ be able to check all my projects, labs, CTFs and even play around with some
 web application functionalities present in this webpage (still in progress).
 
 <h2>HOW TO USE/VISUALIZE WEBPAGE PORTFOLIO</h2>
-Simply access it at http://hobohacker.pythonanywhere.com/login
+Simply access it at http://hobohacker.pythonanywhere.com
 
 You need to install python 3.7+
 
