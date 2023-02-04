@@ -26,7 +26,7 @@ def Alab_sqli02():
 
 @views.route('labs/apprentice/buslogic01')
 def Alab_buslogic01():
-    return render_template("excessuve-trust-in-client-side-controls.html")
+    return render_template("excessive-trust-in-client-side-controls.html")
 
 @views.route('labs/apprentice/buslogic02')
 def Alab_buslogic02():
