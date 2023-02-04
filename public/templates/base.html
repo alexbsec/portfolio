@@ -45,6 +45,15 @@
         </div>
     </nav>
 
+    <div class="jumbotron d-flex align-items-center" style="background-image: url(img/hero-2.jpg)">
+      {% block content %}
+      {% endblock %}
+    </div>
+  <footer class="mt-auto text-white-50">
+      
+      <p>&copy; 2022<script>new Date().getFullYear()>2022&&document.write("-"+new Date().getFullYear());</script> <a class="text-white">hobo-hacker.com</a>, by <a href="https://www.linkedin.com/in/jo%C3%A3o-corr%C3%AAa-buschinelli-14bb59166/" class="text-white">João C. Buschinelli</a>.</p>
+  </footer>
+
 <script type="text/javascript" src="{{ url_for('js', filename='effect.js') }}"></script>
 
 </body>
