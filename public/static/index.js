@@ -22,16 +22,7 @@ window.onload = function() {
   else if (sPage == "login") {
     txt = 'Login';
   }
-  else if (sPage == "ctf-solutions.html") {
-    txt = 'CTF Solutions';
-  }
-  else if (sPage == "bug-bounty.html") {
-    txt = 'Bug Hunts';
-  }
-  else if (sPage == "contact.html") {
-    txt = 'Contact me';
-  }
-  else if (sPage == "sqli-vulnerability-in-where-clause.html") {
+  else if (sPage == "sqli01") {
     txt = 'SQLi Vulnerability in Where Clause Allowing Retrieval of hidden data';
   }
   else if (sPage == "sqli-vulnerability-login-bypass.html") {
