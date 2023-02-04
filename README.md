@@ -4,6 +4,22 @@ This is my Portfolio webpage that is under development. Here you will
 be able to check all my projects, labs, CTFs and even play around with some
 web application functionalities present in this webpage (still in progress).
 
+<h2>HOW TO USE/VISUALIZE WEBPAGE PORTFOLIO</h2>
+You need to install python 3.7+
+
+Clone repo:
+
+`code()`
+
+* Needed packages:
+    * flask
+    * flask_login
+    * flask_sqlalchemy
+
+To run server, use 
+
+
+
 <h2>Future Updates</h2>
 Thinking of implementing a comment session in labs' pages. This feature will need user to be authenticated. Also,
 thinking about on how to create some security breaches in order to test pentests skills. Studying a little to do so.
