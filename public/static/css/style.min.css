@@ -29,6 +29,10 @@ body {
     background: -webkit-linear-gradient(to right, #083d0a, #3e3e3e);
     background: linear-gradient(to right, #0f4616, #000000); }
 
+.below {
+  margin-top: 75px;
+}
+
 .boxed-page {
   margin: 0 auto;
   margin-top: 6rem;
