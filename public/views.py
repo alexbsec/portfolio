@@ -59,3 +59,4 @@ def Alab_priv_esc05():
 @views.route('labs/practioner/priv-esc11')
 def Plab_priv_esc11():
     return render_template("url-based-access-control-can-be-circumvented.html", user=current_user)
+    
