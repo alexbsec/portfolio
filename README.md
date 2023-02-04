@@ -6,9 +6,9 @@ web application functionalities present in this webpage (still in progress).
 
 
 <h2>As of Feb 4 - 2023</h2>
-Right now, the page has little functionalities. I'm using Flask to create routes to clean
-file suffixes (such as .html, .png and so on). I'm working on the authentication page in order
-to implement some security functionalities, and then break them. 
+Right now, the page has little functionalities. Suffixes are already removed. Login, sign-up and
+logout functionalities are working. Database is implemented. User can only access labs and other pages
+if logged in and authenticated. Simple sign-up form is added.
 
 There are already some apprentice PortSwigger labs with solutions I've found. It looks like a blog
 post where I explain my thought process to solve all the problems.
