@@ -1,0 +1,69 @@
+{% extends "base.html" %}{% block title %}Excessive Trust in Client Side Controls{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            In this lab we will take a look on what happens when an website trusts
+            too much on the client-side. It is
+            a kind of exploitation directly on a website malfunction. To access the lab,
+            click <a class="fake-link" target="blank" href="https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-excessive-trust-in-client-side-controls">here</a>.
+        </p>
+        <p class="solution-text no-indent">
+            As soon as we start the lab, we can login with our credentials, which in my case is
+            'wiener':'peter'. Once we are logged in, we are going to buy the Leather Jacked, which
+            is very expensive if we look at it. We also see that we have a store credit of 100.00$.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/bus-logic-client-side-trust.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Let us navigate a little through the website. Note that when we click "View details" on
+            the leather jacket, the page that we are sent to has a "Add to cart" button. Let us click on it.
+            After that, go to the cart symbol, now followed by the number 1: the quantity of items in the
+            cart.
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/bus-logic-client-side-trust-2.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Note that we have a coupon field, even though no coupon were actually given to us. Trying to input
+            an incorrect coupon does not work, as expected. Since there is no indication of how we could get a coupon,
+            we have to think differently. In this lab, it is highly recommended to use BurpSuite. That way, we can catch
+            the POST request that is sent to the website API when we add an item to the cart. The POST request is located at the HTTP proxy tab.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/burp-suite-client-side-trust.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            A very interesting parameter here can be seen in the request body. Look that we have the product id, as well
+            as a variable that is called 'price'. We can try to exploit this by changing this parameter to the actual
+            price we want for the jacket to be, and send that request again. To do so, send this request to BurpSuite Repeater.
+            There, change the price parameter to any integer different than zero. This should force the API to identify the price of the item to be, say, 0.20$. Send the request.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/burp-suite-client-side-trust.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Note that the request sent us to a 302 response (redirection page) as expected. Now let us
+            go back to the website and check our cart again. You should see something like this:
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/bus-logic-client-side-trust-3.png')}}">
+        </div>
+
+        <p class="solution-text no-indent">
+            Note that there is a bug here. The website is recognizing the Leather Jacked price to be
+            now 0.20$. Since we have enough credit to afford 0.20$, place order.
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/bus-logic-client-side-trust-4.png')}}">
+        </div>
+        <p class="solution-text center">
+            Which solves the lab!
+        </p>
+        <a href="/labs">Go back</a>
+
+    {% endblock %}

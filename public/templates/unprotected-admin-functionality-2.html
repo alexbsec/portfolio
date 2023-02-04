@@ -1,0 +1,50 @@
+{% extends "base.html" %}{% block title %}Unprotected Admin Functionality 2{%endblock%}
+{%block content%}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            This is a lab about privilege escalation, but differently from the last one (check it out <a class="fake-link" target="blank" href="/labs/apprentice/priv-esc01">here</a>), now the lab tells us that there is a vulnerable admin-panel page that is disclosed somewhere in the website application.
+            You can access
+            it by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality-with-unpredictable-url">here</a>. Once we launch the lab, we are welcomed by the page: 
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-unprotected-admin-func-url-1.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            At a first glance on the requests of the home page captured by BurpSuite, we see that there is nothing really interesting. To find if there is an
+            actual disclosed information in a script in the website, we can inspect the page and look for directories (other than the preset ones) that would lead to 
+            that script.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-unprotected-admin-func-url-2.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Note that in the body tag we have a script running called "labHeader.js", and the code reflects the source directory that this script is located at.
+            Let's try to access it.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-unprotected-admin-func-url-3.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            We can see the source JavaScript code, but this is not the one we are looking for. This is just to set the lab headers correctly, I guess.
+            Let us inspect a little further the main page to see if there is an actual script hidden in it. After navigating a while, we should be 
+            able to find the following html:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-unprotected-admin-func-url-4.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            This JavaScript is the one responsible to restrict access to certain pages if user is not administrator. But look that there is an information disclosure
+            here: it says that if the variable isAdmin is true, then it should redirect you to "/admin-y07bab" (this string might change from session to session). We can
+            access this page by just appending this directory to the home URL. This is where we arrive at:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-unprotected-admin-func-url-5.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Now we can see the user's "carlos" account, and a buttton "delete" next to it. After clicking, we solve the lab!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}{%block title%}User Role Controlled by Request Parameter{%endblock%}
+{%block content%}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            Differently from the last two labs about privilege escalation, this one requires the user to log in to gain access of "fobidden" folders. You can access
+            it by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/access-control/lab-user-role-controlled-by-request-parameter">
+            here</a>. The first approach I would take here is to log in and see the requests on BurpSuite. And my suspicion was correct. After logging in, see that
+            we have a GET request on "/my-accout" directory.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-control-by-request-1.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            There is an interesting cookie in this request. We see that a boolean value false is passed to the "Admin" cookie. What if we changed it to true?
+            My next approach here is: log out, turn intercept on and forward all requests changing every "Admin" cookie to true at every interception.
+            This should allow us to be seen as administrator by the website. The first thing (with intercept on) is to click on My Account link on homepage. This
+            is the request that is sent:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-control-by-request-2.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Change the cookie to true and forward it. The next request is:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-control-by-request-3.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Do the same procedure as before. Next request:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-control-by-request-4.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Forward with true and onto the next request:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-control-by-request-5.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Finally, change it to true and forward. Now check the website. It should be something like this:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-control-by-request-6.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Check that now we have another tab option: the "Admin panel". If we click it directly, it won't work, because there
+            are more requests that uses the Admin cookie in this process. To actually access it, we have to do the same procedure as before.
+            Intercept on and forward true to every Admin cookie you find on the way. After this, you should see the following page:
+        </p> 
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-control-by-request-7.png') }}">
+        </div>
+        <p class="solution-text center">
+            Click delete on carlos account and the lab is solved!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

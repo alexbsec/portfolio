@@ -1,0 +1,54 @@
+{% extends "base.html" %}{% block title %}User Role can be Modified in User Profile{%endblock%}
+{%block content%}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            This lab asks us to delete Carlos's account by giving permission to our account to access the administrator panel. The lab gives a hint,
+            saying that administrator has roleid=2, whatever that means. Well, let's start our search. Start the lab and your BurpSuite and let's not waste 
+            anytime. The first thing I would do is to log in with my credentials and see if there is any cookie or a POST request that might give me the opportunity
+            to change this roleid thing. I had no luck, because logging in or out does not provide me much information. I tried to access the /admin page, but I get
+            a 401 status code: unauthorized, with some messages. Ok, now I am kind of lost. Maybe there is a parameter input that is missing, something like "/admin?roleid=2"?
+            Unfortunately, there is not. I created a Python script to test for me all the possibilities of finding parameters in the URL that could potentially change my
+            privileges on the website. You can access this script on my GitHub <a class="fake-link" terget="fireblank"  href="../../resources/py/find_vars.py">here</a>.
+            Unfortunately, no parameter was found. Maybe my payload was small, but this kind of lab does not need big wordlists.
+        </p>
+        <p class="solution-text no-indent">
+            Let's try a different approach. Once we have logged in, check that there is field to change the e-mail:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-can-modify-1.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Change the e-mail and capture the request on BurpSuite. Look that there is a POST request responds in JSON MIME type. And also, the
+            e-mail POST request is sent in JSON. What is interesting is the content on the response:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-can-modify-2.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Now we're talking! Maybe we can intercept the change e-mail requests, and try to force an input called roleid in the POST request and set it
+            to 2.
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-can-modify-3.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Just forward until there are no more requests to be made. There are no other inputs (visually, at least) that needs change. Go back to the 
+            my-account page and look at what we've got:
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-can-modify-4.png')}}">
+        </div>
+        <p class="solution-text no-indent">
+            Look that we have now an option to access the administrator panel that we did not have before. Let's click on it. 
+        </p>
+        <div class="fig-breath" style="text-align: center">
+            <img class="fig-body" src="{{ url_for('static', filename='img/priv-esc-user-can-modify-5.png')}}">
+        </div>
+        <p class="solution-text center">
+            Click delete on carlos account and the lab is solved!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}
