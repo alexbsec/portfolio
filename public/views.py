@@ -48,7 +48,7 @@ def Alab_priv_esc03():
 
 @views.route('labs/apprentice/priv-esc04')
 def Alab_priv_esc04():
-    return render_template("user-rile-can-be-modified-in-user-profile.html")
+    return render_template("user-role-can-be-modified-in-user-profile.html")
 
 @views.route('labs/apprentice/priv-esc05')
 def Alab_priv_esc05():
