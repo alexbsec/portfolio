@@ -22,6 +22,9 @@ window.onload = function() {
   else if (sPage == "login") {
     txt = 'Login';
   }
+  else if (sPage == "signup") {
+    txt = 'Sign-Up';
+  }
   else if (sPage == "sqli01") {
     txt = 'SQLi Vulnerability in Where Clause Allowing Retrieval of hidden data';
   }
