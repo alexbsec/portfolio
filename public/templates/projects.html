@@ -3,12 +3,26 @@
 {% block content %}
 <div class="container text-center">
     <h1 id="typing-effect" class="display-2 mb-4"></h1>
-
-    <div class="div-left">
-        <h3>Keylogger</h3>
-        <a href="/projects/keylogger">
-            <img class="circle" src="{{ url_for('static', filename='img/Keylogger-Software-1400.jpg') }}">
-        </a>
+    <br>
+    <div class="row-fig">
+        <div class="div-fig">
+            <h3>Remote Keylogger</h3>
+            <a href="/projects/keylogger">
+                <img class="circle" src="{{ url_for('static', filename='img/Keylogger-Software-1400.jpg') }}">
+            </a>
+        </div>
+        <div class="div-fig">
+            <h3>Preventing SQLi</h3>
+            <a href="/projects/prevent-sqli">
+                <img class="circle" src="{{ url_for('static', filename='img/sqlinjection-project-fig.png') }}">
+            </a>
+        </div>
+        <div class="div-fig">
+            <h3>Encryption Malware</h3>
+            <a href="/projects/encryption-malware">
+                <img class="circle" src="{{ url_for('static', filename='img/Malware.jpg') }}">
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}
