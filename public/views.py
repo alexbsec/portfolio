@@ -24,6 +24,14 @@ def projects():
 def keylogger():
     return render_template("keylogger.html", user=current_user)
 
+@views.route('/projects/prevent-sqli')
+def prevent_sqli():
+    return render_template("prevent-sqli.html", user=current_user)
+
+@views.route('/projects/encryption-malware')
+def encryption_malware():
+    return render_template("encryption-malware.html", user=current_user)
+
 ################## SQLI LABS #####################
 
 @views.route('labs/apprentice/sqli01')
