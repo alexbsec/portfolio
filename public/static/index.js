@@ -31,6 +31,12 @@ window.onload = function() {
   else if (sPage == "keylogger") {
     txt = 'Remote Server Keylogger';
   }
+  else if (sPage == "prevent-sqli") {
+    txt = 'Preventing SQL Injection';
+  }
+  else if (sPage == "encryption-malware") {
+    txt = 'Encryption Malware in C++';
+  }
   else if (sPage == "sqli01") {
     txt = 'SQLi Vulnerability in Where Clause Allowing Retrieval of hidden data';
   }
