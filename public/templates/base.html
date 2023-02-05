@@ -13,6 +13,33 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+      <link class="codestyle" rel="stylesheet" href="https://highlightjs.org/static/demo/styles/base16/railscasts.css">
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script>
+      <script>
+        function initSnippet() {
+          let snippet = document.querySelector('#snippet pre code');
+          hljs.highlightElement(snippet);
+          let style = document.getElementById('style-link').textContent;
+          for (let link of document.querySelectorAll('.codestyle')) {
+            link.rel = 'stylesheet';
+            link.disabled = !link.href.match(style + '\\.css$');
+          }
+          document.getElementById('language-link').innerHTML = snippet.result.language;
+          for (let control of document.querySelectorAll('#control a')) {
+            control.addEventListener('click', e => {
+              fetch(control.href, {headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
+                .then(response => response.text()).then(text => {
+                  document.getElementById('snippet').innerHTML = text;
+                  initSnippet();
+                });
+              e.preventDefault();
+            });
+          }
+        }
+        addEventListener('load', initSnippet);
+      </script>
 </head>
 
 <body>
@@ -28,9 +55,9 @@
               {% if user.is_authenticated %}
               <a class="nav-link active" aria-current="page" id="home" href="/">Home</a>
               <a class="nav-link" target="blank" href="https://github.com/buschinelli-joao/">GitHub</a>
+              <a class="nav-link" href="/projects">Projects</a>
               <a class="nav-link" href="/labs">Labs</a>
               <a class="nav-link" href="ctfs.html">CTFs</a>
-              <a class="nav-link" href="about.html">About</a>
               <a class="nav-link" id="logout" href="/logout">Logout</a>
               {% else %}
               <a class="nav-link active" aria-current="page" id="home" href="/">Home</a>
