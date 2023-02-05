@@ -6,10 +6,9 @@
 <h2>Description</h2>
 
 <p class="solution-text no-indent">
-    This is a simple keylogger project that combines JavaScript, Python and a remote server to track keyboard keys pressed on a computer. 
-    First we need to setup a remote server to print the keys pressed in the target pc. With the IP address of the server and the listening port,
-    I've programmed a Python script that dumps json payloads and send it through a POST request to the remote server. The payloads are created when 
-    the target press any key.
+    This is a simple keylogger project that combines JavaScript, Python, and a remote server to track keyboard keys pressed on a computer. 
+    First, we need to set up a remote server to print the keys pressed in the target pc. With the IP address of the server and the listening port,
+    I've programmed a Python script that dumps json payloads and sends them through a POST request to the remote server. The payloads are created when the target presses any key.
 </p>
 
 <h3>Building the Python script</h3>
@@ -53,12 +52,13 @@
 </div>
 
 <p class="solution-text no-indent">
-    Now that everything is setup, we can start writing up some code. Let's edit the key_down function. In order to track the keys, we need
-    a string variable, which we shall call 'text'. This string is going to be concatenated everytime a key is pressed. Everytime this variable
-    is updated, we have to use it in our post_request function to send it to our remote server. Following this idea, we have to make it a global
-    variable. After that, we start concatenating this string using the keyboard class inside pynput package. We need to track every possible key then
-    concatenating it to our variable. To do so, we need several if and elif statements. Everytime a key is pressed, the global variable 'text' is going
-    to be updated. This is what the code looks like:
+    Now that everything is set up, we can start writing up some code. Let's edit the key_down function. 
+    In order to track the keys, we need a string variable, which we shall call 'text'. 
+    This string is going to be concatenated every time a key is pressed. Every time this variable is updated, 
+    we have to use it in our post_request function to send it to our remote server. Following this idea, we have to make it 
+    a global variable. After that, we start concatenating this string using the keyboard class inside the pynput package. 
+    We need to track every possible key and then concatenate it to our variable. To do so, we need several if and elif statements. 
+    Every time a key is pressed, the global variable 'text' is going to be updated. This is what the code looks like:
 </p>
 
 <div class="shrink">
@@ -112,7 +112,7 @@
 <p class="solution-text no-indent">
     Now that our 'text' variable is tracking several possible keys pressed, let's move to our main function. Here we want to use a listener that will fetch
     each key pressed down and then call our post_request function (yet to be coded). The pynput package has a listener inside the keyboard class. We assign to
-    a 'on_press' parameter our key_down method, and then the listener will fetch each key pressed while the target is online. After calling the post_request function,
+    the 'on_press' parameter our key_down method, and then the listener will fetch each key pressed while the target is online. After calling the post_request function,
     We then use the 'join' method of the listener to collect all events until the key is released. The main function should look like this:
 </p>
 
@@ -163,11 +163,11 @@
 </div>
 
 <p class="solution-text no-indent">
-    We only need to write the post_request function and add some options using optparse package afterwards. The post_request function is responsible for sending
+    We only need to write the post_request function and add some options using the optparse package afterward. The post_request function is responsible for sending
     our text variable to the remote server through a POST request. Since our server is going to be running at some IP and listening at some port, we shall define
     two global variables: 'ip' and 'port'. We also want to define another global variable called 'interval' which is responsible to wait for a certain amount of seconds
     before each request. Since our payload is better interpreted as json, we also need to add a header to these requests, with the 'Content-Type' being 'application/json'. Then,
-    we define a timer variable which is responsible to call our post_request function after 'interval' amount of seconds has passed. This looks like the following: 
+    we define a timer variable that is responsible to call our post_request function after the 'interval' amount of seconds has passed. This looks like the following: 
 </p>
 
 <div class="shrink">
@@ -230,7 +230,7 @@
 </div>
 
 <p class="solution-text no-indent">
-    Now that everything is done, we just need to provide this script the ip and port of our remote server. Let's make it such that it is interactable with
+    Now that everything is done, we just need to provide this script with the ip and port of our remote server. Let's make it such that it is interactable with
     the user by using optparse package. Wrapping everything up, we have the following script:
 </p>
 
@@ -318,10 +318,10 @@
 <h3>Setting up the Remote Server</h3>
 
 <p class="solution-text no-indent">
-For the purpose of this project, it is necessary to setup a remote server that our Python script will talk to. I recommend installing
-Ubuntu or Debian based OS, since it is easier to install all required softwares. Of course, it is also possible to use MacOS or a Windows
-server machine. We can install these softwares manually or with Python. Independently of how we choose to install the dependencies, these are the
-commands we need to run in the remote server terminal (for Linux):
+    For the purpose of this project, it is necessary to set up a remote server that our Python script will talk to. I recommend installing
+    Ubuntu or Debian-based OS, since it is easier to install all required software. Of course, it is also possible to use MacOS or a Windows
+    server machine. We can install the required software manually or with Python. Independently of how we choose to install the dependencies, these are the
+    commands we need to run in the remote server terminal (for Linux):
 </p>
 
 <div class="shrink">
@@ -341,7 +341,7 @@ commands we need to run in the remote server terminal (for Linux):
 
 <p class="solution-text no-indent">
     In order to talk to our Python script, it is also necessary to write some code that interprets what our keylogger is sending
-    to the listening port. We installed these softwares to run the JavaScript code that will be responsible for that, as well as the 
+    to the listening port. We installed this softwares to run the JavaScript code that will be responsible for that, as well as the 
     Express web framework module.
 </p>
 
@@ -349,8 +349,8 @@ commands we need to run in the remote server terminal (for Linux):
 
 <p class="solution-text no-indent">
     Now we are ready to write our last script. We want to write a JavaScript code that will fetch the POST requests sent by our Python script malware.
-    This script, however, should be ran inside our remote server, differently from our Python script that runs inside the target machine. This piece
-    of code is only responsible to interpret and display in our server what the target is typing. We start by importing the libraries needed:
+    This script, however, should be run inside our remote server, differently from our Python script that runs inside the target machine. This piece
+    of code is only responsible to interpret and display on our server what the target is typing. We start by importing the libraries needed:
 </p>
 
 
@@ -370,11 +370,11 @@ commands we need to run in the remote server terminal (for Linux):
 </div>
 
 <p class="solution-text no-indent">
-    First three lines are just defining the libraries. In the port constant, we ask for the user to input the listening port of the server (this should be
+    The first three lines are just defining the libraries. In the port constant, we ask for the user to input the listening port of the server (this should be
     the same port as we input in the Python script). The app constant creates an Express application instance, which will be used to handle HTTP requests.
     The last line sets up middleware for the application, specifically for parsing json data that is sent in the request body. 
-    The extended option, when set to true, allows for more complex objects to be encoded as json. We now need to add two endpoints: a GET and POST endpoints.
-    Let's tart with the GET endpoint:
+    The extended option, when set to true, allows for more complex objects to be encoded as json. We now need to add two endpoints: a GET and POST endpoint.
+    Let's start with the GET endpoint:
 </p>
 
 <div class="shrink">
@@ -402,7 +402,7 @@ commands we need to run in the remote server terminal (for Linux):
 </div>
 
 <p class="solution-text no-indent">
-    The GET endpoint retrieves the contents of a file named "keyboard_log.txt", and returns it to the client as an HTML 
+    The GET endpoint retrieves the contents of a file named "keyboard_log.txt" and returns it to the client as an HTML 
     page with a header and the contents of the file, separated by line breaks. 
     If the file does not exist, it returns a message saying that there is nothing logged.
 </p>
@@ -487,18 +487,18 @@ commands we need to run in the remote server terminal (for Linux):
 <h3>Final considerations</h3>
 
 <p class="solution-text no-indent">
-    This is a simple keylogger project that needs more sharpening. It is a front-door to a much robust keylogger and it is only
+    This is a simple keylogger project that needs more sharpening. It is a front door to a much more robust keylogger and it is only
     meant to illustrate how to build a connection between a target and a remote server using Python and JavaScript. These two endpoints
-    talk to each other by sending HTTP requests. All the pressed keys in the target pc is logged into the remote server root page in HTML format,
+    talk to each other by sending HTTP requests. All the pressed keys in the target pc are logged into the remote server root page in HTML format,
     synchronously. What is being typed by the target is going to show on the attacker screen as long as the target is online and the Python script
     is running. The first drawback of this code is that the target needs to have Python installed, as well as all the packages used in the script. 
-    Another drawback is that the target needs to run the script in order to be vulnerable to it. There are a few ways to bypass this, one of each
-    is by making the .py file to be an executable file .exe (if target uses a Windows machine). However, the target still needs to have Python installed.
+    Another drawback is that the target needs to run the script to be vulnerable to it. There are a few ways to bypass this, one of which
+    is by making the .py file to be an executable file .exe (if the target uses a Windows machine). However, the target still needs to have Python installed.
     
 </p>
 
 <h2>Disclaimer</h2>
-WARNING! This project must not be used for malicious purposes. It is simply a project to show how keyloggers work in remote servers. Use at your own risk.
+WARNING! This project must not be used for malicious purposes. It is simply a project to show how keyloggers work on remote servers. Use at your own risk.
 
 
 
