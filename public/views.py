@@ -14,6 +14,16 @@ def home():
 def labs():
     return render_template("PortSwiggerLabs.html", user=current_user)       # reference current user to check if it is authenticated
 
+################## PROJECTS ######################
+
+@views.route('/projects')
+def projects():
+    return render_template("projects.html", user=current_user)
+
+@views.route('/projects/keylogger')
+def keylogger():
+    return render_template("keylogger.html", user=current_user)
+
 ################## SQLI LABS #####################
 
 @views.route('labs/apprentice/sqli01')
