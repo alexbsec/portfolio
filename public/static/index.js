@@ -25,6 +25,12 @@ window.onload = function() {
   else if (sPage == "signup") {
     txt = 'Sign-Up';
   }
+  else if (sPage == "projects") {
+    txt = 'Projects';
+  }
+  else if (sPage == "keylogger") {
+    txt = 'Remote Server Keylogger';
+  }
   else if (sPage == "sqli01") {
     txt = 'SQLi Vulnerability in Where Clause Allowing Retrieval of hidden data';
   }
