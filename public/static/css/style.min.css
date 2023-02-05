@@ -33,6 +33,19 @@ body {
   margin-top: 75px;
 }
 
+.div-left {
+  margin-right: 40%;
+}
+
+.circle {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-position: 50% 50%;
+  background-size: cover;
+  border-radius: 50%;
+}
+
 .boxed-page {
   margin: 0 auto;
   margin-top: 6rem;
@@ -131,19 +144,19 @@ p {
 img {
   max-width: 100%; }
 
+#text {
+  margin-left: -13%;
+}
+
+.shrink {
+  padding-left: 20%;
+  padding-right: 20%;
+  font-size: 15px;
+}
 
 .no-indent {
   text-indent: 0%;
 }
-
-.code-style {
-  font-size: 20px;
-  line-height: 28px;
-  background-color: rgb(255, 255, 255);
-  color: #000000;
-  text-indent: 50%;
-}
-
 
 a:focus,
 button:focus {
