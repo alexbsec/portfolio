@@ -20,6 +20,18 @@ def labs():
 def projects():
     return render_template("projects.html", user=current_user)
 
+@views.route('/projects/encryption-projects')
+def encryption_projects():
+    return render_template("encryption-projects.html", user=current_user)
+
+@views.route('/projects/encryption-projects/encryption-malware')
+def encryption_malware():
+    return render_template("encryption-malware.html", user=current_user)
+
+@views.route('/projects/encryption-projects/one-time-pad-encryption')
+def encryption_one_time_pad():
+    return render_template("one-time-pad-encryption.html", user=current_user)
+
 @views.route('/projects/keylogger')
 def keylogger():
     return render_template("keylogger.html", user=current_user)
@@ -27,10 +39,6 @@ def keylogger():
 @views.route('/projects/prevent-sqli')
 def prevent_sqli():
     return render_template("prevent-sqli.html", user=current_user)
-
-@views.route('/projects/encryption-malware')
-def encryption_malware():
-    return render_template("encryption-malware.html", user=current_user)
 
 ################## SQLI LABS #####################
 
