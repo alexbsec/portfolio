@@ -28,6 +28,12 @@ window.onload = function() {
   else if (sPage == "projects") {
     txt = 'Projects';
   }
+  else if (sPage == "encryption-projects") {
+    txt = 'Encryption Projects';
+  }
+  else if (sPage == "one-time-pad-encryption") {
+    txt = 'One-time Pad Encryption Algorithm in C++'
+  }
   else if (sPage == "keylogger") {
     txt = 'Remote Server Keylogger';
   }
