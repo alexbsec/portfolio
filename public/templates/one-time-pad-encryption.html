@@ -1,0 +1,420 @@
+{% extends "base.html" %} {% block title %}João Buschinelli - Projects{% endblock %}
+
+{% block content %}
+<h1 id="typing-effect" class="display-2 mb-4"></h1>
+<br>
+<h2>Description</h2>
+
+<p class="solution-text no-indent">
+    I was reading a book called Crypto101 by Pomidorkowi and ended up caught by the cryptography world. Since I also wanted to practice some C++ 
+    programming, I decided to implement C++ scripts to some (if not all) of the encryption described in it. Not gonna lie, but this was a 
+    challenging promise to myself, which I'm already regretting (and also not). The first encryption chapter is 
+    about Exclusive Or (XOR) and One-time pad encryption. 
+    The One-time pad is a simple encryption algorithm that is the most secure one, as long as truly random data is possible to generate.
+</p>
+
+<p class="solution-text no-indent">
+    The idea of this encryption method is the following: suppose we have the plain text and want to encrypt it. We can generate a random key of 
+    same size of this plain text string, then match every binary representation of each character of both key and text to generate a ciphertext. 
+    The XOR is an operator that takes as input two bits (0 or 1) and returns one bit (0 or 1), depending on the inputs. If the inputs are equal,
+    then it returns 0. If they are different, it outputs 1.
+</p>
+
+$$ 0 \oplus 0 = 0 $$
+$$ 1 \oplus 0 = 1 $$
+$$ 0 \oplus 1 = 1 $$
+$$ 1 \oplus 1 = 0 $$
+
+<p class="solution-text no-indent">
+    Given the output, we cannot crack the ciphertext without knowing both plain text and key inputs, which makes this 
+    encryption pretty strong. The problem is that to encrypt a whole string, 
+    we have to do it bitwise since this algorithm only works for bits. Without further ado, let's dive into the code. 
+</p>
+
+
+
+<h3>C++ Script</h3>
+
+<p class="solution-text no-indent">
+    Alright, this script might end up being too long and for certain, there are easier ways to do it. But since I'm practicing C++ I will let this pass. If we look at our description above, we need to implement several functions. Excluding the main function, I want to write up five methods here: a string-to-binary converter, a binary-to-string converter (ASCII), an XOR method for two bits, a bitwise XOR method, and last, but not least, a random key generator given a plain text. To build these methods, we want the following libraries: iostream, vector, bitset, string, and random. The structure of the code should then look something like this:
+</p>
+
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            #include &lt;iostream&gt;
+            #include &lt;vector&gt;
+            #include &lt;bitset&gt;
+            #include &lt;string&gt;
+            #include &lt;random&gt;
+
+            std::string stringToBinary(std::string const &text) {
+            }
+
+            std::string binaryToString(std::string const &binaryStr) {
+            }
+
+            std::string exclusiveOr(char bitA, char bitB) {
+            }
+
+            std::string bitwiseXOR(std::string textA, std::string textB) {
+            }
+
+            std::string generateOneTimePadKey(std::string const &text) {
+            }
+
+            int main() {
+                return 0;
+            }
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    The string-to-binary converter is the simplest method, so let's do it first. Given the string text variable, let's convert it using the bitset library. I've chosen to use an 8-bit long binary representation for each character of the string. We first define another string variable which we shall call binary. We now need to loop through all characters of the input and transform them into binary. Pretty easy, huh? Yeah, I had some trouble understanding the syntax, but after a while, I managed to do it correctly. 
+</p>
+
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            #include &lt;iostream&gt;
+            #include &lt;vector&gt;
+            #include &lt;bitset&gt;
+            #include &lt;string&gt;
+            #include &lt;random&gt;
+
+            std::string stringToBinary(std::string const &text) {
+                std::string binary = "";
+                for (char const &c: text) {
+                    binary  += std::bitset<8>(c).to_string() + ' ';
+                }
+                return binary;
+            }
+
+            std::string binaryToString(std::string const &binaryStr) {
+            }
+
+            std::string exclusiveOr(char bitA, char bitB) {
+            }
+
+            std::string bitwiseXOR(std::string textA, std::string textB) {
+            }
+
+            std::string generateOneTimePadKey(std::string const &text) {
+            }
+
+            int main() {
+                return 0;
+            }
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    I've used a for loop that iterates a char variable 'c' through all characters of the input string. After that, we need to append the correct binary value to the binary representation of that character. To convert a char to binary, we've used the bitset<8> converter representation, followed by a whitespace character to separate each binary value. It then returns the binary representation of that string. Awesome!
+</p>
+
+<p class="solution-text no-indent">
+    Next, let's write the exclusiveOr method, which is also simple. We only need to implement the equations shown above. Given two bit variables bitA and bitB, we evoke an if statement to check if the bitA equals bitB. If the statement is triggered, it returns 0. If not, then returns 1. This is how the code presents itself:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            #include &lt;iostream&gt;
+            #include &lt;vector&gt;
+            #include &lt;bitset&gt;
+            #include &lt;string&gt;
+            #include &lt;random&gt;
+
+            std::string stringToBinary(std::string const &text) {
+                std::string binary = "";
+                for (char const &c: text) {
+                    binary  += std::bitset<8>(c).to_string() + ' ';
+                }
+                return binary;
+            }
+
+            std::string binaryToString(std::string const &binaryStr) {
+            }
+
+            std::string exclusiveOr(char bitA, char bitB) {
+                if (bitA == bitB) {
+                    return "0";
+                }
+            
+                return "1";
+            }
+
+            std::string bitwiseXOR(std::string textA, std::string textB) {
+            }
+
+            std::string generateOneTimePadKey(std::string const &text) {
+            }
+
+            int main() {
+                return 0;
+            }
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    Ok, now we start to write the hard stuff. Let's make the bitwiseXOR method since it is kind of similar to the exclusiveOr. This method needs the other two we just defined to work properly, and we'll see why in just a second. We have two text variables as input, textA, and textB, similar to the previous exclusiveOr method. Let's declare some variables. We first declare the output variable. We need to have another two variables which shall represent the binary representation of the two text input variables. We call them textBinaryA and textBinaryB. These two binary variables are going to be computed using our stringToBinary converter we just wrote, given the textA and textB strings as input, respectively. It's also good to handle a possible error here: if the length of textA and textB is not the same, then the code should stop. We add this if statement at the very beginning of the function. This is what this first piece of code looks like:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            std::string bitwiseXOR(std::string textA, std::string textB) {
+                if (textA.length() != textB.length()) {
+                    throw std::invalid_argument("Length of textA and textB do not match.");
+                }
+            
+                std::string output = "";
+                std::string textBinaryA, textBinaryB;
+            
+                textBinaryA = stringToBinary(textA);
+                textBinaryB = stringToBinary(textB);
+            }
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    Now we need a for loop and apply our exclusiveOr bitwise through both binary converted texts. The 'for' loop iterator will go from 0 to the textBinaryA(or B) length and apply the XOR operator at every iteration. Since our textBinaryA(and B) are separated by a whitespace every 8 bits, we need an if statement that checks for this whitespace and concatenates it to the output variable. If not, then it computes the exclusiveOr method of the binary texts that way, concatenating the result to the output variable. Finally, we return the output variable. The method is then finished:
+</p>
+
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            std::string bitwiseXOR(std::string textA, std::string textB) {
+                if (textA.length() != textB.length()) {
+                    throw std::invalid_argument("Length of textA and textB do not match.");
+                }
+            
+                std::string output = "";
+                std::string textBinaryA, textBinaryB;
+            
+                textBinaryA = stringToBinary(textA);
+                textBinaryB = stringToBinary(textB);
+            
+                for (int i = 0; i < textBinaryA.length(); ++i) {
+                    if (textBinaryA[i] == ' ') {
+                        output += ' ';
+                    } else {
+                        output += exclusiveOr(textBinaryA[i], textBinaryB[i]);
+                    }
+                }
+
+                return output;
+            }
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    There are two methods, aside from the main function, to implement. Let's make the One-pad random key from the plain text. We first declare three variables. We need a string 'key' variable that is our output. From the random library, let's define a random_device variable called 'rd' which is a random number generator that produces non-deterministic numbers. This variable is called again in another random mt19937 variable, which we shall call 'gen'. The mt19937 is a random number generator engine that uses the random numbers generated by the 'rd' variable to produce integer numbers. We then define a normal distribution variable called 'dis' that picks random numbers between 33 and 126 representing ASCII characters. We now want to implement a for loop that runs through the text input variable length. Inside this loop, we concatenate the converted ASCII character drawn from the normal distribution variable 'dis' to the 'key' variable. This is what this method should look like, if we follow these steps:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            std::string generateOneTimePadKey(const std::string &text) {
+                std::string key;
+                std::random_device rd;
+                std::mt19937 gen(rd());
+                std::uniform_int_distribution<> dis(33, 126);
+            
+                for (int i = 0; i < text.length(); ++i) {
+                     key += char(dis(gen));
+                }
+            
+                return key;
+            }
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    The last method is responsible to convert a binary string to ASCII string. We need this code because our ciphertext is generated through the bitwiseXOR function, which returns a binary string. We want it to be ASCII. We declare four variables for our converter function: a string text variable (our output), a 'binaryValue' variable to keep track of the 8-bit binary numbers that represent a specific ASCII character, a vector variable called 'binaryList' used to separate all binaryValue found inside this vector, and finally an integer variable 'textLen' that stores the length of the output text.
+</p>
+
+<p class="solution-text no-indent">
+    To store the 8-bit binary value to our vector 'binaryList', we need a 'for' loop. In this loop, which goes from 0 to the binary string length, we check if the current binary character is whitespace or not. If true, then we loop through a whole 8-bit binary character representation using the push_back method to append the binaryValue to our binaryList. After that, we clear the binaryValue variable. We also increment our textLen variable by 1 inside this if statement. If not true, we create a string from the binary string current character and concatenate it to our binaryValue variable. We repeat this process until every binary is properly allocated inside our list. 
+</p>
+
+<p class="solution-text no-indent">
+    After this loop, we need another loop that converts every binary item inside our list to ASCII character. This loop iterates from 0 until textLen. Inside the loop, we declare a bitset 8-bit variable called 'binary' from the current binary list iteration, as well as a 'c' char variable that casts this 8-bit binary to ASCII. Finally, we convert the character to a string through a constructor and concatenate it to our text variable defined at the very beginning of our method. 
+</p>
+
+<p class="solution-text no-indent">
+    Pheew... That was a long explanation of how the function should work. Implementing it should give us the following code:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            std::string binaryToString(std::string const &binaryStr) {
+                std::string text = "";
+                std::string binaryValue = "";
+                std::vector<std::string> binaryList;
+                int textLen = 0;
+            
+                for (int i = 0; i < binaryStr.length(); ++i) {
+                    if (binaryStr[i] == ' ') {
+                        textLen += 1;
+                        binaryList.push_back(binaryValue);
+                        binaryValue = "";
+                    } else {
+                        std::string s(1,binaryStr[i]);
+                        binaryValue += s;
+                    }
+                }
+            
+            
+            
+                for (int j = 0; j < textLen; ++j) {
+                    std::bitset<8> binary(binaryList[j]);
+                    char c = static_cast<char>(binary.to_ulong());
+                    std::string s2(1, c);
+                    text += s2;
+                }
+            
+                return text;
+            }
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    In our main function, let's ask the user to input a text to be ciphered. We declare four string variables: 'plaiText', 'key', 'ciphertextBinary' and 'ciphertext'.
+    The user input goes into the plaiText variable. We send this text to our generateOneTimePadKey method and store the output inside the 'key' variable. After that, we 
+    call our bitwiseXOR method passing the 'plainText' and 'key' strings as inputs, storing the result inside the 'cipheredtextBinary' variable. Finally, we convert
+    the latter into ASCII through our binaryToString method and store the output inside the 'ciphertext' variable, and we are DONE! This is how the final script looks like:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            #include &lt;iostream&gt;
+            #include &lt;vector&gt;
+            #include &lt;bitset&gt;
+            #include &lt;string&gt;
+            #include &lt;random&gt;
+
+            std::string stringToBinary(std::string const &text) {
+                std::string binary = "";
+                for (char const &c: text) {
+                    binary  += std::bitset<8>(c).to_string() + ' ';
+                }
+                return binary;
+            }
+                
+            std::string binaryToString(std::string const &binaryStr) {
+                std::string text = "";
+                std::string binaryValue = "";
+                std::vector<std::string> binaryList;
+                int textLen = 0;
+                
+                for (int i = 0; i < binaryStr.length(); ++i) {
+                    if (binaryStr[i] == ' ') {
+                        textLen += 1;
+                        binaryList.push_back(binaryValue);
+                            binaryValue = "";
+                    } else {
+                        std::string s(1,binaryStr[i]);
+                        binaryValue += s;
+                    }
+                }
+                
+                
+                
+                for (int j = 0; j < textLen; ++j) {
+                    std::bitset<8> binary(binaryList[j]);
+                    char c = static_cast<char>(binary.to_ulong());
+                    std::string s2(1, c);
+                    text += s2;
+                }
+                
+                return text;
+            }
+                
+            std::string exclusiveOr(char bitA, char bitB) {
+                std::string output;
+            
+                if (bitA == bitB) {
+                    return "0";
+                }
+                
+                return "1";
+            }
+                
+            std::string bitwiseXOR(std::string textA, std::string textB) {
+                if (textA.length() != textB.length()) {
+                    throw std::invalid_argument("Length of textA and textB do not match.");
+                }
+                
+                std::string output = "";
+                std::string textBinaryA, textBinaryB;
+                
+                textBinaryA = stringToBinary(textA);
+                textBinaryB = stringToBinary(textB);
+                
+                
+                for (int i = 0; i < textBinaryA.length(); ++i) {
+                    if (textBinaryA[i] == ' ') {
+                        output += ' ';
+                    } else {
+                        output += exclusiveOr(textBinaryA[i], textBinaryB[i]);
+                    }
+                }
+                return output;
+            }
+                
+            std::string generateOneTimePadKey(const std::string &text) {
+                std::string key;
+                std::random_device rd;
+                std::mt19937 gen(rd());
+                std::uniform_int_distribution<> dis(33, 126);
+                
+                for (int i = 0; i < text.length(); ++i) {
+                     key += char(dis(gen));
+                }
+            
+                return key;
+            }
+                 
+            int main() {
+                std::string plainText, key, output;
+
+                std::cout << "Enter a string: ";
+
+                std::getline(std::cin, plainText);
+                
+                key = generateOneTimePadKey(plainText);
+                
+                std::cout << "Plain text input: " << plainText << std::endl;
+                
+                std::string ciphertextBinary = bitwiseXOR(plainText, key);
+                std::string ciphertext = binaryToString(ciphertextBinary);
+
+                std::cout << "Cipher text generated: " << ciphertext << std::endl;
+
+                return 0;
+                    
+            }
+        </code>
+    </pre>
+</div>
+
+<p class="solution-text no-indent">
+    Isn't it beautiful? It is so gratifying to see this bad boy working! In the next page we see how we can an attacker
+    might bypass this encryption method to retrieve the plain text.
+</p>
+
+
+{% endblock %}
