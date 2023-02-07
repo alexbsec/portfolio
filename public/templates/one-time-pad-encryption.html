@@ -290,11 +290,74 @@ $$ 1 \oplus 1 = 0 $$
     </pre>
 </div>
 
+
 <p class="solution-text no-indent">
-    In our main function, let's ask the user to input a text to be ciphered. We declare four string variables: 'plaiText', 'key', 'ciphertextBinary' and 'ciphertext'.
+    One last thing needs to be done. You see, when we perform the bitwise XOR operator using the plain text and the key, we can end up with a 8-bit binary
+    sequence that is represented by an "ilegal" ASCII character, such as "\t" (tab), "\n" (new line) and so on. This kind of pollutes our
+    ciphertext. To remove this annoyance, we simply add another method that makes sure our ciphertext has only the allowed ASCII characters. This method
+    basically converts every 8-bit binary sequence representing a ciphertext character into decimal. If this decimal number is in between 33 and 126 (allowed characters),
+    we let it as it is. If not, then we replace it by the null character. This does not destroy our encryption because null ASCII characters
+    are still countable in length such that the ciphertext, even though possibly shorter then the plain text to our eyes, will still be convertable to its
+    original binary format. If we have the binary representation of the key and the ciphertext, we can decrypt the plain text still. We also need to modify
+    our binaryToString function, which now should make use of this new function we are defining below:
+</p>
+
+<div class="shrink">
+    <pre>
+        <code id="text" class="hljs language-c++">
+            char binaryToChar(const std::string &binary) {
+                int decimal = 0;
+                for (int i = 0; i < binary.length(); ++i) {
+                    if (binary[i] == '1') {
+                        decimal += pow(2, binary.length() - 1 - i);
+                    }
+                }
+            
+                char ascii = (char)decimal;
+                if (decimal >= 33 && decimal <= 126) {
+                    return ascii;
+                } else {
+                    return '\0';
+                }
+            }
+
+            ...
+
+            std::string binaryToString(std::string const &binaryStr) {
+                std::string text = "";
+                std::string binaryValue = "";
+                std::vector<std::string> binaryList;
+                int textLen = 0;
+            
+                for (int i = 0; i < binaryStr.length(); ++i) {
+                    if (binaryStr[i] == ' ') {
+                        textLen += 1;
+                        binaryList.push_back(binaryValue);
+                        binaryValue = "";
+                    } else {
+                        std::string s(1,binaryStr[i]);
+                        binaryValue += s;
+                    }
+                }
+            
+                for (int j = 0; j < textLen; ++j) {
+                    char c = binaryToChar(binaryList[j]);
+                    std::string s2(1, c);
+                    text += s2;
+                }
+            
+                return text;
+            }
+        </code>
+    </pre>
+</div>
+
+
+<p class="solution-text no-indent">
+    Finally, in our main function, let's ask the user to input a text to be ciphered. We declare four string variables: 'plaiText', 'key', 'ciphertextBinary' and 'ciphertext'.
     The user input goes into the plaiText variable. We send this text to our generateOneTimePadKey method and store the output inside the 'key' variable. After that, we 
-    call our bitwiseXOR method passing the 'plainText' and 'key' strings as inputs, storing the result inside the 'cipheredtextBinary' variable. Finally, we convert
-    the latter into ASCII through our binaryToString method and store the output inside the 'ciphertext' variable, and we are DONE! This is how the final script looks like:
+    call our bitwiseXOR method passing the 'plainText' and 'key' strings as inputs, storing the result inside the 'cipheredtextBinary' variable. Lastly, we convert
+    the latter into ASCII through our binaryToString method and store the output inside the 'ciphertext' variable.
 </p>
 
 <div class="shrink">
@@ -305,7 +368,23 @@ $$ 1 \oplus 1 = 0 $$
             #include &lt;bitset&gt;
             #include &lt;string&gt;
             #include &lt;random&gt;
-
+                
+            char binaryToChar(const std::string &binary) {
+                int decimal = 0;
+                for (int i = 0; i < binary.length(); ++i) {
+                    if (binary[i] == '1') {
+                        decimal += pow(2, binary.length() - 1 - i);
+                    }
+                }
+            
+                char ascii = (char)decimal;
+                if (decimal >= 33 && decimal <= 126) {
+                    return ascii;
+                } else {
+                    return '\0';
+                }
+            }
+                
             std::string stringToBinary(std::string const &text) {
                 std::string binary = "";
                 for (char const &c: text) {
@@ -324,22 +403,19 @@ $$ 1 \oplus 1 = 0 $$
                     if (binaryStr[i] == ' ') {
                         textLen += 1;
                         binaryList.push_back(binaryValue);
-                            binaryValue = "";
+                        binaryValue = "";
                     } else {
                         std::string s(1,binaryStr[i]);
                         binaryValue += s;
                     }
                 }
                 
-                
-                
                 for (int j = 0; j < textLen; ++j) {
-                    std::bitset<8> binary(binaryList[j]);
-                    char c = static_cast<char>(binary.to_ulong());
+                    char c = binaryToChar(binaryList[j]);
                     std::string s2(1, c);
                     text += s2;
                 }
-                
+            
                 return text;
             }
                 
@@ -357,14 +433,14 @@ $$ 1 \oplus 1 = 0 $$
                 if (textA.length() != textB.length()) {
                     throw std::invalid_argument("Length of textA and textB do not match.");
                 }
-                
+            
                 std::string output = "";
                 std::string textBinaryA, textBinaryB;
-                
+            
                 textBinaryA = stringToBinary(textA);
                 textBinaryB = stringToBinary(textB);
-                
-                
+            
+            
                 for (int i = 0; i < textBinaryA.length(); ++i) {
                     if (textBinaryA[i] == ' ') {
                         output += ' ';
@@ -380,35 +456,57 @@ $$ 1 \oplus 1 = 0 $$
                 std::random_device rd;
                 std::mt19937 gen(rd());
                 std::uniform_int_distribution<> dis(33, 126);
-                
+            
                 for (int i = 0; i < text.length(); ++i) {
-                     key += char(dis(gen));
+                    key += char(dis(gen));
                 }
             
                 return key;
             }
-                 
+                  
             int main() {
                 std::string plainText, key, output;
-
-                std::cout << "Enter a string: ";
-
+                std::cout << "Enter a text to be ciphered: ";
                 std::getline(std::cin, plainText);
-                
+            
                 key = generateOneTimePadKey(plainText);
+
+                std::cout << std::endl;
                 
                 std::cout << "Plain text input: " << plainText << std::endl;
-                
+            
                 std::string ciphertextBinary = bitwiseXOR(plainText, key);
+
+                std::cout << std::endl;
+                
+                std::cout << "Binary ciphertext: " << ciphertextBinary << std::endl;
+                
                 std::string ciphertext = binaryToString(ciphertextBinary);
 
-                std::cout << "Cipher text generated: " << ciphertext << std::endl;
+                std::cout << std::endl;
 
-                return 0;
+                std::cout << "Ciphertext length: " << ciphertext.length() << std::endl;
+
+                std::cout << std::endl;
+                
+                std::cout << "Cipher text generated: " << ciphertext << std::endl;
                     
+                return 0;
             }
         </code>
     </pre>
+</div>
+
+<p class="solution-text no-indent">
+    This script has a time complexity of O(n) since the main computational costs of it
+    are in the bitwiseXOR and binaryToString functions, which both loop through the input string and perform operations on 
+    each character in the string. The space complexity is also O(n), because the code creates several variables and data 
+    structures to store intermediate and final results.
+    Here is the compiled script:
+</p>
+
+<div class="fig-breath">
+    <center><img class="fig-body" src="{{ url_for('static', filename='img/onetimepad-output.png') }}"></center>
 </div>
 
 <p class="solution-text no-indent">
