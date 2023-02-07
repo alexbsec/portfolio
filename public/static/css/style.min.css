@@ -39,6 +39,10 @@ body {
   margin-right: -12%;
 }
 
+.fig-title-text {
+  font-size: 24px;
+}
+
 .div-fig {
   display: inline-block;
   text-align: center;
