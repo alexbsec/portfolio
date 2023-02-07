@@ -35,15 +35,18 @@ body {
 
 .row-fig {
   display: flex;
+  margin-left: -12%;
+  margin-right: -12%;
 }
 
 .div-fig {
-  margin-left: 5%;
-  margin-right: 5%;
+  display: inline-block;
+  text-align: center;
+  margin: auto;
 }
 
 .circle {
-  display: inline-block;
+  display: flex;
   width: 100px;
   height: 100px;
   background-position: 50% 50%;
