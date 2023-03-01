@@ -14,6 +14,12 @@ def home():
 def labs():
     return render_template("PortSwiggerLabs.html", user=current_user)       # reference current user to check if it is authenticated
 
+################## PENTESTS ######################
+
+@views.route('/pentests')
+def pentests():
+    return render_template("pentests.html", user=current_user)
+
 ################## PROJECTS ######################
 
 @views.route('/projects')
@@ -31,6 +37,10 @@ def encryption_malware():
 @views.route('/projects/encryption-projects/one-time-pad-encryption')
 def encryption_one_time_pad():
     return render_template("one-time-pad-encryption.html", user=current_user)
+
+@views.route('/projects/encryption-projects/one-time-pad-encryption/crib-dragging-attacks')
+def encryption_one_time_pad_exploitation():
+    return render_template("one-time-pad-encryption-exploitation.html", user=current_user)
 
 @views.route('/projects/keylogger')
 def keylogger():
