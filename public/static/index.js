@@ -31,7 +31,12 @@ window.onload = function() {
     "priv-esc04": "User role can be modified in user profile",
     "priv-esc05": "User ID controlled by Request Parameter",
     "priv-esc11": "URL Based Access Control can be Circumvented",
-    "pentests": "Penetration Test Labs"
+    "pentests": "Penetration Test Labs",
+    "pwnlab": "Pwnlab: Init",
+    "kioptrix-2": "Kioptrix level 2",
+    "fristleaks-13": "FristLeaks 1.3",
+    "node": "Node",
+    "vancouver2018": "Vancouver 2018 Workshop"
   };
   const sPath = window.location.pathname;
   const sPage = sPath.substring(sPath.lastIndexOf('/') + 1);

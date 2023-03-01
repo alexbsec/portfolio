@@ -10,7 +10,6 @@ def home():
     return render_template("home.html", user=current_user)
 
 @views.route('/labs')
-@login_required
 def labs():
     return render_template("PortSwiggerLabs.html", user=current_user)       # reference current user to check if it is authenticated
 
@@ -19,6 +18,29 @@ def labs():
 @views.route('/pentests')
 def pentests():
     return render_template("pentests.html", user=current_user)
+
+@views.route('/pentests/vulnhub/pwnlab')
+def pwnlab():
+    return render_template("pwnlab.html", user=current_user)
+
+@views.route('/pentests/vulnhub/kioptrix-2')
+def kioptrix2():
+    return render_template("kioptrix-2.html", user=current_user)
+
+@views.route('/pentests/vulnhub/fristleaks-1.3')
+def fristleaks_1_3():
+    return render_template('fristleaks-13.html', user=current_user)
+    
+@views.route('/pentests/vulnhub/node')
+def node():
+    return render_template('node.html', user=current_user)
+
+@views.route('/pentests/vulnhub/vancouver2018')
+def vancouver2018():
+    return render_template('vancouver2018.html', user=current_user)
+
+
+
 
 ################## PROJECTS ######################
 
