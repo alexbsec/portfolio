@@ -43,15 +43,14 @@
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top nav_left">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top nav_left" id="navbar">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">João Buschinelli</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse flex-d flex-row-reverse nav_right" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav navbar-base">
               {% if user.is_authenticated %}
               <a class="nav-link active" aria-current="page" id="home" href="/">Home</a>
               <a class="nav-link" target="blank" href="https://github.com/buschinelli-joao/">GitHub</a>
@@ -63,6 +62,7 @@
               <a class="nav-link active" aria-current="page" id="home" href="/">Home</a>
               <a class="nav-link" target="blank" href="https://github.com/buschinelli-joao/">GitHub</a>
               <a class="nav-link" href="/projects">Projects</a>
+              <a class="nav-link" href="/pentests">Pentests</a>
               <a class="nav-link" id="login" href="/login">Login</a>
               <a class="nav-link" id="signup" href="/signup">Sign-up</a>
               {% endif %}
@@ -105,6 +105,7 @@
   </footer>
 
 <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+<script type="text/jabascript" src="{{ url_for('static',filename='navbar.js') }}"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.min.css') }}">
