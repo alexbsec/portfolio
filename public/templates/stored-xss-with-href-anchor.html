@@ -1,0 +1,43 @@
+{% extends "base.html" %}{% block title %}Stored XSS Vulnerability in Comment Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            According to the lab description, there is a simple stored cross-site scripting vulnerability in the comment functionality.
+            This lab can be accessed by clicking <a class="fake-link" target="blank" href="https://0aaa00ed0355be728186fc00002f00d8.web-security-academy.net/">here</a>. 
+            When we arrive at the home page, it looks like a blog website. There a bunch of blog posts in the home page. We can access one to see if we find the comment functionality the lab talks about. At the bottom of
+            each blog post, there is a button saying "view post". Let's click on it. Once we arrive at an specific blog post and scroll down, we find the comment section where anyone can leave
+            a comment. 
+        </p>
+        <p class="solution-text no-indent">
+            Going to the comment section and posting a simple comment redirects us to another page, but we can go back to see if our
+            comment was posted.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss08-img1.png') }}">
+        </div>    
+        <p class="solution-text no-indent">
+            Inspecting the page, we see that there is no reflected parameter, but we also see that the comment field uses the &lt;textarea&gt; tag,
+            which can be populated with the autofocus attribute. This can trigger an alert box, if we add the payload: " autofocus=alert(1). It does not
+            seem to work, but we could try other payloads, such as " onmouseover=alert(1). After these two unsuccessful attempts, I just realized that
+            the vulnerable field is the Name input tag, not the comment, but we need to add a comment that triggers an alert box when the author
+            name is clicked.
+        </p>
+        <p class="solution-text no-indent">
+            After a bunch of attempts, I decided to fill the website input and, for my surprise, it created a link in the comment's author name. Investigating the
+            page, we see that this link has an href attribute, which is prone to XSS attack with the following payload: javascript:alert(1).
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss08-img3.png') }}">
+        </div>   
+        <p class="solution-text no-indent">
+            Solving the lab!
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss08-img2.png') }}">
+        </div>   
+
+        <a href="/labs">Go back</a>
+{%endblock%}

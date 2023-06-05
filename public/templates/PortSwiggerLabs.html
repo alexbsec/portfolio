@@ -1,7 +1,7 @@
 {% extends "base.html" %}{% block title %}Labs{%endblock%}
 {% block content %}
     <div class="container">
-        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <h1 id="typing-effect" class="display-2 mb-4"></h1> 
         <p class="solution-text no-indent">
             Portswigger is a fantastic resource for learning about web application security. They offer a range of free labs that are designed to help people understand common vulnerabilities and how to exploit them. These labs cover a wide range of topics, from basic SQL injection to advanced business logic vulnerabilities.
         </p>
@@ -32,6 +32,36 @@
                                 </li>
                             </ul>
                         </li>
+                        <a class="nav-link" onclick="dropDown(this);" href="#appresqli">XSS</a>
+                        <ul class="dropdown-content hide">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss01">Reflected XSS into HTML context with nothing encoded</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss02">Stored XSS into HTML context with nothing encoded</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss03">DOM XSS in document.write sink using source location.search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss04">DOM XSS in document.write sink using source location.search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss05">DOM XSS in document.write sink using source location.search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss06">DOM XSS in jQuery selector sink using a hashchange event</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss07">Reflected XSS into attribute with angle brackets HTML-encoded</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss08">Stored XSS into anchor href attribute with double quotes HTML-encoded</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/labs/apprentice/xss09">Reflected XSS into a JavaScript string with angle brackets HTML encoded</a>
+                            </li>
+                        </ul>
                         <li class="nav-item">
                             <a class="nav-link" onclick="dropDown(this);" href="#blogic">Business Logic Vulnerabilities</a>
                             <ul class="dropdown-content hide">
@@ -155,6 +185,31 @@
                                     SQLi with filter bypass via XML encoding</a>
                                 </li>
 
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="dropDown(this)" href="#practxss">XSS</a>
+                            <ul class="dropdown-content hide">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    /labs/practioner/xss11">
+                                    DOM XSS in document.write sink using source location.search inside a select element</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    /labs/practioner/xss12">
+                                    DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    /labs/practioner/xss13">
+                                    Exploiting XSS to perform CSRF</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="
+                                    /labs/practioner/xss14">
+                                    Exploiting cross-site scripting to steal cookies</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">

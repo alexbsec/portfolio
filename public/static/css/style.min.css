@@ -68,11 +68,13 @@ body {
 
 .fig-body {
   border-radius: 2%;
+
 }
 
 .fig-breath {
   padding-top: 60px;
   padding-bottom: 60px;
+  text-align: center;
 }
 
 .solution-text {
@@ -521,10 +523,10 @@ footer {
 }
 
 .navbar-base {
-  width: calc(90% - 60%);
+  width: calc(90% - 55%);
   display: flex;
   justify-content: space-between;
-  margin-left: 60%;
+  margin-left: 40%;
 }
 
 .navbar-nav .nav-link:active,

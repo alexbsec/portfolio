@@ -1,0 +1,60 @@
+{% extends "base.html" %}{% block title %}Stored XSS Vulnerability in Comment Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            According to the lab description, there is a simple stored cross-site scripting vulnerability in the comment functionality.
+            This lab can be accessed by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/stored/lab-html-context-nothing-encoded">here</a>. 
+            When we arrive at the home page, it looks like a blog website. There a bunch of blog posts in the home page. We can access one to see if we find the comment functionality the lab talks about. At the bottom of
+            each blog post, there is a button saying "view post". Let's click on it. Once we arrive at an specific blog post and scroll down, we find the comment section where anyone can leave
+            a comment. 
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss02-img1.png') }}">
+        </div>        
+
+        <p class="solution-text no-indent">
+            After posting a comment, we are redirected to this page:
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss02-img2.png') }}">
+        </div>        
+
+
+        <p class="solution-text no-indent">
+            Going back to the original blog post, we can successfully see our post:
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss02-img3.png') }}">
+        </div>        
+
+
+        <p class="solution-text no-indent">
+            Note that stored XSS usually happens in functionalities that stores information in the server and it is shown back on the web page, which 
+            is the case for the comment section. We can play around to see what we get by injecting some tampered payload. Since the title of this labe says
+            that there are no encoding method to prevent malicious injections, then we can just try to make our input more "stylish": &lt;b style="color:red;"&gt;Hi mom&lt;/b&gt;.
+            This is what we get:
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss02-img4.png') }}">
+        </div>        
+
+        <p class="solution-text no-indent">
+            Ok. Our comment is red. This indicates we can inject malicious payloads to this comment section, exposing a stored XSS vulnerability. We can just
+            pass &lt;script&gt;alert(1)&lt;/script&gt; and see what happens once we load this blog post page. Unfortunately, this payload does not work.
+            Perhaps the problem is that we need to trigger the script "alert" when the page is loaded. For that, we can try to pass &lt;svg /onload=alert(1)&gt;.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss02-img5.png') }}">
+        </div>        
+
+        <p class="solution-text no-indent">
+            Solving the lab!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

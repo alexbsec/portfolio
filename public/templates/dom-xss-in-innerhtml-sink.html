@@ -1,0 +1,63 @@
+{% extends "base.html" %}{% block title %}DOM XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            Similarly to the last DOM XSS lab, there is a simple DOM cross-site scripting vulnerability in the search functionality, except this time it ins the innerHTML sink.
+            This lab can be accessed by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-innerhtml-sink">here</a>. 
+            We can see the search functionality right on the home page.
+        </p>
+        <p class="solution-text no-indent">
+            We can start testing this by simply searching for anything. I decided to go with 'hi mom'. Since this is a DOM-based XSS vulnerable webpage,
+            I looked at the HTML source code to check whether the script responsible for the query selector was there. For my surprise (or not), it was. This time,
+            the script responsible to fetch the query and displey on the page is the following:
+        </p>
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-js">
+                    function doSearchQuery(query) {
+                        document.getElementById('searchMessage').innerHTML = query;
+                    }
+                    var query = (new URLSearchParams(window.location.search)).get('search');
+                    if(query) {
+                        doSearchQuery(query);
+                    }
+                </code>
+            </pre>
+        </div>       
+        <p class="solution-text no-indent">
+            Once we search for any passed input, the query is passed through a &lt;span&gt; tag, as we can see by inspecting the page after the
+            search. 
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss04-img1.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            After that, I decided to go with the last payload, which was "&gt;hi mom. Even if it does not work, we might get a clue about how
+            the above script works. And indeed, differently from the last lab, this does nothing. However, if we go to the &lt;span&gt; tag we
+            talked about previously, we should find this:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss04-img2.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            We can see that what is being passed to the span tag is exactly what we pass in the search bar. Well, then it is rather simple.
+            What if we passed, instead, &lt;b style="color:green;"&gt;hi mom&lt;/b&gt;? That would probably be displayed as HTML.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss04-img3.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            As expected! This basically tells us that if we instead pass &lt;script&gt;alert(1)&lt;/script&gt;, then we would probably solve the lab. However,
+            script tags won't be triggered inside span tags. So we need a different payload. We can try &lt;img src=x onerror=alert(1)&gt;.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss04-img4.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            And we did it!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

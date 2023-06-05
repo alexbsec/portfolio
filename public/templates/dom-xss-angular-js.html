@@ -1,0 +1,32 @@
+{% extends "base.html" %}{% block title %}DOM XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            In this lab we are going to explore AngularJS attribute known as AngularJS directive. The lab description says that we can run
+            javascript code with double curly brackets using this directive, and this technique is useful when angle brackets and double quotes
+            are being encoded. We can access this lab by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-angularjs-expression">here</a>. 
+        </p>
+
+        <p class="solution-text no-indent">
+            This AngularJS directive works as follows: we can run a simple javascript code by doing { { 5-1 } }, and the
+            result will be the subtraction 5-1=4, as we can see in the image below.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss12-img1.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            In order to run javascript functions, we need to run it inside a constructor controller, otherwise the code won't be able to interpret our
+            input. The idea is also similar here, we just need to add the alert function to a constructor inside the double curly braces. A payload like this:
+            { {constructor.constructor('alert(1)')()} } should do the job.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss12-img2.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            And we did it!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

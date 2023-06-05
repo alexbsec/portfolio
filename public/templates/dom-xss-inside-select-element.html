@@ -1,0 +1,58 @@
+{% extends "base.html" %}{% block title %}DOM XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            In this lab, it seems we have a DOM XSS in the check stock functionality.
+            To access the lab, click <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-document-write-sink-inside-select-element">here</a>.
+            Since we have moved to the next lab level, we are going to take a more serious approach. First, it is a good idea to use BurpSuite proxy to capture th requests.
+            With it, we might get more hidden information and understand how this check stock functionality works. 
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss11-img1.png') }}">
+        </div>    
+        <p class="solution-text no-indent">
+            In the website, we see that it is a shopping website. We can select a product and visit its page. At the bottom, we arrive at the functionality
+            to be exploited. We also see that there are different city locations where we can check the stock in a drop-down like option.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss11-img2.png') }}">
+        </div>  
+        <p class="solution-text no-indent">
+            With BurpSuite's proxy on, let's click the check stock button and go to the HTTP history to examine the requests. We see that it is a POST request
+            with two parameters, one called 'productId' and the other 'storeId'. Their names already tell us what they are. If we refresh the page and capture
+            its GET request, we will also find the script that is fetching the number of items on stock, given the parameters.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss11-img3.png') }}">
+        </div>   
+        <p class="solution-text no-indent">
+            Note that the script fetches the store based on our input and retrieves what is the stock. However it understands the
+            stores aravaible from its already declared stores (inside the script), or from input parameters passed on the URL. This means that if we
+            append the parameter 'storeId' to the URL and add something, it should add to our select drop-down options, even if it is not present in the
+            defined locations in the script. Let's try to pass &amp;storeId=hi+mom. This payload should add another location option called 'hi mom'.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss11-img4.png') }}">
+        </div>  
+        <p class="solution-text no-indent">
+            As expected, the passed parameter is being rendered in DOM, and we can inject anything on it to trigger an XSS attack. The lab description
+            gives us a hint to break the select statement and add our exploit. So, let's do the following payload as a test: &lt;/select&gt;hi+mom.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss11-img5.png') }}">
+        </div>  
+        <p class="solution-text no-indent">
+            As we can see, we've broken the select statement, and every option displayed after it. Well, if that is the case, we can pass the payload
+            &lt;/select&gt;&lt;img onerror=alert(1) src=x&gt;, and see if we trigger an alert box.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss11-img6.png') }}">
+        </div>  
+        <p class="solution-text no-indent">
+            Solving the lab!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

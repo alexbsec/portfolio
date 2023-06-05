@@ -1,0 +1,52 @@
+{% extends "base.html" %}{% block title %}Reflected XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            According to the lab description, there is a reflected cross-site scripting vulnerability in the search functionality.
+            This lab can be accessed by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/contexts/lab-javascript-string-angle-brackets-html-encoded">here</a>. 
+            We can see the search functionality right on the home page.
+        </p>
+        <p class="solution-text no-indent">
+            Ok, since we have angle brackets HTML encoded, we know that using them should not help us at all. We shall start with a simple 'hi mom'
+            search, as always. However, this time I'm going to use BurpSuite proxy and capture the request.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss09-img1.png') }}">
+        </div>  
+        <p class="no-indent solution-text">
+            We can see that our input is reflected inside the javascript variable called 'searchTerms'. Right below it, there is a code that uses the
+            js function encodeURIComponent, which basically URL encodes the input, if needed. We also see that the functionality uses 'document.write'
+            to display what've searched, concatenating the 'encodeURIComponent' output to it. We already know that concatenating strings is not always a
+            good idea, since it can induce XSS attacks. What we need to do here is to pass an input that breaks the javascript string and executes an
+            alert box. A good test is to pass a simple quote ', followed by some arithmetics, such as 1+2 or something.
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss09-img2.png') }}">
+        </div>  
+        <p class="no-indent solution-text">
+            It seems that nothing is happening as there are no arithmetic operations after the single quote, which causes the input to be interpreted as passed, rather than evaluating the expression. One way to resolve this is to pass '-1+2-' in the input. With this input, the document.write component should be:
+            document.write('&lt;img src=path/to/image/tracker.gif?search=' + '-1+2-"' + '&gt;');
+            Note that in this case, we are adding two single quotes, then passing a mathematical expression that may or may not be evaluated, followed by another two single quotes. The output should be either ''-1+2-'' or ''3''.
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss09-img3.png') }}">
+        </div>  
+        <p class="solution-text no-indent">
+            Apparently, we have the former. Somehow, the mathematical expression is not being computed. This is probably due to HTML not interpreting the numbers
+            as... numbers. We can test it further and add javascript functions. Since this method, at least to what we have wrote so far, does seem to break
+            the string, we can jump right to the point and try to pass '-alert(1)-' as input.
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss09-img4.png') }}">
+        </div>  
+        <p class="solution-text no-indent">
+            And we did it! The thing was that it needed a javascript function to actually execute what was inside the document.write sink.
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

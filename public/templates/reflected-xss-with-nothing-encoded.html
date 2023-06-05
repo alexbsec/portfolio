@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% block title %}Reflected XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            According to the lab description, there is a simple reflected cross-site scripting vulnerability in the search functionality.
+            This lab can be accessed by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/reflected/lab-html-context-nothing-encoded">here</a>. 
+            We can see the search functionality right on the home page.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss01-img1.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            The simplest reflected XSS payload test we can try here is a single quote &quot;. This should tell us if the search functionality
+            is accepting this special character. This was my first attempt, and indeed this functionality is prone to reflected XSS vulnerability,
+            as it displays the input right into the HTML of the page. The result is the following:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss01-img2.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Althoug off to a good start, this does not mean that the search bar is a vulnerable feature. We can see if we can inject some HTML to this
+            feature by comparing the outputs of a normal and tampered payload. If we try to pass "hi mom", we should get the following output:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss01-img4.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            However, we can tamper this payload by setting it to be &lt;h1&gt;&lt;strong&gt;hi mom&lt;/strong&gt;&lt;/h1&gt;. In this case, we get this 
+            as result:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss01-img3.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+        Ok. This is promising. A simple HTML payload is interpreted and rendered as HTML in the body of the page, accordingly with what we instructed it to do.
+        This basically solves the lab, since we can change our payload to a simple XSS &lt;script&gt;alert(1)&lt;/script&gt; to make the page pop up the number 1.        
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss01-img5.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Solving the lab!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

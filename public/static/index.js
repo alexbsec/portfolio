@@ -36,6 +36,19 @@ window.onload = function() {
     "kioptrix-2": "Kioptrix level 2",
     "fristleaks-13": "FristLeaks 1.3",
     "node": "Node",
+    "xss01": "Reflected XSS into HTML context with nothing encoded",
+    "xss02": "Stored XSS into HTML context with nothing encoded",
+    "xss03": "DOM XSS in document.write sink using source location.search",
+    "xss04": "DOM XSS in innerHTML sink using source location.search",
+    "xss05": "DOM XSS in jQuery anchor href attribute sink using location.search source",
+    "xss06": "DOM XSS in jQuery selector sink using a hashchange event",
+    "xss07": "Reflected XSS into attribute with angle brackets HTML-encoded",
+    "xss08": "Stored XSS into anchor href attribute with double quotes HTML-encoded",
+    "xss09": "Reflected XSS into a JavaScript string with angle brackets HTML encoded",
+    "xss11": "DOM XSS in document.write sink using source location.search inside a select element",
+    "xss12": "DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded",
+    "xss13": "Exploiting XSS to perform CSRF",
+    "xss14": "Exploiting cross-site scripting to steal cookies",
     "vancouver2018": "Vancouver 2018 Workshop"
   };
   const sPath = window.location.pathname;

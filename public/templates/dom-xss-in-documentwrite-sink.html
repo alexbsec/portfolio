@@ -1,0 +1,76 @@
+{% extends "base.html" %}{% block title %}DOM XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            According to the lab description, there is a simple DOM cross-site scripting vulnerability in the search functionality.
+            This lab can be accessed by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-document-write-sink">here</a>. 
+            We can see the search functionality right on the home page.
+        </p>
+        <p class="solution-text no-indent">
+            The lab says something about the location.search source. We can investigate the HTTP request's response of a search and grep the result for that
+            to see what it is talking about. To do that, we search anything in the search bar, capture the URL and use curl.
+        </p>
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-bash">
+                ┌──(root㉿kali)-[~]
+                └─# curl https://0a9000bf0365b27482bcf2b500970034.web-security-academy.net/?search=hi+mom | grep location.search
+                % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                                Dload  Upload   Total   Spent    Left  Speed
+                100  3415  100  3415    0     0   2913      0  0:00:01  0:00:01 --:--:--  
+                2913                            &lt;title&gt;DOM XSS in document.write sink using source location.search&lt;/title&gt;
+                                    &lt;h2>DOM XSS in &lt;code&gt;document.write&lt;/code&gt; sink using source &lt;code&gt;location.search&lt;/code&gt;&lt;/h2&gt;
+                                        var query = (new URLSearchParams(window.location.search)).get('search');                
+                </code>
+            </pre>
+        </div>
+        <p class="solution-text no-indent">
+            We see that there is a query variable declared in the HTML response body that captures the URL search parameter. We can try to exploit the
+            'get' method by trying to pass a scripted payload. Simply passing alert(1) to the search parameter does not seem to work. This is probably because this parameter
+            is being passed as a string. Unfortunately, breaking the apostrophe using &amp;apos; breaks the query to an empty search.
+        </p>
+        <p class="solution-text no-indent">
+            After poking around a little more, I ended up finding this piece of script inside the HTML of the page, which was not retrieved by our curl. This script
+            is the following:
+        </p>
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-js">
+                    function trackSearch(query) {
+                        document.write('&lt;img src="/resources/images/tracker.gif?searchTerms='+query+'"&gt;');
+                    }
+                    var query = (new URLSearchParams(window.location.search)).get('search');
+                    if(query) {
+                        trackSearch(query);
+                    }
+                
+                </code>
+            </pre>
+        </div>      
+        <p class="solution-text no-indent">
+            Now we can see a payload that would trigger HTML tags here. This code takes what we search, store it in the query variable, and checks if
+            it is populated with something. If yes, then it triggers the trackSearch function, which basically uses document.write to pull up images and blogs.
+            The problem is that it concatenates the query variable to it, making it prone to XSS attacks. For example, if we set our query to be '"&gt;hi mom', we would have
+            the following document.write: <br><code class="hljs language-js">
+                <span class="hljs-title">document.write('&lt;img src="/resources/images/tracker.gif?searchTerms='+"&gt;hi mom+'"&gt;')</span></code>
+                <br>
+            And then we would be able to display 'hi mom' somewhere on the page.
+        </p>  
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss03-img1.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            As we can see, our payload is written on the HTML right below the search bar. Alright, we can simply pass the payload "&gt;&lt;script&gt;alert(1)&lt;/script&gt; in the search bar
+            and see if it triggers the script tag.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss03-img2.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Indeed it does, which solves the lab!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

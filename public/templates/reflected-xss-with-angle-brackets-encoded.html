@@ -1,0 +1,44 @@
+{% extends "base.html" %}{% block title %}Reflected XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            According to the lab description, there is a reflected cross-site scripting vulnerability in the search functionality.
+            This lab can be accessed by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/contexts/lab-attribute-angle-brackets-html-encoded">here</a>. 
+            We can see the search functionality right on the home page.
+        </p>
+
+        <p class="solution-text no-indent">
+            From the lab title, we now that angle brackets are being encoded, so a simple payload such as &lt;script&gt;alert(1)&lt;/script&gt; would definetly not work.
+            We could try URL encoding it to see if we trigger the pop up, such as %3Cscript%3Ealert(1)%3C%2Fscript%3E.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss07-img1.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Unfortunately it does not work. However, we can see that it is a reflected XSS as it is displaying our message in the HTML body.
+            We can't get much out of inspecting the page either, so we will need to be smart here. If we investigate the HTML, we see that
+            the input tag is &lt;input type="text" placeholder="Search the blog..." name="Search" value="hi mom"&gt;, if our input is hi mom.
+            If angle brackets are HTML encoded, we cannot pass "&gt; to break the input tag. But we can trigger an alert box within the input tag.
+            On way to do so is by passing the payload " onfocus=alert(1). This should make the input tag to look like: 
+            &lt;input type="text" placeholder="Search the blog..." name="Search" value="" onfocus=alert(1)&gt;, and when the user clicks the search
+            bar it should be welcomed by an alert box.
+        </p>
+        <p class="solution-text no-indent">
+            However, this does not work. If we take a look at the reflected value in the search box, we find the following:
+            &lt;input type="text" placeholder="Search the blog..." name="Search" value="" onfocus="alert(1)""&gt;. See that we have two double quotes
+            after alert(1), which is making the onfocus not to trigger. It seems that the code is adding the double quotes to the onfocus attribute.
+            In this case, we can try " onfocus="alert(1), which should make the input
+            &lt;input type="text" placeholder="Search the blog..." name="Search" value="" onfocus="alert(1)"&gt;, since it would not interpret that the
+            onfocus attribute needs extra double quotes.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss07-img2.png') }}">
+        </div>
+        <p class="solution-text no-indent">
+            Solving the lab!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

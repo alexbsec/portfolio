@@ -39,9 +39,6 @@ def node():
 def vancouver2018():
     return render_template('vancouver2018.html', user=current_user)
 
-
-
-
 ################## PROJECTS ######################
 
 @views.route('/projects')
@@ -81,6 +78,60 @@ def Alab_sqli01():
 @views.route('labs/apprentice/sqli02')
 def Alab_sqli02():
     return render_template("sqli-vulnerability-login-bypass.html", user=current_user)
+
+#################### XSS LABS ####################
+
+@views.route('labs/apprentice/xss01')
+def Alab_xss01():
+    return render_template("reflected-xss-with-nothing-encoded.html", user=current_user)
+
+@views.route('labs/apprentice/xss02')
+def Alab_xss02():
+    return render_template("stored-xss-with-nothing-encoded.html", user=current_user)
+
+@views.route('labs/apprentice/xss03')
+def Alab_xss03():
+    return render_template("dom-xss-in-documentwrite-sink.html", user=current_user)
+
+@views.route('labs/apprentice/xss04')
+def Alab_xss04():
+    return render_template('dom-xss-in-innerhtml-sink.html', user=current_user)
+
+@views.route('labs/apprentice/xss05')
+def Alab_xss05():
+    return render_template('dom-xss-in-jquery-anchor.html', user=current_user)
+
+@views.route('labs/apprentice/xss06')
+def Alab_xss06():
+    return render_template('dom-xss-in-jquery-selector.html', user=current_user)
+
+@views.route('labs/apprentice/xss07')
+def Alab_xss07():
+    return render_template('reflected-xss-with-angle-brackets-encoded.html', user=current_user)
+
+@views.route('labs/apprentice/xss08')
+def Alab_xss08():
+    return render_template('stored-xss-with-href-anchor.html', user=current_user)
+
+@views.route('labs/apprentice/xss09')
+def Alab_xss09():
+    return render_template('reflected-xss-into-js-string.html', user=current_user)
+
+@views.route('labs/practioner/xss11')
+def Plab_xss11():
+    return render_template('dom-xss-inside-select-element.html', user=current_user)
+
+@views.route('labs/practioner/xss12')
+def Plab_xss12():
+    return render_template('dom-xss-angular-js.html', user=current_user)
+
+@views.route('labs/practioner/xss13')
+def Plab_xss13():
+    return render_template('exploiting-xss-to-perform-csrf.html', user=current_user)
+
+@views.route('labs/practioner/xss14')
+def Plab_xss14():
+    return render_template('xss-to-steal-cookie.html', user=current_user)
 
 ################ BUS LOGIC LABS ##################
 

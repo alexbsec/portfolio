@@ -1,0 +1,69 @@
+{% extends "base.html" %}{% block title %}DOM XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            In this lab, we are supposed to deliver an exploit to the user browser using the exploit server available on the page. We can
+            click the "go to exploit" server button and see what's going on.
+            To access the lab, click <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-jquery-selector-hash-change-event">here</a>. 
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss06-img1.png') }}">
+        </div>         
+        <p class="solution-text no-indent">
+            As we can see, we can craft a response when someone access the directory /exploit by changing the request's header and body. Simply using
+            what is provided and accessing the exploit, we get a page saying Hello, world! We could try to tamper the body to include a script that would
+            pop up an alert. Let's send the payload &lt;img src=x onerror=alert(1)&gt; in the request's body and then click view exploit. We should get this
+            as a result:
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss06-img2.png') }}">
+        </div> 
+        <p class="solution-text no-indent">Yielding:</p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss06-img3.png') }}">
+        </div> 
+        <p class="solution-text no-indent">
+            This seems enough. We could try deliverying this exploit to see if we solve the lab, but we need to change the onerror to print(), as the lab instructs.
+            Unfortunately this does not solve the lab. The lab description tells us that there is a vulnerability in the home page in the auto-scroll functionality, so
+            somehow we need to link our exploit to that. Inspecting the home page, we can find this script:
+        </p>
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-js">
+                    $(window).on('hashchange', function(){
+                        var post = $('section.blog-list h2:contains(' + decodeURIComponent(window.location.hash.slice(1)) + ')');
+                        if (post) post.get(0).scrollIntoView();
+                    });
+                </code>
+            </pre>
+        </div>    
+        <p class="solution-text no-indent">
+            The $(window).on('hashchange', function(){...}); code attaches an event listener to the browser window, which will execute the function whenever the URL hash changes.
+            The URL hash is the part of the URL that follows the "#" symbol. For example, if the URL is "http://example.com/#post-h2-title", the hash value is "post-h2-title". 
+            When the hash value changes, the code will search for a h2 element inside a section element with a class of "blog-list", which contains the text matching the decoded hash value. The decodeURIComponent() function is used to decode any URI-encoded characters in the hash value.
+            After that, the page is going to scroll to the post location. We can try this functionality by typing in: #The%20Hearing%20Test, which is one of the posts present in the home page. 
+            We can try passing the payload "'&lt;img onerror=alert(1) src=x&gt;' (including the single quotes and the first double quote) after the hash to see if we can pop up the alert message.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss06-img4.png') }}">
+        </div> 
+        <p class="solution-text no-indent">
+            Since this payload works, we can deliver the exploit to the user using the iframe tag to retrieve the vulnerable home page with this hash payload. Unfortunately, this also
+            does not work. I think the problem is that the script is only triggered when the user hits enter on the URL. Since we want it to trigger as soon as the user opens the exploit,
+            we can add a 'onload' parameter that will run the script. We can change our payload to '&lt;svg /onload=print()&gt;' for that purpose.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss06-img6.png') }}">
+        </div>
+        <p class="solution-text no-indent">After deliverying the exploit, we get:</p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss06-img7.png') }}">
+        </div> 
+        <p class="solution-text no-indent">
+            Solving the lab!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}

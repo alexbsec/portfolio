@@ -1,0 +1,100 @@
+{% extends "base.html" %}{% block title %}DOM XSS Vulnerability in Search Functionality{%endblock%}
+{% block content %}
+        <h1 id="typing-effect" class="display-2 mb-4"></h1>
+        <p>
+            <b class="solution-title">Solution</b>
+        </p>
+        <p class="solution-text no-indent">
+            This lab seems a little bit more complicated, as it has Comments and Submit Feedback functionalities.
+            We can access it by clicking <a class="fake-link" target="blank" href="https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-innerhtml-sink">here</a>. 
+            Let us explore it a little bit before attempting to exploit it. 
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss05-img1.png') }}">
+        </div>    
+        <p class="solution-text no-indent">
+            First, let's try to see the comment functionality. I have the feeling that this is not vulnerable to XSS, but as good pentesters, we 
+            should test everything anyway. If we post a comment, we can see it is directly displayed underneath all other previous comments in a 
+            &lt;p&gt; tag. We can try our previous payloads here to see what happens. Firstly, let's try to change our text color by passing
+            &lt;b style="color:red;"&gt;hi mom&lt;/b&gt;. As we can see, the developers of this blog did a good job sanitizing the input, as nothing
+            really happens when we pass this payload.
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss05-img2.png') }}">
+        </div>    
+        <p class="solution-text no-indent">
+            We could try different payloads, such as URL encoding or closing tags, but I really want to see the submit feedback functionality. As soon as we get the page,
+            we see a form. We can simply send a feedback to see what happens. However, it just outputs a message saying the feedback was sent. After this, I decided
+            to inspect the page to see if there was any piece of script that would give us a lead to a vulnerability. In there, there are two interesting things.
+            The first one is a href to the Submit feedback functionality, which is located at /resources/js/submitFeedback.js. We can go to this URL to see the source code:
+        </p>
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-js">
+                    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+                        submitFeedback(this.getAttribute("method"), this.getAttribute("action"), this.getAttribute("enctype"), this.getAttribute("personal"), new FormData(this));
+                        e.preventDefault();
+                    });
+                    
+                    function submitFeedback(method, path, encoding, personal, data) {
+                        var XHR = new XMLHttpRequest();
+                        XHR.open(method, path);
+                        if (personal) {
+                            XHR.addEventListener("load", displayFeedbackMessage(data.get('name')));
+                        } else {
+                            XHR.addEventListener("load", displayFeedbackMessage());
+                        }
+                        if (encoding === "multipart/form-data") {
+                            XHR.send(data)
+                        } else {
+                            var params = new URLSearchParams(data);
+                            XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            XHR.send(params.toString())
+                        }
+                    }
+                    
+                    function displayFeedbackMessage(name) {
+                        return function() {
+                            var feedbackResult = document.getElementById("feedbackResult");
+                            if (this.status === 200) {
+                                feedbackResult.innerHTML = "Thank you for submitting feedback" + (name ? ", " + name : "") + "!";
+                                feedbackForm.reset();
+                            } else {
+                                feedbackResult.innerHTML =  "Failed to submit feedback: " + this.responseText
+                            }
+                        }
+                    }
+                </code>
+            </pre>
+        </div>
+        <p class="solution-text no-indent">
+            Apart from some XML requests, which are probably related to the form submission, we cannot find anything related to the href jQuery anchor.
+        </p>
+        <p class="solution-text no-indent">
+            The second interesting thing we can find in the submit feedback page is another script that is embedded within the HTML. This script is:
+        </p>
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-js">
+                    $(function() {
+                        $('#backLink').attr("href", (new URLSearchParams(window.location.search)).get('returnPath'));
+                    });
+                </code>
+            </pre>
+        </div>
+        <p class="solution-text no-indent">
+            Here we find something interesting. After I stumble upon this piece of code, I looked to the URL right away to see what was there.
+            Interestingly enough, the URL has a parameter that reads: /feedback?returnPath=/. Adding the last script to this information, we can
+            conclude that once we click the "back" button, we are redirected to the path passed in the returnPath parameter. (Fun fact: Even though this is not
+            the purpose of this lab, I found another vulnerability here. If we pass something like https://google.com to the returnPath variable and click
+            the back button, we are redirected to Google. This is known as a Open Redirect vulnerability.). One way to bypass this vulnerability is to run a javascript
+            code inside the attr function. To do so, we simply pass as returnPath the value javascript:alert(1).
+        </p>
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/xss05-img3.png') }}">
+        </div>    
+        <p class="solution-text no-indent">
+            And we did it!
+        </p>
+        <a href="/labs">Go back</a>
+{%endblock%}
