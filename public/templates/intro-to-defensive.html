@@ -1,0 +1,70 @@
+{% extends "base.html" %}{% block title %}Intro to Operating System Security{%endblock%}
+{% block content %}
+
+<div class="container">
+    <h1 id="typing-effect" class="display-2 mb-4"></h1> 
+    <br />
+
+    <h2>Security Center Operations</h2>
+
+    <p class="solution-text no-indent">
+        A Security Center Operating is a team of IT professionals that aims to monitor a company's network and systems 24 hours per day, 7 days a week.
+        Their main purposes are:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Find vulnerabilities on the network:</b> A vulnerability might be discovered in any device’s software (operating system and programs) on the network, such as a server or a computer. For instance, the SOC might discover a set of MS Windows computers that must be patched against a specific published vulnerability. Strictly speaking, vulnerabilities are not necessarily the SOC’s responsibility; however, unfixed vulnerabilities affect the security level of the entire company.</li>
+        <li><b>Detect unauthorized activity:</b> Consider the case where an attacker discovered the username and password of one of the employees and used it to log in to the company system. It is crucial to detect this kind of unauthorized activity quickly before it causes any damage. Many clues can help us detect this, such as geographic location.</li>
+        <li><b>Discover policy violations:</b> A security policy is a set of rules and procedures created to help and protect 
+        a company against security threats and ensure compliance. What is considered a violation would vary from a company to another.</li>
+        <li><b>Detect intrusions:</b> Instrusions refer to system and network intrusion. One example scenario would be an attacker 
+        successfully exploiting a web application to gain unauthorized access.</li>
+        <li><b>Support with the incident response:</b> An incident can be an observation, a policy violation, an intrusion attempt, or something more damaging such as a major breach. Responding correctly to a severe incident is not an easy task. The SOC can support the incident response team handle the situation.</li>
+    </ul>
+
+    <h3>Data Sources</h3>
+
+    <p class="solution-text no-indent">
+        The SOC uses many data sources to monitor the network for signs of intrusions and to detect any malicious behaviour. Some of these sources are:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Server Logs:</b> There are many types of servers on a network, such as mail server, web server, and domain controller on a MS Windows 
+        network. Logs contain information about many activities, such as successful and failed login attempts.</li>
+        <li><b>DNS Activity:</b> DNS stands for Domain Name System, and it is a protocol responsible from converting a domain name (i.e. domain.com) to
+        an IP address (such as 123.45.67.89). The SOC can gather information about domain names that internal systems are trying to communicate with by merely inspecting DNS queries.</li>
+        <li><b>Firewall Logs:</b> A firewall is a device that controls network packets entering and leaving the network mainly by letting them through 
+        or blocking them. Consequently, firewall logs can reveal much information about what packets passed or tried to pass through the firewall.</li>
+        <li><b>DHCP Logs:</b> DHCP stands for Dynamic Host Configuration Protocol, and it is responsible for assigning an IP address to the system that 
+        tries to connect to a network. Know that DHCP has automatically provided your device with the network settings whenever you can join a network without manual configuration. By inspecting DHCP transactions, we can learn about the devices that joined the network.</li>
+    </ul>
+    
+    <h3>SOC Services</h3>
+
+    <p class="solution-text no-indent">
+    SOC services include reactive and proactive services in addition to other services. Reactive services refer to the tasks initiated after detecting an intrusion or a malicious event. Example reactive services include:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Monitor security posture:</b> This is the primary role of the SOC, and it includes monitoring the network and computers for security alerts and notifications and responding to them as the need dictates.</li>
+        <li><b>Vulnerability management:</b> This refers to finding vulnerabilities in the company systems and patching (fixing) them. The SOC can assist with this task but not necessarily execute it.</li>
+        <li><b>Malware analysis:</b> The SOC might recover malicious programs that reached the network. The SOC can do basic analysis by executing it in a controlled environment. However, more advanced analysis requires sending it to a dedicated team.</li>
+        <li><b>Intrusion detection:</b> An intrusion detection system (IDS) is used to detect and log intrusions and suspicious packets. The SOC’s job is to maintain such a system, monitor its alerts, and go through its logs as the need dictates.</li>
+        <li><b>Reporting:</b> It is essential to report incidents and alarms. Reporting is necessary to ensure a smooth workflow and to support compliance requirements.</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        Proactive services refer to the tasks handled by the SOC without any indicator of an intrusion. Examples are:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Network Security Monitoring (NSM):</b> This focuses on monitoring the network data and analyzing the traffic to detect signs of intrusions.</li>
+        <li><b>Threat Hunting:</b> With threat hunting, the SOC assumes an intrusion has already taken place and begins its hunt to see if they can confirm this assumption.</li>
+        <li><b>Threat Intelligence:</b> Threat intelligence focuses on learning about potential adversaries and their tactics and techniques to improve the company’s defences. The purpose would be to establish a threat-informed defence.</li>
+    </ul>
+
+
+</div>
+
+
+{% endblock %}

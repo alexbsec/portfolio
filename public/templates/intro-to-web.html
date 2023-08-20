@@ -1,0 +1,358 @@
+{% extends "base.html" %}{% block title %}Intro to Operating System Security{%endblock%}
+{% block content %}
+
+<div class="container">
+    <h1 id="typing-effect" class="display-2 mb-4"></h1> 
+    <br />
+
+    <div class="solution-div">
+        <h2>DNS</h2>
+
+        <p>
+            DNS (Domain Name Server) provides a simple way for us to communicate with devices on the internet without remembering IP addresses.
+            An IP address looks like 104.25.10.229. When we want to visit a website, it is not convenient to remember its IP address. Instead, 
+            we memorize its name (or domain name). DNS is responsible to match the domain with its unique IP address, much like a phone book.
+        </p>
+
+        <h3>Domain Hierarchy</h3>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/domain-hierarchy.png') }}">
+        </div>
+
+        <h4>Top Level Domain (TLD)</h4>
+
+        <p>
+            A TLD is the most righthand part of a domain name. So, for example, the google.com TLD is .com. 
+            There are two types of TLD, gTLD (Generic Top Level) and ccTLD (Country Code Top Level Domain). 
+            Historically a gTLD was meant to tell the user the domain name's purpose; for example, a .com would be for commercial purposes, .org for an organisation, .edu for education and .gov for government. And a ccTLD was used for geographical purposes, for example, .ca for sites based in Canada, .co.uk for sites based in the United Kingdom and so on. Due to such demand, there is an influx of new gTLDs ranging from .online , .club , .website , .biz and so many more. 
+        </p>
+
+        <h4>Second-Level Domain</h4>
+
+        <p>
+            In the google.com example, .com is the top level domain and google is the second-level domain.
+            When registering a domain name, the second-level domain is limited to 63 characters + the TLD and can only use a-z 0-9 and hyphens.
+        </p>
+
+        <h4>Subdomain</h4>
+
+        <p>
+            A subdomain sits on the left-hand side of the Second-Level Domain using a period to separate it; for example
+            mail.google.com may refer to the google webmail server.
+            A subdomain name has the same creation restrictions as a Second-Level Domain, being limited to 63 characters and can only use a-z 0-9 and hyphens (cannot start or end with hyphens or have consecutive hyphens).
+            There is no limit to the number of subdomains you can create for your domain name.
+        </p>
+
+        <h3>DNS Records</h3>
+
+        DNS isn't just for websites though, and multiple types of DNS record exist. We'll go over some of the most common ones that you're likely to come across.
+
+        <h4>A Record</h4>
+
+        <p>These records resolve to IPv4 addresses, for example 104.26.10.229</p>
+
+        <h4>AAAA Record</h4>
+
+        <p>These records resolve to IPv6 addresses, for example 2606:4700:20::681a:be5</p>
+
+        <h4>CNAME Record</h4>
+
+        <p>CNAME, short for Canonical Name, is like an internet shortcut. Instead of pointing directly to an IP address, it points to another domain name. When you use a CNAME record, it's like saying, "Go to that other domain to find the information you're looking for." It's handy when you want one domain to act as an alias for another. For example, if 'store.example.com' has a CNAME record pointing to 'mystore.com,' they both lead to the same place on the web.</p>
+
+        <h4>MX Record</h4>
+        <p>MX stands for "Mail Exchange." MX records are like signposts for email. They tell the internet where to deliver email messages for a specific domain. When someone sends an email to an address within that domain, the MX record points to the mail server responsible for handling those incoming messages. In essence, MX records ensure that your emails get sent to the right inbox.</p>
+
+        <h4>TXT Record</h4>
+
+        <p>
+            TXT records are free text fields where any text-based data can be stored. TXT records have multiple uses, but some common ones can be to list servers that have the authority to send an email on behalf of the domain (this can help in the battle against spam and spoofed email). They can also be used to verify ownership of the domain name when signing up for third party services.
+        </p>
+
+        <h3>Making a DNS Request</h3>
+
+        <p>
+            1. When you request a domain name, your computer first checks its local cache to see if you've previously looked up the address recently; if not, a request to your Recursive DNS Server will be made.
+        </p>
+
+        <p>
+            2. A Recursive DNS Server is usually provided by your ISP, but you can also choose your own. This server also has a local cache of recently looked up domain names. If a result is found locally, this is sent back to your computer, and your request ends here (this is common for popular and heavily requested services such as Google, Facebook, Twitter). If the request cannot be found locally, a journey begins to find the correct answer, starting with the internet's root DNS servers.
+        </p>
+
+        <p>
+            3. The root servers serve as the fundamental infrastructure of the DNS system, responsible for directing you to the appropriate Top Level Domain Server based on your request. For instance, if you request www.example.com, the root server will identify the Top Level Domain as ".com" and guide you to the relevant TLD server that manages addresses ending in ".com".
+        </p>
+
+        <p>
+            4. The Top Level Domain (TLD) server stores information about where to locate the authoritative server responsible for fulfilling a DNS request. This authoritative server is frequently referred to as the domain's nameserver. For instance, the nameservers for example.com are kip.ns.cloudflare.com and uma.ns.cloudflare.com. Multiple nameservers are commonly assigned to a domain to provide redundancy in case one becomes unavailable.
+        </p>
+
+        <p>5. An authoritative DNS server is the server that is responsible for storing the DNS records for a particular domain name and where any updates to your domain name DNS records would be made. Depending on the record type, the DNS record is then sent back to the Recursive DNS Server, where a local copy will be cached for future requests and then relayed back to the original client that made the request. DNS records all come with a TTL (Time To Live) value. This value is a number represented in seconds that the response should be saved for locally until you have to look it up again. Caching saves on having to make a DNS request every time you communicate with a server.</p>
+
+
+        <h2>HTTP in Detail</h2>
+
+        <h3>What is HTTP (HyperText Transfer Protocol)?</h3>
+
+        <p>
+            HTTP is what's used whenever you view a website, developed by Tim Berners-Lee and his team between 1989-1991. HTTP is the set of rules used for communicating with web servers for the transmitting of webpage data, whether that is HTML, Images, Videos, etc.
+        </p>
+
+        <h3>What is HTTPS (HyperText Transfer Protocol Secure)?</h3>
+
+        <p>
+            HTTPS is the secure version of HTTP. HTTPS data is encrypted so it not only stops people from seeing the data you are receiving and sending, but it also gives you assurances that you're talking to the correct web server and not something impersonating it.
+        </p>
+
+        <h3>Requests and Responses</h3>
+
+        <p>
+            When we access a website, your browser needs to make requests to a web server for assets such as HTML, images, and download the responses.
+            It all starts in the URL. A URL is predominantly an instruction on how to access a resource on the internet. The below image shows what a URL looks like with all of its features (it does not use all features in every request).
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='img/url-anatomy.png') }}">
+        </div>
+
+        <ul class="custom-bullet-list">
+            <li><b>Scheme:</b> This instructs on what protocol to use for accessing the resource such as HTTP, HTTPS, FTP (File Transfer Protocol).</li>
+            <li><b>Host/domain:</b> The domain name or IP address of the server you wish to access.</li>
+            <li><b>Port:</b> The Port that you are going to connect to, usually 80 for HTTP and 443 for HTTPS, but this can be hosted on any port between 1 - 65535.</li>
+            <li><b>Path:</b> The file name or location of the resource you are trying to access.</li>
+            <li><b>Parameters:</b> Extra bits of information that can be sent to the requested path. For example, /blog?id=1 would tell the blog path that you wish to receive the blog article with the id of 1.</li>
+            <li><b>Anchor:</b> This is a reference to a location on the actual page requested. This is commonly used for pages with long content and can have a certain part of the page directly linked to it, so it is viewable to the user as soon as they access the page. </li>
+        </ul>
+
+        <h4>Making a request</h4>
+
+        <p>
+            It's possible to make a request to a web server with just one line "GET / HTTP/1.1".
+            But for a much richer web experience, you’ll need to send other data as well. This other data is sent in what is called headers, where headers contain extra information to give to the web server you’re communicating with.
+        </p>
+
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-http">
+                    GET / HTTP/1.1
+                    Host: example.com
+                    User-Agent: Mozilla/5.0 Firefox/87.0
+                    Referer: https://example.com
+                </code>
+            </pre>
+        </div>
+
+        <p>Let's break down line by line:</p>
+
+        <ul class="custom-bullet-list">
+            <li><b>Line 1:</b> This request is sending the GET method ( more on this in the HTTP Methods task ), request the home page with / and telling the web server we are using HTTP protocol version 1.1.</li>
+            <li><b>Line 2:</b> We tell the web server we want the website example.com </li>
+            <li><b>Line 3:</b> We tell the web server we are using the Firefox version 87 Browser</li>
+            <li><b>Line 4:</b> We are telling the web server that the web page that referred us to this one is https://example.com</li>
+            <li><b>Line 5:</b> A blank line indicating the end of the request.</li>
+        </ul>
+
+        <p>A possible response to this would be:</p>
+
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-html">
+                HTTP/1.1 200 OK
+                Server: nginx/1.15.8
+                Date: Fri, 09 Apr 2021 13:34:03 GMT
+                Content-Type: text/html
+                Content-Length: 98
+
+                &lt;html&gt;
+                &lt;head&gt;
+                    &lt;title&gt;Example&lt;/title&gt;
+                &lt;/head&gt;
+                &lt;body&gt;
+                    Welcome To example.com
+                &lt;/body&gt;
+                &lt;/html&gt;
+
+                </code>
+            </pre>
+        </div>
+        
+        <p>Each line being:</p>
+
+        <ul class="custom-bullet-list">
+            <li><b>Line 1:</b> HTTP 1.1 is the version of the HTTP protocol the server is using and then followed by the HTTP Status Code in this case "200 Ok" which tells us the request has completed successfully.</li>
+            <li><b>Line 2:</b> This tells us the web server software and version number.</li>
+            <li><b>Line 3:</b> The current date, time and timezone of the web server.</li>
+            <li><b>Line 4:</b> The Content-Type header tells the client what sort of information is going to be sent, such as HTML, images, videos, pdf, XML.</li>
+            <li><b>Line 5:</b> Content-Length tells the client how long the response is, this way we can confirm no data is missing.</li>
+            <li><b>Line 6:</b> HTTP response contains a blank line to confirm the end of the HTTP response.</li>
+            <li><b>Lines 7-14:</b> The information that has been requested, in this instance the homepage.</li>
+        </ul>
+        
+        <h3>HTTP Methods</h3>
+
+        <p>
+            HTTP methods are a way for the client to show their intended action when making an HTTP request. There are a lot of HTTP methods but we'll cover the most common ones, although mostly you'll deal with the GET and POST method.
+        </p>
+
+        <h4>GET request</h4>
+
+        <p>
+            This is used for getting information from a web server.
+        </p>
+
+        <h4>POST request</h4>
+
+        <p>
+            This is used for submitting data to the web server and potentially creating new records.
+        </p>
+
+        <h4>
+            PUT request
+        </h4>
+
+        <p>
+            This is used for submitting data to a web server to update information.
+        </p>
+
+        <h4>DELETE request</h4>
+
+        <p>
+            This is used for deleting information/records from a web server.
+        </p>
+
+        <h3>HTTP Status Codes</h3>
+
+        <p>Status codes are three-digit numbers that the server sends to the browser in response to a client's request made to the server. These codes provide a concise way for the server to communicate the outcome of the request to the client. Each status code falls into one of five categories, indicating whether the request was successful, redirected, client error, server error, or informational. For example, a 404 status code signifies that the requested resource was not found on the server, while a 200 status code indicates a successful request. HTTP status codes are vital for understanding the outcome of web requests and troubleshooting issues in web communication.</p>
+
+        <br />
+
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>100-199 - Information Response</td>
+                <td>These are sent to tell the client the first part of their request has been accepted and they should continue sending the rest of their request. These codes are no longer very common.</td>
+            </tr>
+            <tr>
+                <td>200-299 - Success</td>
+                <td>This range of status codes is used to tell the client their request was successful.</td>
+            </tr>
+            <tr>
+                <td>300-399 - Redirection</td>
+                <td>These are used to redirect the client's request to another resource. This can be either to a different webpage or a different website altogether.</td>
+            </tr>
+            <tr>
+                <td>400-499 - Client Errors</td>
+                <td>Used to inform the client that there was an error with their request.</td>
+            </tr>
+            <tr>
+                <td>500-599 - Server Errors</td>
+                <td>This is reserved for errors happening on the server-side and usually indicate quite a major problem with the server handling the request.</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <h4>Common Status Codes</h4>
+
+        <p>Here are some common status codes:</p>
+
+        <br />
+
+        <table>
+            <tr>
+                <th>Status Code</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>200 - OK</td>
+                <td>The request was completed successfully.</td>
+            </tr>
+            <tr>
+                <td>201 - Created</td>
+                <td>A resource has been created (for example a new user or new blog post).</td>
+            </tr>
+            <tr>
+                <td>301 - Permanent Redirect</td>
+                <td>This redirects the client's browser to a new webpage or tells search engines that the page has moved somewhere else and to look there instead.</td>
+            </tr>
+            <tr>
+                <td>302 - Temporary Redirect</td>
+                <td>Similar to the above permanent redirect, but as the name suggests, this is only a temporary change and it may change again in the near future.</td>
+            </tr>
+            <tr>
+                <td>400 - Bad Request</td>
+                <td>This tells the browser that something was either wrong or missing in their request. This could sometimes be used if the web server resource that is being requested expected a certain parameter that the client didn't send.</td>
+            </tr>
+            <tr>
+                <td>401 - Not Authorized</td>
+                <td>You are not currently allowed to view this resource until you have authorized with the web application, most commonly with a username and password.</td>
+            </tr>
+            <tr>
+                <td>403 - Forbidden</td>
+                <td>You do not have permission to view this resource whether you are logged in or not.</td>
+            </tr>
+            <tr>
+                <td>405 - Method Not Allowed</td>
+                <td>The resource does not allow this method request, for example, you send a GET request to the resource /create-account when it was expecting a POST request instead.</td>
+            </tr>
+            <tr>
+                <td>404 - Page Not Found</td>
+                <td>The page/resource you requested does not exist.</td>
+            </tr>
+            <tr>
+                <td>500 - Internal Service Error</td>
+                <td>The server has encountered some kind of error with your request that it doesn't know how to handle properly.</td>
+            </tr>
+            <tr>
+                <td>503 - Service Unavailable</td>
+                <td>This server cannot handle your request as it's either overloaded or down for maintenance.</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <h3>HTTP Headers</h3>
+
+        <p>
+            Headers are additional bits of data you can send to the web server when making requests.
+            Although no headers are strictly required when making a HTTP request, you’ll find it difficult to view a website properly
+            if not setting any headers.
+        </p>
+
+        <h4>Common Request Headers</h4>
+
+        <ul class="custom-bullet-list">
+            <li><b>Host:</b> Some web servers host multiple websites so by providing the host headers you can tell it which one you require, otherwise you'll just receive the default website for the server.</li>
+            <li><b>User-Agent:</b> This is your browser software and version number, telling the web server your browser software helps it format the website properly for your browser and also some elements of HTML, JavaScript and CSS are only available in certain browsers.</li>
+            <li><b>Content-Length:</b> When sending data to a web server such as in a form, the content length tells the web server how much data to expect in the web request. This way the server can ensure it isn't missing any data.</li>
+            <li><b>Accept-Encoding:</b> Tells the web server what types of compression methods the browser supports so the data can be made smaller for transmitting over the internet.</li>
+            <li><b>Cookie:</b> Data sent to the server to help remember your information (see cookies task for more information).</li>
+        </ul>
+
+        <h4>Common Response Headers</h4>
+        <ul class="custom-bullet-list">
+            <li><b>Set-Cookie:</b> Information to store which gets sent back to the web server on each request (see cookies task for more information).</li>
+            <li><b>Cache-Control:</b> How long to store the content of the response in the browser's cache before it requests it again.</li>
+            <li><b>Content-Type:</b> This tells the client what type of data is being returned, i.e., HTML, CSS, JavaScript, Images, PDF, Video, etc. Using the content-type header the browser then knows how to process the data.</li>
+            <li><b>Content-Encoding:</b> What method has been used to compress the data to make it smaller when sending it over the internet.</li>
+        </ul>
+
+        <h3>Cookies</h3>
+
+        <p>Cookies are just a small piece of data that is stored on your computer. They are saved when you receive a "Set-Cookie" header from a web server. Then every further request you make, you'll send the cookie data back to the web server. Because HTTP is stateless (doesn't keep track of your previous requests), cookies can be used to remind the web server who you are, some personal settings for the website or whether you've been to the website before.</p>
+
+        <p>Cookies can be used for many purposes but are most commonly used for website authentication. The cookie value won't usually be a clear-text string where you can see the password, but a token (unique secret code that isn't easily humanly guessable).</p>
+
+    </div>
+
+
+
+
+
+</div>
+
+
+{% endblock %}

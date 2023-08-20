@@ -1,0 +1,823 @@
+{% extends "base.html" %}{% block title %}Intro to the Cyber World{%endblock%}
+{% block content %}
+
+<div class="container">
+    <h1 id="typing-effect" class="display-2 mb-4"></h1> 
+    <br />
+
+    <h2>What is Networking?</h2>
+
+    <p class="solution-text no-indent">
+        Networks are simply things connected. In computing, a network can be formed by anywhere from 2 devices to billions. These devices
+        include everything from a laptop to security cameras, traffic lights and more.
+    </p>
+    
+    <h2>What is the Internet?</h2>
+
+    <p class="solution-text no-indent">
+        The Internet is one giant network that consists of many, many small networks within itself. The first iteration of the Internet was within the ARPANET project in the late 1960s. This project was funded by the United States Defence Department and was the first documented network in action. However, it wasn't until 1989 when the Internet as we know it was invented by Tim Berners-Lee by the creation of the World Wide Web (WWW). It wasn't until this point that the Internet started to be used as a repository for storing and sharing information, just like it is today.
+    </p>
+
+    <div class="fig-breath">
+        <img class="fig-body" src="{{ url_for('static', filename='img/internet2.png') }}">
+    </div> 
+
+    <h2>Identifying Devices on a Network</h2>
+
+     <h3>IP Addresses</h3>
+
+     <p class="solution-text no-indent">
+        An IP (Internet Protocol) address can be used as a way of identifying a host on a network for a period of time. An IP address
+        is a set of four numbers divided into octets. The value of each octet summarizes the IP address on the network. This number is
+        calculated through a technique known as IP addressing &amp; subnetting. Each octet number can vary from 0 to 255.
+        What's important to understand here is that IP addresses can change from device to device but cannot be active simultaneously more than once within the same network.
+     </p>
+
+     <p class="solution-text no-indent">
+        IP addresses follow a set of standards known as protocols. These protocols are the backbone of networking and force many devices to 
+        communicate in the same language. We should note that devices can be on both private and public network. Furthermore, their IP addresses
+        will be either private or public.
+     </p>
+
+     <p class="solution-text no-indent">
+        A public IP address is used to identify the device on the internet, whereas the private IP address is used to identify a device amongst other 
+        device in the same network. As more devices become connected, it is becoming increasingly harder to get a public address that is not already 
+        in use. IPv6, a new iteration of IP addresses, helps tackle this issue. 
+     </p>
+
+     <h3>MAC Addresses</h3>
+
+     <p class="solution-text no-indent">
+        Devices on a network will all have a physical network interface, which is a microchip board found on the device's motherboard. This
+        network interface is assigned a unique address at the factory it was built at, called its MAC (Media Access Control) address. The MAC
+        address is a twelve-character hexadecimal number split into two's and separated by a colon, such as a1:b2:c3:d4:e5:f6. The first three hex numbers 
+        represent the company that made the network interface, and the last six the device's unique number.
+     </p>
+
+     <p class="solution-text no-indent">
+        However, an interesting thing with MAC addresses is that they can be spoofed in a process called spoofing. The spoofing occurs when a network 
+        device pretends to be identified by another MAC address rather than its own. When this occurs, it can often break poorly implemented security designs that assume that devices talking on a network are trustworthy.
+     </p>
+
+     <h2>Ping</h2>
+     
+     <p class="solution-text no-indent">
+        Ping is one of the most fundamental network tools available to us. Ping uses ICMP (Internet Control Message Protocol) packets to 
+        determine the performance of a connection between devices. The time it takes or ICMP packets travelling between devices is measured by 
+        ping, such as below:
+     </p>
+
+     <div class="shrink">
+        <pre>
+            <code id="text" class="hljs language-bash">
+            └─$ ping google.com          
+            PING google.com(2800:3f0:4001:821::200e (2800:3f0:4001:821::200e)) 56 data bytes
+            64 bytes from 2800:3f0:4001:821::200e (2800:3f0:4001:821::200e): icmp_seq=1 ttl=119 time=13.0 ms
+            64 bytes from 2800:3f0:4001:821::200e (2800:3f0:4001:821::200e): icmp_seq=2 ttl=119 time=12.3 ms
+            64 bytes from 2800:3f0:4001:821::200e (2800:3f0:4001:821::200e): icmp_seq=3 ttl=119 time=12.8 ms
+            </code>
+        </pre>
+    </div>
+
+    <h2>Introducting LAN Topologies</h2>
+
+    <p class="solution-text no-indent">
+        In reference to networking, when we use the term "topology", we are actually referring to the design or look of 
+        the network at hand.
+    </p>
+
+    <h3>Star Topology</h3>
+
+    <p class="solution-text no-indent">
+        The main premise of star topology is that devices are individually connected via a central networking device such as a switch or hub.
+        This is the most found commonly found topology because of its reliability and scalability. Any information sent to a device in this 
+        topology is sent via the central device to which it connects.
+    </p>
+
+    <p class="solution-text no-indent">
+        One disadvantage of this kind of topology is its price. Cabling and the purchase of dedicated networking equipment makes its cost 
+        goes up. However, despite the added cost, this topology is much more scalable in nature. It is very easy to add more devices as the 
+        demand for the network increases.
+    </p>
+
+    <div class="fig-breath">
+        <img class="fig-body" src="{{ url_for('static', filename='img/star-topology.png') }}">
+    </div> 
+
+    <p class="solution-text no-indent">
+        Unfortunately, the more the network scales the more maintaince is required to keep it functional. This increased dependence can also 
+        make troubleshooting much harder.
+    </p>
+
+    <h3>Bus Topology</h3>
+
+    <p class="solution-text no-indent">
+        This type of connection relies upon a single connection which is known as the backbone cable. This topology is similar to the leaf off 
+        of a tree in the sense that the devices (leaves) stem from where the branches are on this cable.
+    </p>
+
+    <p class="solution-text no-indent">
+        Since all data designed for each device travels along the same cable, it is very quickly prone to become slow and bottlenecked if 
+        devices within the topology are all simultaneously requesting data. This bottlenecked also results in very difficult troubleshooting
+        because it quickly becomes difficult to identify which device is experience issues with all data travelling along the same route.
+    </p>
+
+    <p class="solution-text no-indent">
+        However, with this said, bus topologies are one of the easier and more cost-efficient topologies to set up because of their expenses,
+        such as cabling or dedicated networking equipment used to connect these devices.
+    </p>
+
+    <div class="fig-breath">
+        <img class="fig-body" style="width: 41%;" src="{{ url_for('static', filename='img/bus-topology.png') }}">
+    </div>
+
+    <p class="solution-text no-indent">
+        Lastly, another disadvantage of this topology is that there is little redundancy in place in case of failures. This is because 
+        there is a single point of failure along the backbone cable. 
+    </p>
+
+    <h3>Ring Topology</h3>
+
+    <p class="solution-text no-indent">
+        The ring topology has devices connected directly to each other to form a loop, meaning that there is little cabling required and less 
+        dependence on dedicated hardware such as within a star topology.
+    </p>
+
+    <p class="solution-text no-indent">
+        A ring topology works by sending data across the loop until it reaches the destined device, using other devices along the loop to forward the data.
+        Interestingly enough, a device will only send received data from another device in this topology if it does not have any to send itself. 
+        If the device happens to have data to send, it will send its own data first before sending data from another device.
+    </p>
+    <div class="fig-breath">
+        <img class="fig-body" style="width: 41%;" src="{{ url_for('static', filename='img/ring-topology.webp') }}">
+    </div>
+
+    <p class="solution-text no-indent">
+        Because there is only one direction for data to travel across this topology, it is fairly easy to troubleshoot. Lastly, ring topologies
+        are less prone to bottlenecks, such as within a bus topology. The design of this topology does, however, mean that a fault such as cut cable, or broken device will result in the entire networking breaking.
+    </p>
+
+    <h3>What is a Switch?</h3>
+
+    <p class="solution-text no-indent">
+        Switches are dedicated devices within a network designed to aggregate multiple other devices, such as computers, printers or 
+        any other networking-capable device using ethernet. These various devices plug into a switch's port. Switches are usually found in 
+        larger networks such as businesses, universities, or similar-sized networks, where there are many devices to connect to the network.
+    </p>
+
+    <p class="solution-text no-indent">
+        Switches are much more efficient than their lesser counterpart (hubs/repeaters). They keep track of what device is connected to
+        which port. This way, when they receive a packet, instead of repeating that packet to every port like a hub would do, it 
+        just sends it to the intended target, thus reducing network traffic.
+    </p>
+
+    <p class="solution-text no-indent">
+        Both switches and routers can be connected to one another. The ability to do this increases the redundancy (the reliability) of 
+        a network by adding multilpe paths for data to take. If one path goes down, another can be used. While this may reduce the overall 
+        performance of a network because packets have to take longer to travel, there is no downtime.
+    </p>
+
+    <h3>What is a Router?</h3>
+
+    <p class="solution-text no-indent">
+        It's a router's job to connect networks and pass data between them. It does this by using routing.
+        Routing is the label given to the process of data travelling across networks. Routing involves creating a path between networks so that this data can be successfully delivered.
+    </p>
+
+    <h2>Subnetting</h2>
+
+    <p class="solution-text no-indent">
+        Subnetting refers to splitting the network into smaller, miniature networks within itself.
+        Whilst you know where to send information in real life to the correct department, networks need to know as well. Network administrators use subnetting to categorise and assign specific parts of a network to reflect this.
+    </p>
+
+    <p class="solution-text no-indent">
+        Subnetting is achieved by splitting up the number of hosts that can fit within the network, represented by a number called a subnet mask. 
+        A subnet mask is represented as a number of four bytes ranging from 0 to 255, similarly to the IP address. Subnets use IP addresses in three 
+        different ways:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li>Identify the network address.</li>
+        <li>Identify the host address.</li>
+        <li>Identify the default gateway.</li>
+    </ul>
+    <br />
+    <table>
+        <tr>
+          <th>Type</th>
+          <th>Purpose</th>
+          <th>Explanation</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td>Network Address</td>
+          <td>This address identifies the start of the actual network and is used to identify a network's existence.</td>
+          <td>For example, a device with the IP address of 192.168.1.100 will be on the network identified by 192.168.1.0</td>
+          <td>192.168.1.0</td>
+        </tr>
+        <tr>
+          <td>Host Address</td>
+          <td>An IP address here is used to identify a device on the subnet</td>
+          <td>For example, a device will have the network address of 192.168.1.1</td>
+          <td>192.168.1.100</td>
+        </tr>
+        <tr>
+          <td>Default Gateway</td>
+          <td>The default gateway address is a special address assigned to a device on the network that is capable of sending information to another network</td>
+          <td>Any data that needs to go to a device that isn't on the same network (i.e. isn't on 192.168.1.0) will be sent to this device. These devices can use any host address but usually use either the first or last host address in a network (.1 or .254)</td>
+          <td>192.168.1.254</td>
+        </tr>
+      </table>
+      <br />
+
+      <p class="solution-text no-indent">
+        Subnetting provides a range of benefits, including:
+      </p>
+
+      <ul class="custom-bullet-list">
+        <li>Efficiency.</li>
+        <li>Security.</li>
+        <li>Full Control.</li>
+      </ul>
+
+    <h2>The ARP Protocol</h2>
+
+    <p class="solution-text no-indent">
+    As we have already mentioned, devices have two identifiers: MAC address and an IP address. The ARP (Address Resolution Protocol) is the 
+    technology that is responsible for allowing devices to identify themselves on a network. Simply put, the ARP protocol allows a device to 
+    associate its MAC address with an IP address on the network. Each device on a network will keep a log of the MAC addresses associated 
+    with other devices.
+    </p>
+    
+    <p class="solution-text no-indent">
+        When devices wish to communicate with another, they will send a broadcast to the entire network searching for the specific device. 
+        Devices can use the ARP protocol to find the MAC address associated with the device for communication.
+    </p>
+
+    <h3>How does ARP work?</h3>
+
+    <p class="solution-text no-indent">
+        Each device within the network has a "book" that stores information on, which is called a cache. In the context of ARP protocol, this 
+        cache stores the identifiers of other devices on the network. In order to map these two identifiers (IP and MAC addresses), the ARP protocol 
+        sends two types of messages:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li>ARP Request.</li>
+        <li>ARP Reply.</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        When an ARP request is sent, a message is broadcasted to every other device found on a network by this device, asking whether or not the device's 
+        MAC address matches the requested IP address. If the device does have the requested IP address, an ARP reply is returned to the initial device 
+        to acknowledge it. The initial device will then remember this and store it within its cache (an ARP entry).           
+    </p>
+
+    <h2>The DHCP Protocol</h2>
+
+    <p class="solution-text no-indent">
+        IP addresses can be assigned either manually by entering them physically into a device, or automatically by using the DHCP (Dynamic Host 
+        Configuration Protocol) server. When a device connects to the network, if it has not already been manually assigned an IP address, it sends 
+        an DHCP discovery request to see if any DHCP servers are on the network. The DHCP server then replies back with an IP address the device could use (DHCP Offer).
+        The device then sends a reply confirming it wants the offered IP Address (DHCP Request), and then lastly, the DHCP server sends a reply acknowledging this has been completed, and the device can start using the IP Address (DHCP ACK).
+    </p>
+
+    <h2>OSI Model</h2>
+
+    <p class="solution-text no-indent">
+        The OSI model (or Open System Interconnection Model) is an absolute fundamental model used in networking. This critical model provides 
+        a framework dictating how all network devices will send, receive and interpret data.
+    </p>
+
+    <p class="solution-text no-indent">
+        One of the main benefits of the OSI model is that devices can have different functions and designs on a network while communicating with 
+        other devices. Data sent across a network that follows the uniformity of the OSI model can be understood by other devices.
+    </p>
+
+    <p class="solution-text no-indent">
+        The OSI model consists of seven layers which are illustrated in the diagram below. Each layer has a different set of responsibilities from 
+        Layer 7 to Layer 1.
+    </p>
+
+    <div class="fig-breath">
+        <img class="fig-body" style="width: 60%" src="{{ url_for('static', filename='img/osi-layer.svg') }}">
+    </div>
+
+    <h3>Layer 7 - Application</h3>
+
+    <p class="solution-text no-indent">
+        The application layer of the OSI model is the place to determine how the user should interact with data sent or received.
+        Everyday applications such as web mails, banking, browsers, or file servers provide a friendly GUI for users to interact with data 
+        sent or received. Other protocols include DNS.
+    </p>
+
+    <h3>Layer 6 - Presentation</h3>
+
+    <p class="solution-text no-indent">
+        The presentation layer is the layer in which standardization starts to take place. Because software developers can develop any software 
+        such as an email client differently, the data still needs to be handled in the same way. This layer acts as a translator for the data 
+        to and from the application layer. The receiving computer should also understand data sent to a computer in one format destined for in 
+        another format. For example, when you send an email, the other user may have another email client to you, but the contents of the email will still need to display the same.
+        Security features such as data encryption (like HTTPS when visiting a secure site) occur at this layer.
+    </p>
+
+    <h3>Layer 5 - Session</h3>
+
+    <p class="solution-text no-indent">
+        When data is successfully translated or formatted from the previous layer, the session layer will begin to create a connection to the 
+        other computer that the data is destined for. When a connection is established, a session is created. This layer synchronizes the two 
+        computers to ensure that they are on the same page before data is sent and received. Once these checks are in place, the session layer
+        will begin to divide up the data sent in smaller chunks and begin to send these chunks one at a time. This dividing up is beneficial because if the connection is lost, only the chunks that weren't yet sent will have to be sent again — not the entire piece of the data (think of it as loading a save file in a video game).
+        What is worthy of noting is that sessions are unique — meaning that data cannot travel over different sessions, but in fact, only across each session instead.
+    </p>
+
+    <h3>Layer 4 - Transport</h3>
+
+    <p class="solution-text no-indent">
+        Layer 4 of the OSI model plays a vital part in trasmitting data across a network and can be a little bit difficult to grasp. When data is 
+        sent between devices, it follows one of two different protocols:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li>TCP</li>
+        <li>UDP</li>
+    </ul>
+
+    <h4>TCP - Transmission Control Protocol</h4>
+
+    <p class="solution-text no-indent">
+        The Transmission Control Protocol (TCP). Potentially hinted by the name, this protocol is designed with reliability and guarantee in mind. This protocol reserves a constant connection between the two devices for the amount of time it takes for the data to be sent and received.
+    </p>
+
+    <p class="solution-text no-indent">
+        Not only this, but TCP incorporates error checking into its design. Error checking is how TCP can guarantee that data sent from the small chunks in the session layer (layer 5) has then been received and reassembled in the same order.
+    </p>
+
+    <br />
+
+    <table>
+        <tr>
+          <th>Advantages of TCP</th>
+          <th>Disadvantages of TCP</th>
+        </tr>
+        <tr>
+          <td>Guarantees the accuracy of data.</td>
+          <td>Requires a reliable connection between the two devices. If one small chunk of data is not received, then the entire chunk of data cannot be used.</td>
+        </tr>
+        <tr>
+          <td>Capable of synchronising two devices to prevent each other from being flooded with data.</td>
+          <td>A slow connection can bottleneck another device as the connection will be reserved on the receiving computer the whole time.</td>
+        </tr>
+        <tr>
+          <td>Performs a lot more processes for reliability.</td>
+          <td>TCP is significantly slower than UDP because more work has to be done by the devices using this protocol.</td>
+        </tr>
+      </table>
+
+      <br />
+
+      <p class="solution-text no-indent">
+        TCP is used for situations such as file sharing, internet browsing or sending an email. This usage is because these services require the data to be accurate and complete.
+      </p>
+
+      <h4>UDP - User Datagram Protocol</h4>
+
+      <p class="solution-text no-indent">
+        This protocol is not nearly as advanced as its brother - the TCP protocol. It doesn't boast the many features offered by TCP, such as error checking and reliability. In fact, any data that gets sent via UDP is sent to the computer whether it gets there or not. There is no synchronisation between the two devices or guarantee; just hope for the best, and fingers crossed.
+      </p>
+
+      <br />
+
+      <table>
+        <tr>
+          <th>Advantages of UDP</th>
+          <th>Disadvantages of UDP</th>
+        </tr>
+        <tr>
+          <td>UDP is much faster than TCP.</td>
+          <td>UDP doesn't care if the data is received.</td>
+        </tr>
+        <tr>
+          <td>UDP leaves the application layer (user software) to decide if there is any control over how quickly packets are sent.</td>
+          <td>It is quite flexible to software developers in this sense.</td>
+        </tr>
+        <tr>
+          <td>UDP does not reserve a continuous connection on a device as TCP does.</td>
+          <td>This means that unstable connections result in a terrible experience for the user.</td>
+        </tr>
+      </table>
+
+      <br />
+
+      <p class="solution-text no-indent">
+        UDP is useful in situations where there are small pieces of data being sent. For example, protocols used for discovering devices
+        or larger files such as video streaming.
+      </p>
+
+      <h3>Layer 3 - Network</h3>
+
+      <div class="solution-div">
+        <p>
+            The third layer of the OSI model is where the magic of routing &amp; reassamblying data takes place. Firstly, routing simply 
+            determines the most optimal path in which the packets of data should be sent. Briefly, these protocols include OSPF (Open Shortest 
+            Path First) and RIP (Routing Information Protocol). The factors that decide what route is taken is decided by the following:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li>What path is the shortest? I.e. has the least amount of devices that the packet needs to travel across.</li>
+            <li>What path is the most reliable? I.e. have packets been lost on that path before?</li>
+            <li>Which path has the faster physical connection? I.e. is one path using a copper connection (slower) or a fibre (considerably faster)?</li>
+        </ul>
+
+        <p>
+            At this layer, everything is dealt with via IP addresses such as 192.168.1.100. Devices such as routers capable of deliverying packets using 
+            IP addresses are known as layer 3 devices.
+        </p>
+
+        <h3>Layer 2 - Data link</h3>
+
+        <p>The data link layer focuses on the physical addressing of the transmission. It receives a packet from the network layer (including the 
+            IP address for the remote computer) and adds in the physical MAC (Media Access Control) address of the receiving endpoint. Inside every 
+            network-enabled computer is a Network Interface Cable (NIC) which comes with a unique MAC address to identify it.
+        </p>
+
+        <p>
+            MAC addresses are set by the manufacturer and literally burnt into the card; they can't be changed -- although they can be spoofed. When information is sent across a network, it's actually the physical address that is used to identify where exactly to send the information.
+Additionally, it's also the job of the data link layer to present the data in a format suitable for transmission.
+        </p>
+
+        <h3>Layer 1 - Physical</h3>
+
+        <p>This layer is one of the easiest layers to grasp. Put simply, this layer references the physical components of the hardware used in networking and is the lowest layer that you will find. Devices use electrical signals to transfer data between each other in a binary numbering system (1's and 0's).</p>
+      
+        
+        <h2>Packets &amp; Frames</h2>
+
+        <p>
+            Packets and frames are basically chunk of data that together form the larger piece of information they represent. However, frames are 
+            located at the layer 2 of the OSI model (the data link layer). Think of an envelope inside another envelope. The outter envelope is the 
+            packet. The inner envelope is the frame, which contains the data inside it.
+        </p>
+
+        <p>
+            Packets are an efficient way of communicating data across networked devices. Because this data is exchanged in small pieces, there is less chance of bottlenecking occurring across a network than large messages being sent at once.
+            For example, when loading an image from a website, this image is not sent to your computer as a whole, but rather small pieces where it is reconstructed on your computer.
+        </p>
+
+        <p>
+            A packet using the Internet Protocol will have a set of headers that contain additional pieces of information to the data that is being sent across a network.
+        </p>
+
+        <br />
+
+        <table>
+            <tr>
+                <th>Header</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Time to Live</td>
+                <td>This field sets an expiry timer for the packet to not clog up your network if it never manages to reach a host or escape!</td>
+            </tr>
+            <tr>
+                <td>Checksum</td>
+                <td>This field provides integrity checking for protocols such as TCP/IP. If any data is changed, this value will be different from what was expected and therefore corrupt.</td>
+            </tr>
+            <tr>
+                <td>Source Address</td>
+                <td>The IP address of the device that the packet is being sent from so that data knows where to return to.</td>
+            </tr>
+            <tr>
+                <td>Destination Address</td>
+                <td>The device's IP address the packet is being sent to so that data knows where to travel next.</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <h3>The Three-Way Handshake</h3>
+
+        <p>Remembering that the TCP/IP protocol consists of four layers and is arguably just a summarised version of the OSI model. These layers are:</p>
+
+        <ul class="custom-bullet-list">
+            <li>Application</li>
+            <li>Transport</li>
+            <li>Internet</li>
+            <li>Network Interface</li>
+        </ul>
+
+        <p>
+            One defining feature of TCP is that it is connection-based, which means that TCP must establish a connection between both a client and a device acting as a server before data is sent.
+        </p>
+
+        <p>
+            TCP packets contain various sections of information known as headers that are added from encapsulation. Let's explain some of the crucial headers in the table below:
+        </p>
+
+        <br />
+
+        <table>
+            <tr>
+                <th>Header</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Source Port</td>
+                <td>This value is the port opened by the sender to send the TCP packet from. This value is chosen randomly (out of the ports from 0-65535 that aren't already in use at the time).</td>
+            </tr>
+            <tr>
+                <td>Destination Port</td>
+                <td>This value is the port number that an application or service is running on the remote host (the one receiving data); for example, a web server running on port 80. Unlike the source port, this value is not chosen at random.</td>
+            </tr>
+            <tr>
+                <td>Source IP</td>
+                <td>This is the IP address of the device that is sending the packet.</td>
+            </tr>
+            <tr>
+                <td>Destination IP</td>
+                <td>This is the IP address of the device that the packet is destined for.</td>
+            </tr>
+            <tr>
+                <td>Sequence Number</td>
+                <td>When a connection occurs, the first piece of data transmitted is given a random number. We'll explain this more in-depth further on.</td>
+            </tr>
+            <tr>
+                <td>Acknowledgement Number</td>
+                <td>After a piece of data has been given a sequence number, the number for the next piece of data will have the sequence number + 1. We'll also explain this more in-depth further on.</td>
+            </tr>
+            <tr>
+                <td>Checksum</td>
+                <td>This value is what gives TCP integrity. A mathematical calculation is made where the output is remembered. When the receiving device performs the mathematical calculation, the data must be corrupt if the output is different from what was sent.</td>
+            </tr>
+            <tr>
+                <td>Data</td>
+                <td>This header is where the data, i.e. bytes of a file that is being transmitted, is stored.</td>
+            </tr>
+            <tr>
+                <td>Flag</td>
+                <td>This header determines how the packet should be handled by either device during the handshake process. Specific flags will determine specific behaviors, which is what we'll come on to explain below.</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <p>
+            The Three-way handshake communicates using a few special messages - the table below highlights the main ones:
+        </p>
+
+        <br />
+
+        <table border="1">
+            <tr>
+                <th>Step</th>
+                <th>Message</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>SYN</td>
+                <td>A SYN message is the initial packet sent by a client during the handshake. This packet is used to initiate a connection and synchronize the two devices together (we'll explain this further later on).</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>SYN/ACK</td>
+                <td>This packet is sent by the receiving device (server) to acknowledge the synchronization attempt from the client.</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>ACK</td>
+                <td>The acknowledgment packet can be used by either the client or server to acknowledge that a series of messages/packets have been successfully received.</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>DATA</td>
+                <td>Once a connection has been established, data (such as bytes of a file) is sent via the "DATA" message.</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>FIN</td>
+                <td>This packet is used to cleanly (properly) close the connection after it has been completed.</td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td>RST</td>
+                <td>This packet abruptly ends all communication. This is the last resort and indicates there was some problem during the process. For example, if the service or application is not working correctly, or the system has faults such as low resources.</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <p>
+            Any sent data is given a random number sequence and is reconstructed using this number sequence and incrementing it by 1. 
+            Both parts must agree on the same number for data to be sent in the correct order. The order follows:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li><b>1. SYN - </b> Client: Here's my Initial Sequence Number(ISN) to SYNchronise with (0)</li>
+            <li><b>2. SYN/ACK - </b> Server: Here's my Initial Sequence Number (ISN) to SYNchronise with (5,000), and I ACKnowledge your initial number sequence (0)</li>
+            <li><b>3. ACK - </b> Client: I ACKnowledge your Initial Sequence Number (ISN) of (5,000), here is some data that is my ISN+1 (0 + 1).</li>
+        </ul>
+
+        <br />
+
+        <table>
+            <tr>
+                <th>Device</th>
+                <th>Initial Number Sequence (ISN)</th>
+                <th>Final Number Sequence</th>
+            </tr>
+            <tr>
+                <td>Client (Sender)</td>
+                <td>0</td>
+                <td>0 + 1 = 1</td>
+            </tr>
+            <tr>
+                <td>Client (Sender)</td>
+                <td>1</td>
+                <td>1 + 1 = 2</td>
+            </tr>
+            <tr>
+                <td>Client (Sender)</td>
+                <td>2</td>
+                <td>2 + 1 = 3</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <h4>Closing a connection</h4>
+
+        <p>
+            After the data is sent and everything is set, the connection must be closed. Because TCP reserves system resources on a device, it is best practice to close TCP connections as soon as possible.
+            To initiate a closure, the device will send a FIN packet to the other device. The other device must acknowledge the FIN packet.
+        </p>
+
+        <h3>UDP/IP</h3>
+
+        <p>
+            Unlike its brother TCP, UDP is a stateless protocol that doesn't require a constant connection between the two devices for data to be sent. For example, the Three-way handshake does not occur, nor is there any synchronisation between the two devices.
+            Namely, UDP is used in situations where applications can tolerate data being lost (such as video streaming or voice chat) or in scenarios where an unstable connection is not the end-all. 
+        </p>
+
+        <p>
+            UDP packets are much simpler than TCP packets and have fewer headers. However, both protocols share some standard headers, which are what is annotated in the table below:
+        </p>
+
+        <br />
+        <table>
+            <tr>
+                <th>Header</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Time to Live (TTL)</td>
+                <td>This field sets an expiry timer for the packet, so it doesn't clog up your network if it never manages to reach a host or escape!</td>
+            </tr>
+            <tr>
+                <td>Source Address</td>
+                <td>The IP address of the device that the packet is being sent from, so that data knows where to return to.</td>
+            </tr>
+            <tr>
+                <td>Destination Address</td>
+                <td>The device's IP address the packet is being sent to so that data knows where to travel next.</td>
+            </tr>
+            <tr>
+                <td>Source Port</td>
+                <td>This value is the port that is opened by the sender to send the TCP packet from. This value is randomly chosen (out of the ports from 0-65535 that aren't already in use at the time).</td>
+            </tr>
+            <tr>
+                <td>Destination Port</td>
+                <td>This value is the port number that an application or service is running on the remote host (the one receiving the data); for example, a webserver running on port 80. Unlike the source port, this value is not chosen at random.</td>
+            </tr>
+            <tr>
+                <td>Data</td>
+                <td>This header is where data, i.e. bytes of a file that is being transmitted, is stored.</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <h2>Extending Your Network</h2>
+
+        <h3>Port Forwarding</h3>
+
+        <p>Port forwarding is an essential component in connecting applications and services to the Internet. Without port forwarding, applications and services such as web servers are only available to devices within the same direct network.</p>
+
+
+        <p>Suppose we wanted to deploy an application on port 80, with our IP address 192.168.1.100. Without port forwarding, the Application
+            would only be visible by devices within the same network. We call this intranet. If we wanted to make it visible on the internet, 
+            we would need port forwarding, which can be acomplished by a router. It uses another IP address to deploy the application to the internet,
+            making it visible to everyone.
+        </p>
+
+        <h3>Firewalls</h3>
+
+        <p>
+            A firewall is a device within the network responsible for determining what traffic is allowed to enter and exit. 
+            An administrator can configure a firewall to permit or deny traffic from entering or exiting a network based on numerous factors such as:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li>
+                Where the traffic is coming from? (has the firewall been told to accept/deny traffic from a specific network?)
+            </li>
+            <li>
+                Where is the traffic going to? (has the firewall been told to accept/deny traffic destined for a specific network?)
+            </li>
+            <li>
+                What port is the traffic for? (has the firewall been told to accept/deny traffic destined for port 80 only?)
+            </li>
+            <li>
+                What protocol is the traffic using? (has the firewall been told to accept/deny traffic that is UDP, TCP or both?)
+            </li>
+        </ul>
+
+        <p>
+            We'll cover the two primary categories of firewalls in the table below:
+        </p>
+
+        <br />
+
+        <table>
+            <tr>
+                <th>Firewall Category</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Stateful</td>
+                <td>This type of firewall uses the entire information from a connection; rather than inspecting an individual packet, this firewall determines the behavior of a device based upon the entire connection. This firewall type consumes many resources in comparison to stateless firewalls as the decision making is dynamic. For example, a firewall could allow the first parts of a TCP handshake that would later fail. If a connection from a host is bad, it will block the entire device.</td>
+            </tr>
+            <tr>
+                <td>Stateless</td>
+                <td>This firewall type uses a static set of rules to determine whether or not individual packets are acceptable or not. For example, a device sending a bad packet will not necessarily mean that the entire device is then blocked. While these firewalls use much fewer resources than alternatives, they are much dumber. For example, these firewalls are only effective as the rules that are defined within them. If a rule is not exactly matched, it is effectively useless. However, these firewalls are great when receiving large amounts of traffic from a set of hosts (such as a Distributed Denial-of-Service attack).</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <h3>VPN Basics</h3>
+
+        <p>
+            A Virtual Private Network (or VPN for short) is a technology that allows devices on separate networks to communicate securely by creating a dedicated path between each other over the Internet (known as a tunnel). Devices connected within this tunnel form their own private network.
+            Let's cover some of the other benefits offered by a VPN in the table below:
+        </p>
+
+        <br />
+
+        <table>
+            <tr>
+                <th>Benefit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Allows networks in different geographical locations to be connected.</td>
+                <td>For example, a business with multiple offices will find VPNs beneficial, as it means that resources like servers/infrastructure can be accessed from another office.</td>
+            </tr>
+            <tr>
+                <td>Offers privacy.</td>
+                <td>VPN technology uses encryption to protect data. This means that it can only be understood between the devices it was being sent from and is destined for, meaning the data isn't vulnerable to sniffing. This encryption is useful in places with public WiFi, where no encryption is provided by the network. You can use a VPN to protect your traffic from being viewed by other people.</td>
+            </tr>
+            <tr>
+                <td>Offers anonymity.</td>
+                <td>Journalists and activists depend upon VPNs to safely report on global issues in countries where freedom of speech is controlled. Usually, your traffic can be viewed by your ISP and other intermediaries and therefore tracked. The level of anonymity a VPN provides is only as much as how other devices on the network respect privacy. For example, a VPN that logs all of your data/history is essentially the same as not using a VPN in this regard.</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <p>
+            VPN technology has improved over the years. Let's explore some existing VPN technologies below:
+        </p>
+
+        <br />
+
+        <table>
+            <tr>
+                <th>VPN Technology</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>PPP</td>
+                <td>This technology is used by PPTP (explained below) to allow for authentication and provide encryption of data. VPNs work by using a private key and public certificate (similar to SSH). A private key & certificate must match for you to connect. This technology is not capable of leaving a network by itself (non-routable).</td>
+            </tr>
+            <tr>
+                <td>PPTP</td>
+                <td>The Point-to-Point Tunneling Protocol (PPTP) is the technology that allows the data from PPP to travel and leave a network. PPTP is very easy to set up and is supported by most devices. It is, however, weakly encrypted in comparison to alternatives.</td>
+            </tr>
+            <tr>
+                <td>IPSec</td>
+                <td>Internet Protocol Security (IPsec) encrypts data using the existing Internet Protocol (IP) framework. IPSec is difficult to set up in comparison to alternatives; however, if successful, it boasts strong encryption and is also supported on many devices.</td>
+            </tr>
+        </table>
+
+        <br />
+    
+    </div>
+
+
+
+    </div>
+
+
+{% endblock %}

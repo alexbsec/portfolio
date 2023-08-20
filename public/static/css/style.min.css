@@ -33,6 +33,13 @@ body {
   margin-top: 75px;
 }
 
+.custom-bullet-list {
+  list-style-type: disc; /* You can customize the bullet style here */
+  margin-left: 20px; /* Adjust the spacing between bullet points and content */
+  padding-left: 20px; /* Adjust the indentation of the bullet points */
+  font-size: 18px;
+}
+
 .row-fig {
   display: flex;
   margin-left: -12%;
@@ -109,7 +116,7 @@ h4 {
   font-size: 2.4rem; }
 
 h5 {
-  font-size: 1.8rem; }
+  font-size: 2.2rem; }
 
 h6 {
   font-size: 1.6rem; }
@@ -124,7 +131,7 @@ h4,
 h5,
 h6 {
   line-height: 1.5em;
-  font-weight: 400; }
+  font-weight: 350; }
 
 h1,
 h2,
@@ -349,6 +356,24 @@ ul {
   margin: 5px;
   font-size: 20px;
   color: #000; }
+
+.solution-div p {
+  font-size: 18px;
+  text-align: justify;
+}
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
 
 .grid-portfolio {
   overflow: hidden; }

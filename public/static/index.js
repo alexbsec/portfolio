@@ -49,7 +49,15 @@ window.onload = function() {
     "xss12": "DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded",
     "xss13": "Exploiting XSS to perform CSRF",
     "xss14": "Exploiting cross-site scripting to steal cookies",
-    "vancouver2018": "Vancouver 2018 Workshop"
+    "vancouver2018": "Vancouver 2018 Workshop",
+    "malware-dev": "Malware Development/Analysis",
+    "worm-malware": "Local Worm Malware",
+    "topics": "Cybersecurity Topics",
+    "intro": "Intro to the Cyber World",
+    "offensive": "Intro to Offensive Security",
+    "defensive": "Intro to Defensive Security",
+    "network": "Intro to Networking",
+    "web-fundamentals": "Intro to the Web",
   };
   const sPath = window.location.pathname;
   const sPage = sPath.substring(sPath.lastIndexOf('/') + 1);

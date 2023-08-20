@@ -1,0 +1,226 @@
+{% extends "base.html" %}{% block title %}Intro to Offensive Security{%endblock%}
+{% block content %}
+
+<div class="container">
+    <h1 id="typing-effect" class="display-2 mb-4"></h1> 
+    <br />
+
+    <h2>Web Application Security</h2>
+    <p class="solution-text no-indent">
+        A web application is like a “program” that we can use without installation as long as we have a modern standard web browser, such as Firefox, Safari, or Chrome. Consequently, instead of installing every program you need, you only need to browse the related page. The following are some examples of web applications:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Webmails:</b> Gmail, Outlook, Yahoo mail.</li>
+        <li><b>Online Shopping:</b> Amazon, Etsy, AliExpress.</li>
+        <li><b>Social Media:</b> Facebook, Instagram, Snapchat.</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        Consider an online shopping application. Usually, these kind of applications read data about the products and their details from a database server. A database server is responsible for many functions, including reading, searching, and writing to the database. The online shopping web application might need more than one database to access, for example:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Products database:</b> This database contains details about the products, such as name, price, stock, specifications etc.</li>
+        <li><b>Customers database:</b> This database contains details about the users/customers, such as name, email, address, credit card etc.</li>
+        <li><b>Sales database:</b> We expect to see what each customer has purchased and how they paid in this database.</li>
+    </ul>
+
+    <h3>Web Application Security Risks</h3>
+
+    <p class="solution-text no-indent">
+        Suppose we want to buy an item from an online shop. These are some functions one should expect to be able to do within this web app:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li>Log in on the website</li>
+        <li>Search for the product</li>
+        <li>Add the product to cart</li>
+        <li>Specify the shipping address</li>
+        <li>Provide payment details</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        There may be a few common vulnerabilities associated with each one of these functionalities:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Log in at the website:</b> The attacker can try to discover the password by brute forcing; or the attacker could use a more robust technique such as SQL injection to retrieve users credentials.</li>
+        <li><b>Search for a product:</b> The attacker can attempt to breach the system by adding specific characters and code injection to the search term.</li>
+        <li><b>Provide payment details:</b> The attacker would check if the payment details are sent in cleartext or using weak encryption. Encryption refers to making the data unreadable without knowing the secret key or password.</li>
+    </ul>
+
+    <h3>Identification and Authentication Failure</h3>
+
+    <p class="solution-text no-indent">
+        Identification refers to the ability to identify a user uniquely. In contrast, authentication refers to the ability to prove that the user is whom they claim to be.  The online shop must confirm the user’s identity and authenticate them before they can use the system. However, this step is prone to different types of weaknesses. Example weaknesses include: 
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li>Allowing the attacker to brute force the login field, usually using automated tools, to find valid login credentials.</li>
+        <li>Allowing the user to choose a weak password. This can be combined with the above method.</li>
+        <li>Storing the user's credentials in plain text. If the attacker manages to find the file containing the user's credentials, he can easily retrieve and learn the user's password.</li>
+    </ul>
+
+    <h3>Broken Access Controls</h3>
+
+    <p class="solution-text no-indent">
+        Access control ensures that each user can only access files (documents, files, etc.) related to their role in the web application. For example,
+        you don't want someone in the marketing department to access (read) the finance department's documents and/or files. Examples of vulnerabilities of access 
+        control include:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li>Failing to apply the principle of least privilege and giving users more access permissions than they actually need. For example, an online customer should be able to view the prices of the items, but they should not be able to change them.</li>
+        <li>Being able to view or modify someone else's account by using its unique identifier (uid). For example, you don’t want one bank client to be able to view the transactions of another client.</li>
+        <li>Being able to browse pages that require authentication as an unauthenticated user. For example, we cannot let anyone view the webmail before logging in.</li>
+    </ul>
+
+    <h3>Injection</h3>
+
+    <p class="solution-text no-indent">
+        Injection is a type of vulnerability where an attacker injects malicious code into some of the web application's functionality. This can have 
+        several implications, from retrieving information from a database that otherwise were not supposed to be retrieved; inject HTML or Javascript code 
+        to deface webpages and create malicious links; inject malicious code in XML files to make the backend server to behave in a unexpected manner.
+    </p>
+
+    <h3>Cryptographic Failures</h3>
+
+    <p class="solution-text no-indent">
+        Cryptography is the process of encrypting and decrypting data. The encryption part transforms plain text into ciphertext, whereas the 
+        decryption focuses in the inverse process. In order to encrypt something, a key is generated. This key can be used to either decrypt the 
+        data (when the encryption is not one-way only), but also to encrypt that plain text to the desired ciphertext. Examples of cryptographic failures include:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li>Sending sensitive data in a clear text. For example, using HTTP rather than HTTPS.</li>
+        <li>Relying on a weak and predictable encryption algorithm. One old cryptographic algorithm is to shift each letter by one.</li>
+        <li>Using weak keys for cryptographic functions.  It won’t be challenging to break the encryption that used '1234' as a key.</li>
+    </ul>
+
+    <h2>Introduction to Operating System Security </h2>
+    <p class="solution-text no-indent">
+        To define an operating system, we need to visit one computer term: hardware.
+    </p>
+
+    <p class="solution-text no-indent">
+        Computer hardware refers to all the computer parts and peripherals that you can touch with your hands. It includes the screen, mouse,
+        keyboard, printer, USB flash memory, RAM memory, SSD, HDD, mother board and so on.
+    </p>
+
+    <p class="solution-text no-indent">
+        The mother board is the main part of the computer, and all the other pieces of hardware end up needing to connect to the mother board.
+        However, hardware components by themselves are useless if you want to run your favorite programs and applications. We need an Operating System to control and “drive” them.
+    </p>
+
+    <h3>Operating Systems</h3>
+
+    <p class="solution-text no-indent">
+        The operating system (OS) serves as an intermediary layer between hardware and software, facilitating seamless user interaction with software while also ensuring proper hardware utilization.
+        Softwares are the essence of everything we do inside the computer. Unlike hardware, software refers to the applications and programs executed by the computer. While these programs rely on a proper hardware configuration, they also require an OS to accurately interpret and execute them.
+    </p>
+
+    <p class="solution-text no-indent">
+        Some OS are designed to run on laptops and personal desktops, such as Windows and MacOS. Other OS are designes specifically to mobile/smartphones,
+        such as Android and iOS. There are also OS intended for servers. The image below shows the most popular OS.
+    </p>
+
+    <div class="fig-breath">
+        <img class="fig-body" style="width: 50%;" src="{{ url_for('static', filename='img/os-pop.png') }}">
+    </div> 
+
+    <h3>Securing an Operating System</h3>
+
+    <p class="solution-text no-indent">
+        Every OS stores sensitive and private data that must be protected. When we talk about security, we should think of protecting three main things:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Confidentiality:</b> One wants to ensure that secret and private data are only available to intended persons.</li>
+        <li><b>Integrity:</b> It is crucial that no one can tamper with the files stored in your system or while being transferred on the network.</li>
+        <li><b>Availability:</b> One wants their system to be available to retrieve its data anytime needed.</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        This is called the CIA triad. Usually, when an attacker wants to invade a system, it aims to break at least one of these three categories.
+        Let's see the most common type of attacks that happens on OS.
+    </p>
+
+    <h4>1. Authentication and Weak Passwords</h4>
+
+    <p class="solution-text no-indent">
+        As already mentioned, authentication is the act of verifying one's identity, and it can be achieved via three main ways:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li>Something you know, such as password or PIN.</li>
+        <li>Something you have, such as a phone number or email.</li>
+        <li>Something you are, such as a fingerprint.</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        Usually, every OS has ways to implement at least one of these three authentication methods. Since passwords are the most common form of
+        authenticate someone, they are also the most attacked method. Unfortunately, many users opt for easily guessable passwords or reuse the same password across multiple websites and platforms. In essence, if an attacker manages to deduce the password for any of your online accounts, such as your email or social media, they gain unrestricted access to your private information. Hence, it is of utmost importance to select intricate passwords and use distinct passwords for various accounts.
+    </p>
+
+    <h4>2. Weak File Permissions</h4>
+
+    <p class="solution-text no-indent">
+        Proper security dictates the principle of least privilege. In a work environment, you want any file accessible only by those who need to access it
+        (ensuring availability). On a personal level, files are meant to be shared to those that you trust. Weak file permissions make it easy for the adversary to attack confidentiality and integrity. They can attack confidentiality as weak permissions allow them to access files they should not be able to access. Moreover, they can attack integrity as they might modify files that they should not be able to edit.
+    </p>
+
+    <h4>3. Access to Malicious Programs</h4>
+
+    <p class="solution-text no-indent">
+        Depending on the type of malicious program, it can compromise confidentiality, integrity, and availability. For instance, Trojan horses grant attackers access to your system, enabling them to read or modify files.
+    </p>
+
+    <p class="solution-text no-indent">
+        Certain malicious programs target availability. An example is ransomware, which encrypts user files, rendering them unreadable without the decryption password. Attackers offer to restore access by providing the encryption password if users pay the "ransom."
+    </p>
+
+    <h2>Network Security</h2>
+    
+    <p class="solution-text no-indent">
+        A computer network is a group of computers and devices connected with each other. Network security focuses on protecting the security of 
+        these devices and the links connecting them. It consists of different hardware and software solutions to achieve the set of security goals.
+        Hardware solutions refer to the devices you set up in your network to protect its security. They are hardware, so you can literally hold them
+        with your hands. Examples of hardware appliance include:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Firewall appliance:</b> The firewall allows and blocks connections based on predefined set of rules. It restricts what can enter 
+        and what can leave the network.</li>
+        <li><b>Intrusion Detection System (IDS) appliance:</b> An IDS detects system and network intrusions and intrusion attempts. It tries to detect attackers' attempt to break into your network.</li>
+        <li><b>Intrusion Prevention System (IPS) appliance:</b> An IPS blocks detected intrusions and intrusion attempts. It aims to prevent attackers from breaking into your network.</li>
+        <li><b>Virtual Private Network (VPN) concentrator appliance:</b> A VPN ensures that the network traffic cannot be read nor altered by a third party. It protects the confidentiality (secrecy) and integrity of the data.</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        On the other hand, we have software security solutions. Common examples are:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Antivirus software:</b> Antiviruses are meant to detect malicious files and block them from executing.</li>
+        <li><b>Host firewall:</b> Unlike the firewall appliance, a hardware device, a host firewall is a program that ships as part of your system, or it is a program that you install on your system. For instance, MS Windows includes Windows Defender Firewall, and Apple macOS includes an application firewall; both are host firewalls.</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        Breaking into a target network usually includes a number of steps. According to Lockheed Martin, the Cyber Kill Chain has seven steps:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Recon:</b> Recon, short for reconnaissance, refers to the step where the attacker tries to learn as much as possible about the target. Information such as the types of servers, operating system, IP addresses, names of users, and email addresses, can help the attack’s success.</li>
+        <li><b>Weaponization:</b> This step refers to preparing a file with a malicious component, for example, to provide the attacker with remote access.</li>
+        <li><b>Delivery:</b> elivery means delivering the “weaponized” file to the target via any feasible method, such as email or USB flash memory.</li>
+        <li><b>Exploitation:</b> When the user opens the malicious file, their system executes the malicious component.</li>
+        <li><b>Installation:</b> The previous step should install the malware on the target system.</li>
+        <li><b>Command and Control:</b> The successful installation of the malware provides the attacker with a command and control ability over the target system.</li>
+        <li><b>Actions on Objectivs:</b> After gaining control over one target system, the attacker has achieved their objectives. One example objective is Data Exfiltration (stealing target’s data).</li>
+    </ul>
+
+</div>
+
+
+{% endblock %}

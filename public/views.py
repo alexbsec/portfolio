@@ -13,31 +13,32 @@ def home():
 def labs():
     return render_template("PortSwiggerLabs.html", user=current_user)       # reference current user to check if it is authenticated
 
-################## PENTESTS ######################
+################## TOPICS ######################
 
-@views.route('/pentests')
-def pentests():
-    return render_template("pentests.html", user=current_user)
+@views.route('/topics')
+def topics():
+    return render_template("topics.html", user=current_user)
 
-@views.route('/pentests/vulnhub/pwnlab')
-def pwnlab():
-    return render_template("pwnlab.html", user=current_user)
+@views.route('/topics/intro')
+def intro_to_cyber():
+    return render_template("intro-to-cyber.html", user=current_user)
 
-@views.route('/pentests/vulnhub/kioptrix-2')
-def kioptrix2():
-    return render_template("kioptrix-2.html", user=current_user)
+@views.route('/topics/intro/offensive')
+def intro_to_offensive():
+    return render_template("intro-to-offensive.html", user=current_user)
 
-@views.route('/pentests/vulnhub/fristleaks-1.3')
-def fristleaks_1_3():
-    return render_template('fristleaks-13.html', user=current_user)
-    
-@views.route('/pentests/vulnhub/node')
-def node():
-    return render_template('node.html', user=current_user)
+@views.route('/topics/intro/defensive')
+def intro_to_os_security():
+    return render_template("intro-to-defensive.html", user=current_user)
 
-@views.route('/pentests/vulnhub/vancouver2018')
-def vancouver2018():
-    return render_template('vancouver2018.html', user=current_user)
+@views.route('/topics/intro/network')
+def intro_to_network():
+    return render_template('intro-to-network.html', user=current_user)
+
+@views.route('/topics/intro/web-fundamentals')
+def intro_to_web():
+    return render_template('intro-to-web.html', user=current_user)
+
 
 ################## PROJECTS ######################
 
@@ -68,6 +69,14 @@ def keylogger():
 @views.route('/projects/prevent-sqli')
 def prevent_sqli():
     return render_template("prevent-sqli.html", user=current_user)
+
+@views.route('/projects/malware-dev')
+def malware_dev():
+    return render_template("malware-dev.html", user=current_user)
+
+@views.route('/projects/malware-dev/worm-malware')
+def worm_malware():
+    return render_template("worm-malware.html", user=current_user)
 
 ################## SQLI LABS #####################
 

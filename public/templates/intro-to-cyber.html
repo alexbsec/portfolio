@@ -1,0 +1,107 @@
+{% extends "base.html" %}{% block title %}Intro to the Cyber World{%endblock%}
+{% block content %}
+
+<div class="container">
+    <h1 id="typing-effect" class="display-2 mb-4"></h1> 
+    <br />
+
+    <h2>Defensive Security</h2>
+    <p class="solution-text no-indent">
+        Defensive security represents the other essential facet of cybersecurity, focusing on both preventing intrusions from occurring and swiftly detecting them if they do. This aspect is often attributed to the Blue Team, encapsulating the realm of cyber defense.
+    </p>
+
+    <p class="solution-text no-indent">
+        We can summarize the tasks related to defensive security teams as follows:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Cybersecurity awareness:</b> Educating regular users about cybersecurity significantly enhances protection against attacks that target their systems.</li>
+        <li><b>Updating and patching:</b> Adhering to best practices by consistently patching and updating computers, servers, network devices, and more is crucial to prevent exploits against known vulnerabilities.</li>
+        <li><b>Documenting and managing assets:</b> Effectively safeguarding systems and devices requires the Blue Team to maintain a comprehensive understanding of the assets under their care.</li>
+        <li><b>Setting up preventative security devices:</b>  Firewalls and intrusion prevention systems (IPS) play a pivotal role in preventative security. Firewalls control inbound and outbound network traffic, while IPS blocks any traffic aligning with established rules and attack signatures.</li>
+        <li><b>Logging and monitoring devices:</b> Maintaining thorough logs and employing robust network monitoring are paramount. These practices are indispensable for detecting malicious activities and unauthorized devices promptly.</li>
+    </ul>
+
+    <h3>Areas of Defensive Security</h3>
+
+    <h4>1. Security Operations Center (SOC)</h4>
+
+    <p class="solution-text no-indent">
+        A Security Operations Center (SOC) is a team that aims to monitor the network to detect malicious activity events. We can list some of the
+        main areas of interest for a SOC:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Vulnerabilities:</b> SOC analysts promptly address system vulnerabilities by installing patches or updates. When fixes aren't available, they implement measures to bolster defense against potential exploitation.</li>
+        <li><b>Policy violations:</b> Security policies establish rules for safeguarding systems and networks. Detecting policy violations, like unauthorized data disclosure, is vital to maintaining security.</li>
+        <li><b>Unauthorized activity:</b> Detecting unauthorized access stemming from stolen user credentials is critical. SOC teams swiftly block such access to prevent further damage.</li>
+        <li><b>Network intrusions:</b> Even robust security can't eliminate intrusion possibilities. SOC analysts detect intrusions caused by factors like phishing or server vulnerabilities, responding promptly to mitigate issues.</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        SOC cover various tasks to ensure system's protection. One such task is Threat Intelligence.
+    </p>
+
+    <h5>1.1. Threat Intelligence</h5>
+    <p class="solution-text no-indent">
+        Intelligence refers to information gathered about potential attackers. A threat is any action that can disrupt the system. Threat Intelligence aims to 
+        gather information to help the company prepare against potential attackers. The final purpose is to have a threat-informed defense. 
+    </p>
+
+    <p class="solution-text no-indent">
+        Intelligence needs data, which has to be collected, processed, and analyzed. Data collection is usually done from local resources such as network
+        and public sources. Processing data is a critical step, which aims to arrange the collected information into a format suitable for analysis. The analysis phase seeks to find more information about the attackers and their motives; moreover, it aims to create a list of recommendations and actionable steps.
+    </p>
+
+    <h4>2. Digital Forensics Incident Response (DFIR)</h4>
+    <h5>2.1. Digital Forensics</h5>
+    <p class="solution-text no-indent">
+        Forensics is the application of science that aims to investigate crimes and establish facts. Digital forensics is no different, except by the fact that 
+        it is on the digital world. In defensive security, the focus of digital forensics is to analyze evidence of an attack and its perpetrators. It also involves
+        other areas, such as intellectual property theft, cyber espionage, and possession of unauthorized content. Some key areas are:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>File system:</b> Analyzing digital forensic images (low-level copy) of a system's storage might reveal much information, such as installed programs, created files, partially overwritten files, and deleted files.</li>
+        <li><b>System memory:</b> If the attacker is running their malicious program in memory without saving it to the disk, taking a forensic image of the system memory is the best approach to analyze its contents and learn about the attack and attacker.</li>
+        <li><b>System logs:</b> Each client and server computer maintains different log files about what is happening on the system. Log files provide plenty of info about what happened on a system. Some traces will be left even if the attacker tries to clear them.</li>
+        <li><b>Network logs:</b> Logs of the network packets that have traversed a network would help answer more questions about whether an attack is ocurring and what is it entails.</li>
+    </ul>
+
+    <h5>2.2. Incident Response</h5>
+    <p class="solution-text no-indent">
+        An incident in cyber security usually refers to a data breach or a cyber attack. However, anything from a simple misconfiguration to a more serious 
+        attack like a denial of service (DoS) attack can be considered an incident. Incident response specifies the methodology that should be taken to handle
+        these different incidents. Ideally, one would develop a plan for an incident response. The four major phases of the incident response process are:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Preparation:</b> Various measures are put in place to prevent incidents from happening in the first place. An Incident Response team must be ready and trained to handle them.</li>
+        <li><b>Detection and Analysis:</b> The team must have the necessary resources to detect any incident. Moreover, it is essential to further analyze any detected incident to learn about its severity.</li>
+        <li><b>Contaiment, Eradication, and Recovery:</b> Once the incident is properly detected, it is crucial to contain it from affecting any adjacent systems by putting it to a controlled environment, eliminate it, and recover the affected systems. For instance, when we notice that a system is infected with a computer virus, we would like to stop (contain) the virus from spreading to other systems, clean (eradicate) the virus, and ensure proper system recovery.</li>
+        <li><b>Post-Incident Activity:</b> After successful recovery, a report must be produced, and the learned lesson shared to prevent similar incidents in the future.</li>
+    </ul>
+
+    <h5>2.3. Malware Analysis</h5>
+    <p class="solution-text no-indent">
+        Malware stands for malicious software. It includes many types, such as:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Viruses:</b> Virus is a piece of code that attaches itself to a program. It is designed to spread from one system to another. It can work by altering, overwriting, and deliting files once it infects a computer.</li>
+        <li><b>Trojan Horses:</b> A trojan horse is a program that shows one desirable functionality but hides a malicious function underneath. For example, a victim might download a video player from a shady website that gives the attacker complete control over their system.</li>
+        <li><b>Ransomwares:</b> Ransomware is a malicious program that encrypts the user’s files. Encryption makes the files unreadable without knowing the encryption password. The attacker offers the user the encryption password if the user is willing to pay a “ransom.”</li>
+    </ul>
+
+    <p class="solution-text no-indent">
+        Malware analysis aims to learn about such malicious programs using various methods:
+    </p>
+
+    <ul class="custom-bullet-list">
+        <li><b>Static analysis:</b> Static analysis works by inspecting the malicious program without running it. Usually, this requires a solid knowedge of assembly language.</li>
+        <li><b>Dynamic analysis:</b> Dynamic analysis works by running the malware in a controlled environment and monitoring its activities. It lets one observe how the malware works when running.</li>
+    </ul>
+</div>
+
+
+{% endblock %}
