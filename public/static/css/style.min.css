@@ -330,6 +330,14 @@ ul {
   margin-bottom: 0;
   overflow: hidden;
   min-height: 500px; }
+
+  @media (max-width: 1024px) {
+    .jumbotron {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
   @media (min-width: 1024px) {
     .jumbotron {
       min-height: 45vh; } }
