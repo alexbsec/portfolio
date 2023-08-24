@@ -39,6 +39,46 @@ def intro_to_network():
 def intro_to_web():
     return render_template('intro-to-web.html', user=current_user)
 
+@views.route('/topics/basics/network-exploitation')
+def network_exploitation():
+    return render_template('network-exploitation.html', user=current_user)
+
+@views.route('/topics/basics/burpsuite')
+def burpsuite_basics():
+    return render_template('burpsuite-basics.html', user=current_user)
+
+################## CTFs #########################
+
+tryhackme_path = '/ctfs/tryhackme'
+
+@views.route('/ctfs')
+def ctfs():
+    return render_template('ctfs.html', user=current_user)
+
+@views.route(f'{tryhackme_path}/networkservices/smb-exploitation')
+def network_services_smb():
+    return render_template('thm-smb-exploitation.html', user=current_user)
+
+@views.route(f'{tryhackme_path}/networkservices/telnet-exploitation')
+def network_services_telnet():
+    return render_template('thm-telnet-exploitation.html', user=current_user)
+
+@views.route(f"{tryhackme_path}/networkservices/ftp-exploitation")
+def network_services_ftp():
+    return render_template("thm-ftp-exploitation.html", user=current_user)
+
+@views.route(f"{tryhackme_path}/networkservices/nfs-exploitation")
+def network_services_nfs():
+    return render_template("thm-nfs-exploitation.html", user=current_user)
+
+@views.route(f"{tryhackme_path}/networkservices/smtp-exploitation")
+def network_services_smtp():
+    return render_template("thm-smtp-exploitation.html", user=current_user)
+
+@views.route(f'{tryhackme_path}/networkservices/mysql-exploitation')
+def network_services_mysql():
+    return render_template('thm-mysql-exploitation.html', user=current_user)
+
 
 ################## PROJECTS ######################
 

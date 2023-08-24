@@ -311,6 +311,10 @@ ul {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 3px 15px 0px;
   border-radius: 0; }
 
+.no-justify p {
+  text-align: left;
+}
+
 .jumbotron {
   background-color: rgb(156, 154, 154);
   padding-top: 80px;
@@ -335,7 +339,40 @@ ul {
     .jumbotron {
       margin-left: 0;
       margin-right: 0;
+      position: absolute;
+      display: block;
+      min-height: 80vh;
     }
+    
+    .jumbotron p {
+      font-size: 38px;
+    }
+
+    .jumbotron h1 {
+      font-size: 56px; 
+    }
+
+    .jumbotron h2 {
+      font-size: 52px; 
+    }
+
+    .jumbotron h3 {
+      font-size: 50px; 
+    }
+
+    .jumbotron h4 {
+      font-size: 48px; 
+    }
+
+  
+    .jumbotron h5 {
+      font-size: 46px; 
+    }
+
+    .jumbotron .custom-bullet-list {
+      font-size: 40px;
+    }
+
   }
 
   @media (min-width: 1024px) {

@@ -58,6 +58,15 @@ window.onload = function() {
     "defensive": "Intro to Defensive Security",
     "network": "Intro to Networking",
     "web-fundamentals": "Intro to the Web",
+    "network-exploitation": "Network Exploitation Basics",
+    "ctfs": "CTFs",
+    "smb-exploitation": "TryHackMe - Exploiting SMB - Network Services Room",
+    "telnet-exploitation": "TryHackMe - Exploiting Telnet - Network Services Room",
+    "ftp-exploitation": "TryHackMe - Exploiting FTP - Network Services Room",
+    "nfs-exploitation": "TryHackMe - Exploiting NFS - Network Services 2 Room",
+    "smtp-exploitation": "TryHackMe - Exploiting SMTP - Network Services 2 Room",
+    "mysql-exploitation": "TryHackMe - Exploiting MySQL - Network Services 2 Room",
+    "burpsuite": "Burpsuite Basics",
   };
   const sPath = window.location.pathname;
   const sPage = sPath.substring(sPath.lastIndexOf('/') + 1);

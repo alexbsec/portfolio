@@ -1,0 +1,819 @@
+{% extends "base.html" %}{% block title %}Network Exploitation Basics{%endblock%}
+{% block content %}
+
+<div class="container">
+    <h1 id="typing-effect" class="display-2 mb-4"></h1> 
+    <br />
+
+    <div class="solution-div">
+
+        <h2>Networking</h2>
+
+        <h3>OSI Model, an Overview</h3>
+
+        <P>
+            We have already discussed in depth what the OSI model <a href="/topics/intro/network#osi-model">here</a> is. In this 
+            page, we shall briefly discuss it again for clarification. 
+        </P>
+
+        <p>The OSI model consists of seven layers: Application, Presentation, Session, Transport, Network, Data Link, and Physical layer.
+            A good mnemonic for the seven layers is "Please Do Not Throw Sausage Pizza Away". Let's recap what each layer represents:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li><b>Physical Layer:</b> Deals with hardware, cables, and electrical signals.</li>
+            <li><b>Data Link Layer:</b> Manages data framing and error detection on the network.</li>
+            <li><b>Network Layer:</b> Handles routing and forwarding of data packets.</li>
+            <li><b>Transport Layer:</b> Ensures end-to-end communication and data reliability.</li>
+            <li><b>Session Layer:</b> Manages session establishment and termination.</li>
+            <li><b>Presentation Layer:</b> Translates, encrypts, or compresses data for compatibility.</li>
+            <li><b>Application Layer:</b> Provides user interfaces and network services.</li>
+        </ul>
+
+        <h3>Encapsulation</h3>
+
+        <p>
+            As the data is passed down each layer of the model, more information containing details specific to the layer in question 
+            is added on the start of the transmission. As an example, the header added by the Network layer would include things like the source
+            and destination IP addresses. The Transport layer would include information specific to the protocol being used. The Data Link layer 
+            also adds a piece on the end of the transmission, which is used to verify that the data has not been corrupted on transmission. This 
+            whole process is called encapsulation.
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='/img/encapsulation.jpeg') }}">
+        </div>
+
+        <p>
+            Note that the encapsulated data is given a different name at different steps of the process. In layers 7, 6 and 5, data is simply data. In 
+            the Transport layer, the encapsulated data is referred to as data segment or a datagram (depending if is TCP latter, or UDP former). At 
+            the Network layer, the data is referred to as a packet. When the packet is passed down to the Data Link layer, it becomes a frame. By 
+            the time the frame goes to the Physical layer, it becomes bits.
+        </p>
+
+        <p>
+            After the data is received by the secondo computer, it reverses the process. Starting at the Physical layer and working up until it 
+            reaches the Application layer, stripping off the information as it goes. This process is called de-encapsulation. 
+        </p>
+
+        <h3>The TCP/IP Model</h3>
+
+        <p>
+            In many ways, the TCP/IP model is very similar to the OSI model. It consists of four layers: Application, Transport, Internet and Network. 
+            Between them, these cover the same range of functions the OSI model layers do.
+        </p>
+
+        <p>
+            You would be justified in asking why we bother with the OSI model if it's not actually used for anything in the real-world. The answer to that question is quite simply that the OSI model (due to being less condensed and more rigid than the TCP/IP model) tends to be easier for learning the initial theory of networking.
+        </p>
+
+        <p>
+            The processes of encapsulation and de-encapsulation work in exactly the same way with the TCP/IP model as they do with the OSI model. At each layer of the TCP/IP model a header is added during encapsulation, and removed during de-encapsulation.
+        </p>
+
+        <p>
+            When we talk about TCP/IP we are actually talking about a suite of protocols: a set of rules that defines how an action is to 
+            be carried out. TCP/IP takes its name from the two most important of these: the Transmission Control Protocol (which we touched upon earlier in the OSI model) that controls the flow of data between two endpoints, and the Internet Protocol, which controls how packets are addressed and sent.
+        </p>
+
+        <p>
+            As mentioned earlier, TCP is a connection-based protocol. In other words, before you send any data via TCP, both parts must be stably connected
+            in a process called three-way handshake, as we have already discussed.
+        </p>
+
+        <p>
+            When we attempt to make a connection, our computer first sends a special request to the target server indicating that it wants to initialize 
+            a connection; a process called SYN. The server will then respond with a SYN/ACK packet back to us. Finally, we respond with an ACK packet. 
+            With the three-way handshake successfully completed, data can be reliably transmitted between the two computers. Any data that is lost or corrupted on transmission is re-sent, thus leading to a connection which appears to be lossless.
+        </p>
+
+        <h3>Networking Tools</h3>
+
+        <p>
+            Let's talk about some tools we may use while pentesting applications.
+        </p>
+
+        <h4>Ping</h4>
+
+        <p>
+            The ping command is used when we want to test whether a connection to a remote resource is possible. Usually this will be a website 
+            on the internet, but it could also be a computer in your LAN. Ping works using the ICMP protocol. This protocol works on the Network 
+            layer of the OSI model (internet layer of the TCP/IP model). The basic syntax is <code class="hljs language-python"><span class="hljs-keyword">ping &lt;target&gt;</span></code>.
+            Below we have an example of how we could ping google.
+        </p>
+
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-bash">
+                └─$ ping google.com          
+                PING google.com(2800:3f0:4001:821::200e (2800:3f0:4001:821::200e)) 56 data bytes
+                64 bytes from 2800:3f0:4001:821::200e (2800:3f0:4001:821::200e): icmp_seq=1 ttl=119 time=13.0 ms
+                64 bytes from 2800:3f0:4001:821::200e (2800:3f0:4001:821::200e): icmp_seq=2 ttl=119 time=12.3 ms
+                64 bytes from 2800:3f0:4001:821::200e (2800:3f0:4001:821::200e): icmp_seq=3 ttl=119 time=12.8 ms
+                </code>
+            </pre>
+        </div>
+
+        <p>
+            Note that while we have not provided an IP address, ping has already converted the domain name of google to an IPv6 format. 
+            This is a handy secondary application for ping, as it can be used to determine the IP address of the server hosting a website. One of the big advantages of ping is that it's pretty much ubiquitous to any network enabled device. 
+        </p>
+
+        <h4>Traceroute</h4>
+
+        <p>
+            The logical follow-up to the ping command is the traceroute command. Traceroute can be used to map the path your request takes as it 
+            heads to the target machine. The internet is made up of many servers and end-points, all networked together. This means that to get 
+            to the actual content we want, we first need to go through a bunch of other servers. Traceroute allows us to see each one of these 
+            connections. The basic syntax is <code class="hljs language-python"><span class="hljs-keyword">traceroute &lt;target&gt;</span></code>.
+        </p>
+
+        <p>
+            By default, the Windows traceroute utility (<code class="hljs language-python"><span class="hljs-keyword">tracert</span></code>) operates 
+            using the ICMP protocol, same as ping. The Unix equivalent operates over UDP.
+        </p>
+
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-bash">
+                └─$ traceroute google.com   
+                traceroute to google.com (142.251.128.14), 30 hops max, 60 byte packets
+                1  _gateway (192.168.0.1)  4.145 ms  4.106 ms  4.072 ms
+                2  10.28.160.1 (10.28.160.1)  14.932 ms  20.620 ms  22.762 ms
+                3  c9064a5d.virtua.com.br (201.6.74.93)  25.917 ms  27.162 ms  27.132 ms
+                4  201.6.65.110 (201.6.65.110)  27.075 ms  27.057 ms  24.693 ms
+                5  c9064166.virtua.com.br (201.6.65.102)  26.997 ms  26.970 ms  26.943 ms
+                6  c9064041.virtua.com.br (201.6.64.65)  26.900 ms  29.095 ms  30.434 ms
+                7  142.250.175.238 (142.250.175.238)  30.000 ms  12.875 ms  18.175 ms
+                8  * * *
+                9  209.85.254.180 (209.85.254.180)  27.469 ms 216.239.50.112 (216.239.50.112)  27.312 ms 142.251.67.82 (142.251.67.82)  27.184 ms
+                10  216.239.41.11 (216.239.41.11)  25.883 ms 74.125.243.76 (74.125.243.76)  27.026 ms 74.125.243.67 (74.125.243.67)  29.005 ms
+                11  * 108.170.245.161 (108.170.245.161)  27.793 ms 108.170.245.129 (108.170.245.129)  14.342 ms
+                12  216.239.41.11 (216.239.41.11)  21.132 ms  18.973 ms 142.251.53.177 (142.251.53.177)  21.759 ms
+                13  * * *
+                14  * * *
+            </code>
+        </pre>
+        </div>
+
+        <h4>WHOIS</h4>
+
+        <p>
+            Whois essentially allows you to query who a domain name is registered to. In Europe personal details are redacted; however, elsewhere you can potentially get a great deal of information from a whois search.
+        </p>
+
+        <p>
+            Whois lookups are very easy to perform. The syntax is <code class="hljs language-python"><span class="hljs-keyword">whois &lt;target&gt;</span></code>
+        </p>
+
+        <h4>Dig</h4>
+
+        <p>
+            Dig allows us to manually query recursive DNS servers of our choice for information about domains: 
+        </p>
+
+        <code class="hljs language-python"><span class="hljs-keyword">dig &lt;target&gt; @&lt;dns-server-ip&gt;</span></code>
+        
+        <p>
+            It is a very useful tool for network troubleshooting.
+        </p>
+
+        <div class="shrink">
+            <pre>
+                <code id="text" class="hljs language-bash">
+                └─$ dig google.com @1.1.1.1
+
+                ; &lt;&lt;&gt;&gt; DiG 9.18.16-1-Debian &lt;&lt;&gt;&gt; google.com @1.1.1.1
+                ;; global options: +cmd
+                ;; Got answer:
+                ;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 30329
+                ;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+                    
+                ;; OPT PSEUDOSECTION:
+                ; EDNS: version: 0, flags:; udp: 1232
+                ;; QUESTION SECTION:
+                ;google.com.			IN	A
+                    
+                ;; ANSWER SECTION:
+                google.com.		139	IN	A	142.251.128.46
+                    
+                ;; Query time: 16 msec
+                ;; SERVER: 1.1.1.1#53(1.1.1.1) (UDP)
+                ;; WHEN: Mon Aug 21 22:58:23 -03 2023
+                ;; MSG SIZE  rcvd: 55
+            </code>
+        </pre>
+        </div>
+
+        <p>
+            In summary, that information is telling us that we sent it one query and successfully (i.e. No Errors) received one full answer -- which, as expected, contains the IP address for the domain name that we queried.
+        </p>
+
+        <p>
+            Another interesting piece of information that dig gives us is the TTL (Time To Live) of the queried DNS record. As mentioned previously, when your computer queries a domain name, it stores the results in its local cache. The TTL of the record tells your computer when to stop considering the record as being valid -- i.e. when it should request the data again, rather than relying on the cached copy.
+        </p>
+
+
+        <h2>Nmap</h2>
+
+        <p>
+            When it comes to hacking, knowedge is power. The more the knowledge we have about a target system or network, the more options 
+            we have availabile.
+        </p>
+
+        <p>
+            Starting with the IP address of the company we want to make a security audit on, the first step is to get an idea of the whole 
+            landscape we are attacking. In short, we must know which services are running on the target. For example, perhaps one service 
+            might be a webserver, and another is acting as a Windows Active Directory Domain Controller. The first stage of doing this mapping 
+            is by port scanning the target. When a computer runs a network service, it opens a construct called "port" to receive incoming 
+            connections. Ports are necessary when multiple services are in place. For example, when we load several different pages on our 
+            browser, the program must have some way of determining which tab is loading which web page. This is done by establishing connections 
+            to the remote server using different ports on our local machine.  Equally, if you want a server to be able to run more than one service (for example, perhaps you want your webserver to run both HTTP and HTTPS versions of the site), then you need some way to direct the traffic to the appropriate service.
+        </p>
+
+        <p>
+            Every computer has a total of 65535 available ports, many of these are registered as standard ports. For example, a HTTP webserver can 
+            nearly always be found on port 80. HTTPS can be found on port 443. Windows NETBIOS can be found on port 139 and SMB can be found on port 
+            445. If we do not know which of these ports a server has open, then we do not have a hope of successfully attacking the target; thus, it is crucial that we begin any attack with a port scan. 
+        </p>
+
+        <p>
+            Nmap can be used to perform many different kinds of port scan. The basic theory is this: nmap will connect to each port of the 
+            target in turn. Depending on how the target's port responds, it can be determined as open, closed or filtered (usually by a firewall).
+            Once we know which ports are open, we can look at the enumerating which services are running on each port.
+        </p>
+
+        <h3>Scan Types</h3>
+
+        <p>When port scanning with nmap, there are three basic scan types:</p>
+
+        <ul class="custom-bullet-list">
+            <li>TCP Connect Scan (-sT)</li>
+            <li>SYN "Half-Open" Scans (-sS)</li>
+            <li>UDP scans (-sU)</li>
+        </ul>
+
+        <p>Additionally there are several less common port scan types. These are:</p>
+
+        <ul class="custom-bullet-list">
+            <li>TCP Null Scan (-sN)</li>
+            <li>TCP FIN Scan (-sF)</li>
+            <li>TCP Xmas Scan (-sX)</li>
+        </ul>
+
+        <p>
+            Most of these (with the exception of UDP scans) are used for very similar purposes, however, the way that they work differs between each scan. This means that, whilst one of the first three scans are likely to be your go-to in most situations, it's worth bearing in mind that other scan types exist.
+        </p>
+
+        <h4>TCP Connect Scan</h4>
+
+        <p>Syntax:  <code class="hljs language-python"><span class="hljs-keyword">nmap -sT &lt;target&gt;</span></code></p>
+
+        <p>
+        To understand this first scan type (-sT), it's important that we are comfortable with TCP three-way handshake. 
+        a TCP Connect scan works by performing the three-way handshake with each target port in turn. In other words, Nmap tries to connect to each specified TCP port, and determines whether the service is open by the response it receives. 
+        </p>
+
+        <p>If Nmap sends a TCP request with the SYN flag set to a closed port, the target server will respond with a TCP packet with the RST (Reset) flag set. By this response, Nmap can establish that the port is closed.</p>
+   
+        <div class="fig-breath">
+            <img class="fig-div" src="{{ url_for('static', filename='/img/syn-rst.png') }}">
+        </div>
+
+        <p>If, however, the request is sent to an open port, the target will respond with a TCP packet with the SYN/ACK flags set. Nmap then marks this port as being open (and completes the handshake by sending back a TCP packet with ACK set).</p>
+    
+        <p>What if the port is open, but hidden behind a firewall? 
+            Many firewalls are configured to simply drop incoming packets. Nmap sends a TCP SYN request, and receives nothing back. This indicates that the port is being protected by a firewall and thus the port is considered to be filtered.
+            That said, it is very easy to configure a firewall to respond with a RST TCP packet. For example, in IPtables for Linux, a simple version of the command would be as follows:
+            <code class="hljs language-python"><span class="hljs-keyword">iptables -I INPUT -p tcp --dport &lt;port&gt; -j REJECT --reject-with tcp-reset</span></code>
+        </p>
+
+        <p>
+            This can make it extremely difficult (if not impossible) to get an accurate reading of the target(s).
+        </p>
+
+        <h4>SYN Scan</h4>
+
+        <p>Syntax: <code class="hljs language-python"><span class="hljs-keyword">sudo nmap -sS &lt;target&gt;</span></code></p>
+
+        <p>
+            As with TCP scans, SYN scans (-sS) are used to scan the TCP port-range of a target. However, SYN scans 
+            are referred to as half-open scan, or stealth scan. This is because a SYN scan sends back a RST TCP packet 
+            after the SYN/ACK response from the server, thus not completing the three-way handshake. The advantages of this 
+            type of scans include:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li>It can be used to bypass older intrusion detection systems as they are looking for a full three-way handshake.
+                This is often no longer the case with modern IDS solutions.
+            </li>
+            <li>
+                SYN scans are often not logged by applications listening on open ports, as standard practice is to log a connection 
+                once it has been fully established. 
+            </li>
+            <li>
+                Without having to bother about completing (and disconnecting from) a three-way handshake for every port, SYN scans 
+                are significantly faster than a standard TCP scan.
+            </li>
+        </ul>
+
+        <p>
+            Some disadvantages include:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li>
+                They require sudo permissions in order to work correctly in Linux. This is because SYN scans require the 
+                ability to create raw packets (as opposed to the full TCP scan), which is a privileged action only root users can perform.
+            </li>
+            <li>
+                Unstable services are sometimes brought down by SYN scans, which could prove problematic if a client has provided a 
+                production environment for the test.
+            </li>
+        </ul>
+
+        <p>
+            For all of these reasons, SYN scans are the default scans used by Nmap if run with sudo permissions. If run without sudo 
+            permissions, Nmap defaults to the TCP scan.
+        </p>
+
+        <p>
+            When using a SYN scan to identify closed and filtered ports, the exact same rules as with a TCP Connect scan apply.
+            If a port is closed then the server responds with a RST TCP packet. If the port is filtered by a firewall then the TCP SYN packet is either dropped, or spoofed with a TCP reset.
+            In that sense, the two scans are identical: the big difference is in how they handle open ports.
+        </p>
+
+        <h4>UDP Scan</h4>
+
+        <p>Syntax: <code class="hljs language-python"><span class="hljs-keyword">nmap -sU &lt;target&gt;</span></code></p>
+
+        <p>
+            Unlike TCP, UDP connection is stateless. This means that UDP sends packets to the destination port and hope that 
+            they will make it, rather than establishing a connection beforehand. This makes UDP superb for connections that rely on 
+            speed rather over quality, but lack of acknowledgment makes UDP significantly slower to scan. 
+        </p>
+
+        <p>
+            When a packet is sent to an open UDP port, there should be no response. When this happens, Nmap refers to that port to 
+            be open|filtered. In other words, it suspects the port is open, but it could be firewalled. If it gets a UDP response 
+            (very unusual), then the port is set as open. 
+        </p>
+
+        <p>
+            When a packet is sent to a closed port, the target should respond with an ICMP ping packet containing a message that 
+            the port is unreachable. 
+        </p>
+
+        <p>Due to its difficulty in identifying open ports, UDP scan tend to be incredibly slow in comparison with the previous two 
+            scans. For this reason, it's usually good practice to run an Nmap scan with --top-ports switch enabled, or at least in a 
+            small desired range of ports. For example: <code class="hljs language-python"><span class="hljs-keyword">nmap -sU --top-ports 20 &lt;target&gt;</span></code> will scan the top 20 UDP ports.
+        </p>
+
+        <p>
+            When scanning UDP ports, Nmap usually sends completely empty requests -- just raw UDP packets. That said, for ports which are usually occupied by well-known services, it will instead send a protocol-specific payload which is more likely to elicit a response from which a more accurate result can be drawn.
+        </p>
+
+        <h4>NULL, FIN and Xmas Scans</h4>
+
+        <p>
+            NULL, FIN and Xmas scans are less commonly used than any of the already mentioned scans. All three are interlinked and used primarily 
+            as they tend to be even stealthier than a SYN scan. The idea is to send malformed TCP packets
+            to the target. We are not going to go into much detail about them.
+        </p>
+
+        <p>
+            The expected response for these scans is very similar to UDP scan. If the port is open, then there is no response to the 
+            malformed packets. Unfortunately, that is also an expected behaviour if the port is protected by a firewall, so these scans 
+            will only ever identify ports as open|filtered, closed or filtered.
+            If a port is identified as filtered with one of these scans then it is usually because the target has responded with an ICMP unreachable packet.
+        </p>
+
+        <p>
+            It's also worth noting that while RFC 793 mandates that network hosts respond to malformed packets with a RST TCP packet for closed ports, and don't respond at all for open ports; this is not always the case in practice. In particular Microsoft Windows (and a lot of Cisco network devices) are known to respond with a RST to any malformed TCP packet -- regardless of whether the port is actually open or not. This results in all ports showing up as being closed.
+        </p>
+
+        <p>
+            That said, the goal here is, of course, firewall evasion. Many firewalls are configured to drop incoming TCP packets to blocked ports which have the SYN flag set (thus blocking new connection initiation requests). By sending requests which do not contain the SYN flag, we effectively bypass this kind of firewall. Whilst this is good in theory, most modern IDS solutions are savvy to these scan types, so don't rely on them to be 100% effective when dealing with modern systems.
+        </p>
+
+        <h5>1. NULL Scan</h5>
+
+        <p>Syntax: <code class="hljs language-python"><span class="hljs-keyword">nmap -sN &lt;target&gt;</span></code></p>
+
+        <p>As the name suggests, NULL scans are when a TCP request is sent with no flags set at all. As per the RFC, 
+            the target host should respond with a RST packet if the port is closed.
+        </p>
+
+        <h5>2. FIN Scan</h5>
+
+        <p>Syntax: <code class="hljs language-python"><span class="hljs-keyword">nmap -sF &lt;target&gt;</span></code></p>
+
+        <p>FIN scans work in a similar fashion, but its request is sent with a FIN flag (usually used to close an active connection).
+            Nmap expects a RST packet if the port is closed.
+        </p>
+
+        <h5>3. Xmas Scan</h5>
+
+        <p>Syntax: <code class="hljs language-python"><span class="hljs-keyword">nmap -sX &lt;target&gt;</span></code></p>
+
+        <p>As with the other two scans, Xmas scans send a malformed TCP packet and expects a RST response for closed ports.
+            It's referred to as an xmas scan as the flags that it sets (PSH, URG and FIN) give it the appearance of a blinking christmas tree when viewed as a packet capture in Wireshark. 
+        </p>
+
+        <h3>ICMP Network Scanning</h3>
+
+        <p>
+            On first connection to a target network in a black box assignment, our first objective is to obtain a "map" of the network structure.
+            In other words, we want to see which IP addresses contain actice hosts, and which do not.
+        </p>
+
+        <p>
+            One way to do this is by using Nmap to perform a so called ping sweep. This is exactly as the name suggests:
+            Nmap sends an ICMP packet to each possible IP address for the specified network. When it receives a response, 
+            it marks the IP address as being alive. To perform a ping sweep, we use the -sn switch. Its syntax is:
+        </p>
+
+        <p><code class="hljs language-python"><span class="hljs-keyword">nmap -sn 192.168.0.1-254</span></code></p>
+
+        <p>or</p>
+
+        <p><code class="hljs language-python"><span class="hljs-keyword">nmap -sn 192.168.0.0/24</span></code></p>
+
+        <p>The ping sweep method forces nmap to not scan for any ports, forcing it to rely primarily on ICMP echo packets
+            (or ARP requests on a local network, if run with sudo or directly as the root user) to identify targets.
+            In addition to the ICMP echo requests, the -sn switch will also cause nmap to send a TCP SYN packet to port 443 of the target, as well as a TCP ACK (or TCP SYN if not run as root) packet to port 80 of the target.
+        </p>
+
+        <h3>NSE Scripts</h3>
+
+        <p>The Nmap Scripting Engine (NSE) is an incredibly powerful addition to Nmap, extending its functionality quite 
+            considerably. NSE scripts are written in Lua programming language, and can be used to do a variety of things:
+            from scanning for vulnerabilities, to attempting to exploit them. The NSE is particularly useful for reconnaissance,
+            however, it is well worth knowing how extensive the script libraries are. Some useful categories are:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li><b>safe:</b> Won't affect the target.</li>
+            <li><b>intrusive:</b> Not safe, likely to affect the target.</li>
+            <li><b>vuln:</b> Scan for vulnerabilities.</li>
+            <li><b>exploit:</b> Attempt to exploit a vulnerability.</li>
+            <li><b>auth:</b> Attempt to bypass authentication for running services.</li>
+            <li><b>brute:</b> Attempt to brute force credentials.</li>
+            <li><b>discovery:</b> Attempt to query running services for further information about the network.</li>
+        </ul>
+
+        <h3>Working with the NSE</h3>
+
+        <p>To run a script, we need to follow the syntax: <code class="hljs language-python"><span class="hljs-keyword">nmap --script=&lt;script-name&gt; &lt;target&gt;</span></code></p>
+
+        <p>
+            Multiple scripts can be run at once if we separate the script names by comma in the above syntax.
+        </p>
+
+        <p>Some scripts require arguments. These can be given with the --script-args switch. An example would be 
+            the http-put script (used to upload files using PUT method). This takes two arguments: the URL to upload the file to, 
+            and the file's location. For example:
+        </p>
+
+        <p>
+            <code class="hljs language-python"><span class="hljs-keyword">nmap --script=http-put --script-args http-put.url='/dav/shell.php',http-put.file='./shell.php' -p 80 &lt;target&gt;</span></code>
+        </p>
+
+        <h3>Firewall Evasion</h3>
+
+        <p>
+            Your typical Windows host will, with its default firewall, block all ICMP packets. This presents a problem: not only do we often 
+            use ping to manually establish the activity of a target, Nmap does the same thing by default. 
+            This means that Nmap will register a host with this firewall configuration as dead and not bother scanning it at all. 
+        </p>
+
+        <p>
+            Fortunately, Nmap provides an option for this: -Pn, which tells nmap to not bother pinging the host before scanning it. 
+            This means Nmap will always treat the target host as being alive, effectively bypassing the ICMP block. However, it comes 
+            with a price of potentially taking a very long time to complete the scan.
+        </p>
+
+        <p>
+            There are a variety of other switches Nmap considers useful for firewall evasion. We will not go through these in detail, however. 
+            But it is worth mentioning a few of them:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li>(-f): Used to fragment the packets making it less likely that the packets will be detected by the firewall.</li>
+            <li>(--mtu): Accepts a maximum transmission unit size to use for the packets sent. This must be a multiple of 8.</li>
+            <li>(--scan-delay): Used to add a delay between packets sent. This is very useful if the network is unstable, but also 
+                for evading any time-based firewall/IDS triggers.
+            </li>
+            <li>(--badsum): This is used to generate an invalid checksum for packets. Any real TCP/IP stack would drop this packet, 
+                however, firewalls may potentially respond automatically, without bothering to check the checksum of the packet.
+                As such, this switch can be used to test the presence of a firewall/IDS.
+            </li>
+        </ul>
+
+        <h2>Network Services</h2>
+
+        <p>Let's talk about some common Network Service vulnerabilities and misconfigurations.</p>
+
+        <h3>Understanding SMB</h3>
+
+        <p>SMB (Server Message Block Protocol) is a client-server communication protocol used for sharing access to files, printers, 
+            serial ports and other resources on a network.
+        </p>
+        
+        <p>
+            Servers make file systems and other resources (printers, named pipes, APIs) available to clients on network. Client computers 
+            may have their own hard disks, but they also want access to the shared file systems and printers on the servers.
+            The SMB protocol is known as a response-request protocol, meaning that it transmits multiple messages between the client 
+            and server to establish a connection. Clients connect to servers using TCP/IP, NetBEUI or IPX/SPX.
+        </p>
+
+        <h4>How does SMB work?</h4>
+
+        <p>
+            Once they have established a connection, clients can then send commands (SMBs) to the server that allow them to 
+            access shares, open files, read and write files, and generally do all the sort of things that you want to do with 
+            a file system. However, in the case of SMB, these things are done over the network. 
+        </p>
+
+        <p>Client and server support for the SMB protocol has been integrated into Microsoft Windows operating systems, beginning with Windows 95. Additionally, Samba, an open-source server, has been made available for Unix systems. For an introductory exploration of SMB exploitation, you can refer to <a href="/ctfs/tryhackme/networkservices/smb-exploitation">this</a> CTF walkthrough.</p>
+
+        <h3>Understanding Telnet</h3>
+
+        <p>Telnet is an application protocol which allows you to connect to and execute commands on a remote machine that is hosting a telnet server.
+            The telnet client will establish a connection with the server, and then it becomes a virtual terminal allowing you to interact with 
+            the remote host.
+        </p>
+
+        <p>
+            Telnet sends all messages in clear text and has no specific security mechanism. Thus, in many applications and services, Telnet has 
+            been replaced by SSH in most implementations.
+        </p>
+
+        <h4>How does Telnet Works?</h4>
+
+        <p>The user connects to the server by using the Telnet protocol, which means entering "telnet" into a command line. The user 
+            then executes commands on the server by using specific telnet commands. You can connect to a telnet server with the syntax:
+        </p>
+
+        <p>
+            <code class="hljs language-python"><span class="hljs-keyword">telnet &lt;target-ip&gt; &lt;target-port&gt;</span></code>
+        </p>
+
+        <p>One useful command we might use in telnet command line is the .RUN command, which serves as a starting point for running 
+            Unix commands. For an introductory exploration of telnet and backdoors, please refer to <a href="/ctfs/tryhackme/networkservices/telnet-exploitation">this</a> CTF walkthrough.
+        </p>
+
+        <h3>Understanding FTP</h3>
+
+        <p>
+            File Transfer Protocol (FTP) is a protocol used to allow remote transfer of files over a network. It uses a client-server 
+            model to this, and relays commands and data in a very efficient way.
+        </p>
+
+        <h4>How does FTP Work?</h4>
+
+        <p>
+            A typical FTP session operates using two channels:
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li>A command channel.</li>
+            <li>A data chennel.</li>
+        </ul>
+
+        <p>
+        The command channel is used for transmitting commands as well as replies to those commands, while the data channel is used for 
+        transferring data.</p>
+
+        <p>FTP operates using client-server protocol. The client initiates a connection with the server and the server validates the connection
+            with credentials. So long the session is open, the client may execute FTP commands on the server.
+        </p>
+
+        <h4>Active and Passive Connections</h4>
+
+        <p>
+            The FTP server may support either Active or Passive connections (or both).
+        </p>
+
+        <ul class="custom-bullet-list">
+            <li>In active connections, the client opens a port and listens. The server is required to actively connect to it.</li>
+            <li>In passive connections, the server opens a port and listens (passively) and the client connects to it.</li>
+        </ul>
+
+        <p>
+            This separation of command information and data into separate channels is a way of being able to send commands to the server without having to wait for the current data transfer to finish. If both channels were interlinked, you could only enter commands in between data transfers, which wouldn't be efficient for either large file transfers, or slow internet connections. For reference, check out 
+            <a href="/ctfs/tryhackme/networkservices/ftp-exploitation">this</a> CTF walkthrough.
+        </p>
+
+        <h3>Understanding NFS</h3>
+
+        <p>
+            NFS stands for Network File System and allows a system to share directories and files with others over the network. By using 
+            NFS, users and programs can access files on a remote system almost as if they were local files. It does this by mounting all,
+            or a portion of a file on a server. The portion of the file system that is mounted can be accessed by clients with whatever 
+            privileges assigned to each file.
+        </p>
+
+        <h4>How does NFS Work?</h4>
+
+        <p>
+            First, the client will request to mount a directory from a remote host on a local directory just 
+            the same way it can mount a physical device such as an USB stick. The mount service will then act to connect
+            to the relevant mount daemon using RPC.
+        </p>
+    
+        <p>
+            The server checks if the user has permission to mount whatever directory has been requested. It will then return a 
+            file handle which uniquely identifies each file and directory that is on the server.
+        </p>
+    
+        <p>
+            If someone wants to access a file using NFS, an RPC call is placed on NFSD (the NFS daemon) on the server.
+            This call takes parameters such as:
+        </p>
+    
+        <ul class="custom-bullet-list">
+            <li>The file handle.</li>
+            <li>The name of the file to be accessed.</li>
+            <li>The user's user ID.</li>
+            <li>The user's group ID.</li>
+        </ul>
+    
+        <p>These are used in determining access rights to the specified file. This is what controls user permissions, i.e., read 
+            and write of files.
+        </p>
+    
+        <h4>Mounting NFS Shares</h4>
+    
+        <p>In order to mount a NFS share, we run the command:</p>
+    
+        <p><code class="hljs language-python"><span class="hljs-keyword">sudo mount -t nfs &lt;IP&gt;:&lt;share-name&gt; /tmp/mount/ -nolock</span></code></p>
+
+        <br />
+    
+        <table>
+            <tr>
+              <th>Command</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>sudo mount</td>
+              <td>Run the mount command with superuser privileges</td>
+            </tr>
+            <tr>
+              <td>-t nfs</td>
+              <td>Specify the type of device to mount, indicating it's NFS</td>
+            </tr>
+            <tr>
+              <td>&lt;IP&gt;:&lt;share-name&gt;</td>
+              <td>Replace &lt;IP&gt; with the IP Address of the NFS server and &lt;share-name&gt; with the name of the share you wish to mount</td>
+            </tr>
+            <tr>
+              <td>/tmp/mount/</td>
+              <td>Specify the local mount point directory where the NFS share will be mounted</td>
+            </tr>
+            <tr>
+              <td>-nolock</td>
+              <td>Specify not to use NLM locking</td>
+            </tr>
+          </table>
+
+          <br />
+
+          <p>For reference, check out <a href="/ctfs/tryhackme/networkservices/nfs-exploitation">this</a> CTF walkthrough on how to exploit 
+            vulnerable root-squash NFS shares </p>
+
+        <h3>Understanding SMTP</h3>
+
+        <p>
+            SMTP stands for "Simple Mail Transfer Protocol". It is used to handle the sending of emails. In order to support email services, 
+            a protocol pair is required, comprising of SMTP and POP/IMAP. Together they allow the user to send outgoing mail and retrieving 
+            incoming mail, respectively.
+        </p>
+
+        <p>The SMTP server performs three basic functions:</p>
+
+        <ul class="custom-bullet-list">
+            <li>
+                It verifies who is sending the emails through the SMTP server.
+            </li>
+            <li>
+                It sends the outgoing mail.
+            </li>
+            <li>
+                If the outgoing mail can't be delivered it sends the message back to the sender.
+            </li>
+        </ul>
+
+        <p>
+            Most people will have encountered SMTP when configuring a new email address on some third-party email clients, such as Thunderbird.
+            When you configure a new email client, you will need to also configure the SMTP server configuration in order to send the outgoing emails.
+        </p>
+
+        <h4>POP and IMAP</h4>
+
+        <p>
+        POP, or Post Office Protocol and IMAP, or Internet Message Access Protocol, are both email protocols responsible for the transfer of the 
+        email between a client and a mail server. The main differences between them is in POP's more simplistic approach of downloading the inbox 
+        from the mail server to the client. IMAP will synchronize the current inbox, with new mail on the server, downloading anything new. This 
+        means that changes to the inbox made on one computer, over IMAP, will persist if you then synchronize the inbox from another computer.
+        The POP/IMAP server is responsible for fulfilling this process.
+        </p>
+
+        <h4>How does SMTP Work?</h4>
+
+        <p>
+            Think of email delivery like sending a letter through the regular mail. You write the email (like a letter), use a service (like a postal delivery), and it goes through different steps to reach the recipient's inbox (like a postbox). The SMTP server in this process is like the sorting office. It takes the email, sorts it out, and then sends it on its way to the person it's meant for.
+            The image below shows a diagram of how this process works.
+        </p>
+
+        <div class="fig-breath">
+            <img class="fig-body" src="{{ url_for('static', filename='/img/smtp-diagram.png') }}">
+        </div>
+
+        <p>Let's break it down in steps:</p>
+
+        <p>1. Your email program, like your regular email client or some other software, connects to your domain's SMTP server, such as smtp.google.com. This starts the SMTP handshake, and it happens over the SMTP port (usually port 25). Once these connections are confirmed, the SMTP session kicks off.
+        </p>
+
+        <p>
+            2. Now, we can start sending the email. First, the client sends the sender's and recipient's email addresses. Then, it sets up the email body and any attachments and sends all of this to the server.
+        </p>
+
+        <p>
+            3. The SMTP server checks whether the domain of the recipient matches that of the sender.
+        </p>
+
+        <p>
+            4. The sender's SMTP server tries to connect to the recipient's SMTP server before sending the email. If it can't reach the recipient's server or if it's not available, the email gets placed into an SMTP queue.
+        </p>
+
+        <p>
+            5. Next, the recipient's SMTP server verifies incoming emails. It checks if the domain and username are recognized, and then it forwards the email to a POP or IMAP server.
+        </p>
+
+        <p>
+            6. Finally, the email appears in the recipient's inbox.
+        </p>
+          
+
+        <p>This is a simplified version of how it actually works. For more detailed reference, please access this
+            <a target="_blank" href="https://computer.howstuffworks.com/e-mail-messaging/email3.htm">link</a>.
+            This <a target="_blank" href="https://www.afternerd.com/blog/smtp/">link</a> also contains good reference for how SMTP works.
+        </p>
+
+        <p>
+            To better understand how can we exploit SMTP, refer to <a href="/ctfs/tryhackme/networkservices/smtp-exploitation">this</a> CTF walkthrough.
+        </p>
+
+        <h3>Understanding MySQL</h3>
+
+        <p>
+            In its simplest definition, MySQL is a relational database management system (RDBMS) based on Structured Query Language (SQL).
+            A database is simply a persistent, organized collection of structured data. RDBMS refers to a software or service to create 
+            and manage databases based on the relational model. The term "relational" refers to the data being stored in organized tables. Finally, 
+            SQL is the language used by clients to communicate with the server to retrieve data from the database.
+        </p>
+    
+        <h4>How does MySQL Work?</h4>
+    
+        <p>
+            MySQL can run on various platforms, whether it's Linux or Windows. It is commonly used as a backend database for many prominent 
+            websites and forms an essential component of the LAMP stack: Linux, Apache, MySQL, and PHP.
+        </p>
+    
+        <p>
+            When you interact with MySQL, you send SQL queries to the MySQL server, which processes those queries and returns the requested data.
+            The server efficiently manages data storage, retrieval, and modification, making it a crucial tool for handling vast amounts of structured information.
+        </p>
+    
+        <h4>Key Features of MySQL</h4>
+    
+        <p>
+            MySQL offers a range of features that make it a popular choice for database management:
+        </p>
+    
+        <ul class="custom-bullet-list">
+            <li><b>Scalability:</b> MySQL can handle both small-scale and large-scale databases, making it versatile for various applications.</li>
+            <li><b>Security:</b> MySQL provides robust security features to protect data, including user authentication, access control, and encryption.</li>
+            <li><b>High Performance:</b> It's optimized for fast data retrieval and can handle high concurrent loads efficiently.</li>
+            <li><b>Community Support:</b> There's an active MySQL community that contributes to its development and offers support and resources.</li>
+            <li><b>Open Source:</b> MySQL is open-source software, which means it's freely available for use and modification.</li>
+        </ul>
+    
+        <p>Understanding MySQL is essential for anyone involved in web development, data analysis, or system administration. It forms the backbone of numerous web applications and data-driven services.</p>
+    
+        <p>If you want to delve deeper into MySQL, you can explore the official documentation provided by Oracle on their <a target="_blank" href="https://docs.oracle.com/en-us/iaas/mysql-database/doc/mysql-server.html">website</a>.</p>
+    
+        <p>To better understand how to exploit MySQL service, check <a href="/ctfs/tryhackme/networkservices/mysql-exploitation">this</a> CTF walkthrough.</p>
+    </div>
+
+
+    
+
+
+
+</div>
+
+
+{% endblock %}
